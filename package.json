@@ -1,0 +1,9 @@
+{
+    "name": "commander",
+    "main": "index.html",
+    "window": {
+      "title": "Commander",
+      "icon": "images/kirk.png"
+    }
+}
+  
