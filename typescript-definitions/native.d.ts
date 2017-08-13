@@ -1,4 +1,14 @@
-﻿
+﻿interface FileSystem {
+    getDrives(callback: (drive: Drive)=>any)
+}
+
+declare class Drive {
+    name: string
+    description: string
+    type: number
+}
+
+
 declare class GetItemsInput {
     directory: string
     requestNumber: number

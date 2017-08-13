@@ -11,11 +11,12 @@ class Commander
 {
     constructor()
     {
-
-        alert("Guten Tag")
-        const addon = require('./plugins/filesystem')
-        alert(addon.hello())
-        
+        const filesystem: FileSystem = require('./plugins/filesystem') 
+        filesystem.getDrives(drive => {
+            console.log(`Drive name: ${drive.name}` )    
+            console.log(`Drive description: ${drive.description}` )    
+            console.log(`Drive type: ${drive.type}` )    
+        })
 
         this.leftView = new CommanderView("leftView")
         this.rightView = new CommanderView("rightView")
