@@ -11,6 +11,12 @@ class Commander
 {
     constructor()
     {
+
+        alert("Guten Tag")
+        const addon = require('./plugins/filesystem')
+        alert(addon.hello())
+        
+
         this.leftView = new CommanderView("leftView")
         this.rightView = new CommanderView("rightView")
         this.leftView.otherView = this.rightView
