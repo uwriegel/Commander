@@ -1,4 +1,10 @@
-﻿
+﻿enum DriveItem {
+    Unknown,
+	HardDrive,
+	Rom,
+	Removable
+}
+
 enum ItemsKind {
     Drive,
     Parent,
@@ -24,6 +30,7 @@ class ItemsModel implements IModel
     constructor(id: string)
     {
         this.id = id
+        this.fileSystemAccess = require('./plugins/filesystem') 
         Connection.addFileEventSource(this.id, this.update.bind(this))
         Connection.addServiceEventSource(this.id, this.updateServiceItem.bind(this))
     }
@@ -51,13 +58,30 @@ class ItemsModel implements IModel
         {
             case "Favoriten":
                 this.currentItems = Favorites.getItems(lastCurrentDir)
-                break;
+                break
             case "History":
                 this.currentItems = SavedHistory.getItems(lastCurrentDir)
-                break;
+                break
             case "SavedViews":
                 this.currentItems = SavedViews.getItems(this.id, lastCurrentDir)
-                break;
+                break
+            case "drives":
+                var drives = this.fileSystemAccess.getDrives()
+                this.currentItems = {
+                    currentDirectory: directory,
+                    items: drives.map(drive => {
+                        return {
+                            name: drive.name,
+                            description: drive.description,
+                            fileSize: 12345,
+                            parent: null,
+                            kind: ItemsKind.Drive,
+                            imageUrl: "images/drive.png" // TODO: drive.DriveType == DriveType.Network ? "images/networkdrive.png" : "images/drive.png"
+                        }
+                    })
+                    // TODO: Registry, Dienste, History, Favoriten
+                }
+                break
             default:
                 this.currentItems = await Connection.getItems(this.id, ++this.requestNumber, directory)
                 if (this.exifDates)
@@ -68,7 +92,7 @@ class ItemsModel implements IModel
                             n.exifDateTime = this.exifDates[n.name]
                     })
                 }
-                break;
+                break
         }
             
         if (this.observator) {
@@ -190,5 +214,10 @@ class ItemsModel implements IModel
     * Dictionary, in dem das Exif-Datum gespeichert ist, Schlüssel ist der Dateiname
     */
     private exifDates: { [name: string]: string } 
+
+    /**
+     * Zugriff auf das FileSystem über das Plugin 'filesystem' auf das  Windows API
+     */
+    private fileSystemAccess: FileSystem
 }
 

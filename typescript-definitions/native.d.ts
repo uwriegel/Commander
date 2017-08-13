@@ -1,11 +1,11 @@
 ﻿interface FileSystem {
-    getDrives(callback: (drive: Drive)=>any)
+    getDrives(): Drive[]
 }
 
 declare class Drive {
     name: string
     description: string
-    type: number
+    type: DriveItem
 }
 
 
@@ -53,9 +53,9 @@ declare class Item
     savedViewParent?: boolean
 
     serviceName?: string
-    startType?
-    status? 
-    value?
+    startType?: any
+    status?: any 
+    value?: any
 
     renamedName?: string
 }
