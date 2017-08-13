@@ -6,6 +6,7 @@
       "title": "Commander",
       "icon": "images/kirk.png",
       "show": false
-    }
+    },
+    "gypfile": true
 }
   

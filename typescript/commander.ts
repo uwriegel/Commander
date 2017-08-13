@@ -11,6 +11,16 @@ class Commander
         const testFolder = 'c:/windows/System32';
         var button = document.getElementById('start')
         button.onclick = () => {
+
+            alert("Mache es")
+
+            const addon = require('./native/build/Release/hello');
+            alert(addon.hello())
+
+
+
+
+
             fs.readdir(testFolder, (err, files) => {
                 files.forEach((file, i) => {
                     fs.stat(`${testFolder}\\${file}`, (err, stats) => {

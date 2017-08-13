@@ -4,3 +4,15 @@ Scripts/commander.js.map
 Scripts/module.js.map
 Scripts/listbox.js.map
 Scripts/listbox.js
+native/build/Release/hello.pdb
+native/build/binding.sln
+native/build/config.gypi
+native/build/hello.vcxproj
+native/build/hello.vcxproj.filters
+native/build/Release/hello.exp
+native/build/Release/hello.lib
+native/build/Release/hello.map
+native/build/Release/hello.node
+native/build/Release/obj/hello/test.obj
+native/build/Release/obj/hello/vc140.pdb
+native/build/Release/obj/hello/win_delay_load_hook.obj
