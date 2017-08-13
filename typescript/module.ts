@@ -1,9 +1,9 @@
 
-// TODO: Window-State speichern und wiederherstellen
 // TODO: Icons per http-Server bereitstellen
 // TODO: Icons per c-Plugin (ILspy) aufbereiten
 
-//import Orang from '/test'
+
+var commanderInstance: Commander 
 
 document.addEventListener("DOMContentLoaded", () =>
 {
@@ -29,14 +29,6 @@ document.addEventListener("DOMContentLoaded", () =>
         })
         currentWindow.close(true)
     })
-    
-    
-    
-    
-    // var hugo = new Orang()
-    // hugo.
-//alert("Lohditt")
-    var listBoxContainer = <HTMLElement>document.querySelector('#commanderView tbody')
-    var commander = new Commander(listBoxContainer)
-    commander.test()
+
+    commanderInstance = new Commander()   
 })  

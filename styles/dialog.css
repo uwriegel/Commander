@@ -1,0 +1,153 @@
+﻿.shader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.7s;
+    background-color: rgba(0, 0, 0, 0.60);
+}
+
+.shaderVisible {
+    opacity: 1;
+}
+
+.dialog {
+    position: absolute;
+    padding: 10px;
+    width: 300px;
+    height: 75px;
+    margin: auto;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+}
+
+.dialog > p > input {
+    width: calc(100% - 8px);
+}
+
+.dialog > p > input[type=checkbox] {
+    width: auto;
+}
+
+.dialog > ul {
+    list-style-type: none;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    height: 20px;
+}
+
+.dialog > ul > li {
+    display: inline;
+    list-style: none;
+}
+
+.conflictsDialog {
+    width: calc(100% - 30px);
+    height: calc(80%);
+}
+
+.dialogButton {
+    display: inline-block;
+    background-color: blue;
+    user-select: none;
+    -webkit-user-select: none;
+    color: white;
+    text-align: center;
+    width: 80px;
+    height: 20px;
+    line-height: 20px;
+    transition: background-color 0.3s;
+    border-radius: 3px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.dialogButton:hover {
+    background-color: #7979ff;
+}
+
+.dialogButton:active, .buttonActive {
+    background-color: #01018e;
+}
+
+.dialogButton:focus {
+    outline-color: red;
+    outline-width: 1px;
+    outline-style: solid;
+    outline-offset: 1px;
+}
+
+.conflictTable {
+    box-sizing: border-box;
+    position: absolute;
+    width: calc(100% - 20px);
+    top: 40px;
+    height: calc(100% - 90px);
+    outline-width: 0px;
+}
+
+.conflictTable th {
+    padding-left:5px;
+    text-align: left;
+    font-weight: normal;
+    color: white;
+    background-color: blue;
+    border-left-color: white;
+    border-left-style: solid;
+    border-left-width: 1px;
+    transition: background-color 0.3s;
+}
+
+/*.conflictTable th:hover {
+    background-color: #0063ff;
+}*/
+
+.conflictTable td {
+    overflow: hidden;
+    height: 16px;
+    text-overflow: ellipsis;
+
+    border-top-style: solid;
+    border-width: 1px;
+    border-color: lightgray;
+    border-left-color: white;
+    border-right-color: white;
+}
+
+.conflictTable th:first-child {
+    border-left-style: none;
+}
+
+.conflictTable tr:hover {
+    background-color: #fffbdf;
+}
+
+.conflictTable tr:focus {
+    outline-color: red;
+    outline-width: 1px;
+    outline-style: solid;
+    outline-offset: -1px;
+}
+
+.conflictsEqual {
+    color:lightgray;
+}
+
+.conflictsNewer{
+    background-color: lightgreen;
+}
+
+.conflictsOlder 
+{
+    background-color: #990000;
+    color:white;
+}
+
+extendedRename > label
+{
+
+}

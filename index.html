@@ -1,24 +1,224 @@
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="de">
     <head>
+        <meta charset="UTF-8" lang="de">
         <title>Commander</title>
-        <link rel="stylesheet" href="styles/style.css">
-        <script src="scripts/listbox.js"></script>        
-        <script src="scripts/commander.js"></script>        
-        <script src="scripts/module.js"></script>        
+        <link rel="stylesheet" href="styles/index.css">
+        <link rel="stylesheet" href="styles/tableView.css">
+        <link rel="stylesheet" href="styles/waitingitem.css">
+        <link rel="stylesheet" href="styles/scrollbar.css">
+        <link rel="stylesheet" href="styles/dialog.css">
+        <link rel="stylesheet" href="styles/menu.css">
+        <script src="scripts/connection.js"></script>
+        <script src="scripts/favorites.js"></script>
+        <script src="scripts/itemsmodel.js"></script>
+        <script src="scripts/itemssorter.js"></script>
+        <script src="scripts/filehelper.js"></script>
+        <script src="scripts/itemsviewmodel.js"></script>
+        <script src="scripts/columnscontrol.js"></script>
+        <script src="scripts/scrollbar.js"></script>
+        <script src="scripts/tableview.js"></script>
+        <script src="scripts/extendedrename.js"></script>
+        <script src="scripts/dialog.js"></script>
+        <script src="scripts/conflictview.js"></script>
+        <script src="scripts/waitingitem.js"></script>
+        <script src="scripts/savedhistory.js"></script>
+        <script src="scripts/commanderview.js"></script>
+        <script src="scripts/vgrid.js"></script>
+        <script src="scripts/grid.js"></script>
+        <script src="scripts/viewer.js"></script>
+        <script src="scripts/savedviews.js"></script>
+        <script src="scripts/commander.js"></script>
+        <script src="scripts/menubar.js"></script>
+        <script src="scripts/submenu.js"></script>
+        <script src="scripts/module.js"></script>
     </head>
     <body>
-        <button id="start">Start</button>
-        <table id="commanderView" class="commanderView">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Erw.</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <header>
+            <ul id="menubar">
+                <li id="menubar1" tabindex="1">
+                    <span class="accelerator">D</span><span>atei</span>
+                </li>
+                <li id="menubar2" tabindex="2">
+                    <span class="accelerator">N</span><span>avigation</span>
+                </li>
+                <li id="menubar3" tabindex="3">
+                    <span class="accelerator">S</span><span>elektion</span>
+                </li>
+                <li id="menubar4" tabindex="4">
+                    <span class="accelerator">A</span><span>nsicht</span>
+                </li>
+            </ul>
+            <table id="submenu1" class="submenu hidden">
+                <tbody>
+                    <tr tabindex="1" class="selectable" id="menuRename">
+                        <td>
+                            <span class="accelerator">U</span><span>mbenennen</span>
+                        </td>
+                        <td>F2</td>
+                    </tr>
+                    <tr>
+                    <tr class="separator">
+                        <td colspan="2"><div /></td>
+                    </tr>
+
+                    </tr>
+                    <tr tabindex="2" class="selectable" id="menuCopy">
+                        <td>
+                            <span class="accelerator">K</span><span>opieren</span>
+                        </td>
+                        <td>F5</td>
+                    </tr>
+                    <tr tabindex="3" class="selectable" id="menuMove">
+                        <td>
+                            <span class="accelerator">V</span><span>erschieben</span>
+                        </td>
+                        <td>F6</td>
+                    </tr>
+                    <tr tabindex="4" class="selectable" id="menuDelete">
+                        <td>
+                            <span class="accelerator">L</span><span>öschen</span>
+                        </td>
+                        <td>F1</td>
+                    </tr>
+                    <tr class="separator">
+                        <td colspan="2"><div /></td>
+                    </tr>
+                    <tr tabindex="5" class="selectable" id="menuProperties">
+                        <td>
+                            <span class="accelerator">E</span><span>igenschaften</span>
+                        </td>
+                        <td>Alt+Enter</td>
+                    </tr>
+                    <tr class="separator">
+                        <td colspan="2"><div /></td>
+                    </tr>
+                    <tr tabindex="6" class="selectable" id="menuExit">
+                        <td>
+                            <span class="accelerator">B</span><span>eenden</span>
+                        </td>
+                        <td>Alt+F4</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="submenu2" class="submenu hidden">
+                <tbody>
+                    <tr tabindex="1" class="selectable" id="menuFirst">
+                        <td>
+                            <span class="accelerator">E</span><span>rstes Element</span>
+                        </td>
+                        <td>Pos1</td>
+                    </tr>
+                    <tr class="separator">
+                        <td colspan="2"><div /></td>
+                    </tr>
+                    <tr tabindex="2" class="selectable" id="menuFavorites">
+                        <td>
+                            <span class="accelerator">F</span><span>avoriten</span>
+                        </td>
+                        <td>F1</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="submenu3" class="submenu hidden">
+                <tbody>
+                    <tr tabindex="3" class="selectable" id="menuSelectAll">
+                        <td>
+                            <span class="accelerator">A</span><span>lles</span>
+                        </td>
+                        <td>Num+</td>
+                    </tr>
+                    <tr tabindex="4" class="selectable" id="menuSelectNone">
+                        <td>
+                            <span class="accelerator">N</span><span>ichts</span>
+                        </td>
+                        <td>Num-</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="submenu4" class="submenu hidden">
+                <tbody>
+                    <tr tabindex="1" class="selectable" id="menuShowHidden">
+                        <td>
+                            <span class="accelerator">V</span><span>ersteckte Dateien</span><span class="checker hidden">&#10003;</span>
+                        </td>
+                        <td>Strg+H</td>
+                    </tr>
+                    <tr tabindex="2" class="selectable" id="menuDarkTheme">
+                        <td>
+                            <span class="accelerator">D</span><span>unkles Thema</span><span class="checker hidden">&#10003;</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </header>
+        <div id="vgrid">
+            <div id="grid">
+                <div id="leftView"></div>
+                <div id="grip"></div>
+                <div id="rightView"></div>
+            </div>
+            <div id="vgrip"></div>
+            <div id="viewer">
+                <img id="viewerImg" class="displayNone" />
+                <video id="viewerVideo" controls autoplay class="displayNone"></video>
+                <iframe id="viewerFrame" frameBorder="0" class="displayNone"></iframe>
+            </div>
+        </div>
+        <footer id="footer">Nichts selektiert</footer>
+        
+        <template id="conflictItemTemplate">
+            <tr tabindex="0">
+                <td class="it-name"><div class="it-iconName"><img class="it-image" src='images/fault.png' alt="" onerror="this.src='images/fault.png'"><span class="it-nameValue"></span></div></td>
+                <td class="it-size">
+                    <span class="it-sourcesize"></span><br>
+                    <span class="it-targetsize"></span>
+                </td>
+                <td>
+                    <span class="it-sourceTime"></span><br>
+                    <span class="it-targetTime"></span>
+                </td>
+                <td>
+                    <span class="it-sourceVersion"></span><br>
+                    <span class="it-targetVersion"></span>
+                </td>
+            </tr>
+        </template>
+        <template id="extendedRenameTemplate">
+            <div id="extendedRename">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="prefix">Prefix:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="prefix" value="Bild" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="initial">Initialwert:</label>
+                        </td>
+                        <td>
+                            <input type="number" id="initial" value="1" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="digits">Stellenzahl:</label>
+                        </td>
+                        <td>
+                            <select id="digits">
+                                <option value="1">1-Stellig</option>
+                                <option value="2">2-Stellig</option>
+                                <option value="3">3-Stellig</option>
+                                <option value="4">4-Stellig</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </template>
     </body>
 </html>
-

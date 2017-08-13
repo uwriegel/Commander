@@ -1,0 +1,282 @@
+
+body {
+    font-family: sans-serif;
+    font-size: 75%;
+    overflow:hidden;
+    padding: 0px;
+    margin: 0px;
+}
+
+#grid, #vgrid {
+    position: absolute;
+}
+
+#vgrid {
+    top: 20px;
+    height: calc(100% - 40px);
+    width:100%
+}
+
+#grid {
+    height: calc(50% - 3px);
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+}
+
+#grip, #vgrip {
+    position: absolute;
+    background-color: #efeeee;
+    transition: background-color 0.5s;
+}
+
+#grip {
+    left: calc(50% - 3px);
+    width: 6px;
+    height: 100%;
+    cursor:ew-resize;
+}
+
+#vgrip {
+    top: calc(50% - 3px);
+    height: 6px;
+    width: 100%;
+    cursor:ns-resize;
+}
+
+#viewer {
+    position: absolute;
+    height: calc(50% - 3px);
+    width: 100%;
+    top: calc(50% + 3px);
+    bottom: 0px;
+}
+
+#viewerImg {
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+}
+
+#viewerVideo {
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+#viewerFrame {
+    display: flex;
+    width: 100%;
+    height: 100%;    
+    margin: 0 auto;
+}
+
+.displayNone {
+    display: none !important;
+}
+
+#grip:hover, #vgrip:hover {
+    background-color: darkgray;
+}
+
+#grip:active, #vgrip:active {
+    background-color: #6b6969;
+}
+
+.displayNone {
+    display: none;
+}
+
+footer {
+    position:absolute;
+    width:100%;
+    padding:3px;
+    bottom:0;    
+    color: white;
+    background-color: blue;
+    
+    border-top-color: lightgray;
+    border-top-style: solid;
+    border-top-width: 1px;
+}
+
+#templates {
+    display: none;
+}
+
+#leftView {
+    position: absolute;
+    width: calc(50% - 3px);
+    height: 100%;
+    left: 0px;
+    right: 0px;
+}
+
+#rightView {
+    position: absolute;
+    width: calc(50% - 3px);
+    height: 100%;
+    left: calc(50% + 3px);
+    right: 0px;
+}
+
+.directory {
+    box-sizing: border-box; 
+    position: absolute;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-style: none;
+    width: calc(100% - 6px);
+    outline-width: 0px;
+}
+
+.commanderTable {
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    top: 18px;
+    height: calc(100% - 18px);
+    outline-width: 0px;
+}
+
+.restrictor {
+    margin-left: 3px;
+    border-style: solid;
+    border-color: gray;
+    background-color: white;
+    bottom: 10px;
+    position: absolute;
+    width: 80%;
+    height: 15px;
+    transition: width 0.3s, height 0.3s, opacity 0.3s;
+}
+
+.restrictorHide {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.tableView
+{
+    transition: background-color 0.5s;
+}
+
+.commanderTable th 
+{
+    padding-left:5px;
+    text-align: left;
+    font-weight: normal;
+    color: white;
+    background-color: blue;
+    border-left-color: white;
+    border-left-style: solid;
+    border-left-width: 1px;
+    transition: background-color 0.3s;
+}
+
+.commanderTable th:hover {
+    background-color: #0063ff;
+}
+
+.commanderTable td
+{
+    overflow: hidden;
+    height: 16px;
+    text-overflow: ellipsis;
+}
+
+.commanderTable th:first-child {
+    border-left-style: none;
+}
+
+.sortDescending:before { 
+    position: relative;
+    top: 8px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid white;
+    content: ''; 
+    margin-right: 5px;
+}
+
+.sortAscending:before { 
+    position: relative;
+    bottom: 12px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 6px solid white;
+    content: ''; 
+    margin-right: 5px;
+}
+
+.commanderTable tr {
+    /*background-color: white;*/
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+.commanderTable tr:hover {
+    background-color: #fffbdf;
+}
+
+.commanderTable tr:focus {
+    outline-color: red;
+    outline-width: 1px;
+    outline-style: solid;
+    outline-offset: -1px;
+}
+
+.it-size {
+    text-align: right;
+    padding-right: 5px;
+}
+
+.exif {
+    color: blue;
+}
+
+.selected .exif   {
+    color: darkorange;
+}
+
+.it-iconName > * {
+    vertical-align: middle;
+}
+
+.it-iconName {
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.it-image {
+    padding-right: 3px;
+}
+
+.hidden {
+    opacity: 0.45;
+}
+
+.selected.itemColorBlue{
+    color: #fffbce;
+    background-color: cornflowerblue;
+}
+
+.commanderTable tr.selected {
+    color: white;
+    background-color: blue;
+}
+
+tr.selected:focus {
+    outline-color: red;
+    outline-width: 1px;
+    outline-style: solid;
+    outline-offset: -1px;
+}
+
+
+

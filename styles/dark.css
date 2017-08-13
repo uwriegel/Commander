@@ -1,0 +1,64 @@
+﻿body
+{
+    background-color: rgb(37,37,38);
+    color: rgba(255, 255, 255, 0.85);
+}
+
+input
+{
+    background-color: rgb(37,37,38);
+    color: rgba(255, 255, 255, 0.85);
+}
+
+#menubar li, .submenu tr
+{
+    background-color: rgb(67,67,68);
+}
+
+#menubar > li:hover, .submenu tr:hover
+{
+    background-color: rgb(127,127,132);
+}
+
+.submenu tr.separator:hover
+{
+    background-color: rgb(67,67,68);
+}
+
+#menubar.subMenuOpened > li.selected
+{
+    background-color: rgb(127,127,132);
+    color: white;
+}
+
+#menubar > li.selected
+{
+    background-color: blue;
+    color: white;
+}
+
+.commanderTable tr:hover
+{
+    background-color: rgb(127,127,132);
+}
+
+#grip, #vgrip
+{
+    background-color: rgb(67,67,68);
+}
+
+.scrollbar
+{
+    background-color: rgb(67,67,68);
+    border-color: rgb(127,127,132);
+}
+
+.scrollbarGrip
+{
+    background-color: rgb(127,127,132);
+}
+
+.scrollbarUp:hover, .scrollbarDown:hover
+{
+    background-color: rgb(127,127,132);
+}
