@@ -1,9 +1,11 @@
 {
+    "version": "0.1",
     "name": "commander",
     "main": "index.html",
     "window": {
       "title": "Commander",
-      "icon": "images/kirk.png"
+      "icon": "images/kirk.png",
+      "show": false
     }
 }
   
