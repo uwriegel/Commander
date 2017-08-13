@@ -1,12 +1,12 @@
 {
-    "version": "0.1",
-    "name": "commander",
-    "main": "index.html",
-    "window": {
-      "title": "Commander",
-      "icon": "images/kirk.png",
-      "show": false
-    },
-    "gypfile": true
+  "version": "0.1",
+  "name": "commander",
+  "main": "index.html",
+  "window": {
+    "title": "Commander",
+    "icon": "images/kirk.png",
+    "show": false
+  },
+  "gypfile": true,
+  "dependencies": {}
 }
-  
