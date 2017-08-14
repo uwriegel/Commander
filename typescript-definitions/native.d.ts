@@ -6,6 +6,7 @@ declare class Drive {
     name: string
     description: string
     type: DriveItem
+    size: number
 }
 
 

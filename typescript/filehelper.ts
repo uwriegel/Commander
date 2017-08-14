@@ -65,6 +65,8 @@ var FileHelper = (function getFileHelper() {
 
     function formatFileSize(fileSize: number): string 
     {
+        if (fileSize == -1)
+            return ""
         var strNumber = `${fileSize}`
         var thSep = '.'
         if (strNumber.length > 3) {

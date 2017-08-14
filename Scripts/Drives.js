@@ -20,14 +20,46 @@ var Drives;
                 return {
                     name: drive.name,
                     description: drive.description,
-                    fileSize: 12345,
+                    fileSize: drive.size,
                     parent: null,
                     kind: ItemsKind.Drive,
                     imageUrl: getDriveIcon(drive.type)
                 };
-            })
+            }).concat([
+                {
+                    name: "Registry",
+                    description: "Windows Registrierungsdatenbank",
+                    kind: ItemsKind.Drive,
+                    parent: null,
+                    fileSize: -1,
+                    imageUrl: "images/registry.png"
+                },
+                {
+                    name: "Dienste",
+                    description: "Dienstesteuerung",
+                    kind: ItemsKind.Drive,
+                    parent: null,
+                    fileSize: -1,
+                    imageUrl: "images/service.png"
+                },
+                {
+                    name: "History",
+                    description: "Verlauf der Verzeichnisse",
+                    kind: ItemsKind.Drive,
+                    parent: null,
+                    fileSize: -1,
+                    imageUrl: "images/history.png"
+                },
+                {
+                    name: "Favoriten",
+                    description: "Abgespeicherte Verzeichnispfade",
+                    kind: ItemsKind.Drive,
+                    parent: null,
+                    fileSize: -1,
+                    imageUrl: "images/favorite.png"
+                }
+            ])
         };
-        // TODO: Registry, Dienste, History, Favoriten
         function getDriveIcon(driveType) {
             switch (driveType) {
                 case DriveItem.Network:
