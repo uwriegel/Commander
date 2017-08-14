@@ -15,6 +15,10 @@ namespace Drives
 	 */
     export function getItems(fileSystemAccess: FileSystem): GetItemsOutput
     {
+		var affe = new fileSystemAccess.Access()
+		var wällju = affe.getValue()
+		alert(wällju)
+
 		fileSystemAccess.getDrives(test => console.log(test))
 		//var drives = fileSystemAccess.getDrives(test => alert(test))
         return 
