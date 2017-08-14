@@ -15,19 +15,21 @@ namespace Drives
 	 */
     export function getItems(fileSystemAccess: FileSystem): GetItemsOutput
     {
-		var drives = fileSystemAccess.getDrives(test => alert(test))
-        return {
-            currentDirectory: "drives",
-            items: drives.map(drive => {
-				return {
-					name: drive.name,
-					description: drive.description,
-					fileSize: drive.size,
-					parent: null,
-					kind: ItemsKind.Drive,
-					imageUrl: getDriveIcon(drive.type)
-				}
-			}).concat([
+		fileSystemAccess.getDrives(test => console.log(test))
+		//var drives = fileSystemAccess.getDrives(test => alert(test))
+        return 
+            // currentDirectory: "drives",
+            // items: drives.map(drive => {
+			// 	return {
+			// 		name: drive.name,
+			// 		description: drive.description,
+			// 		fileSize: drive.size,
+			// 		parent: null,
+			// 		kind: ItemsKind.Drive,
+			// 		imageUrl: getDriveIcon(drive.type)
+			// 	}
+			// }).concat([
+				[
 				{
 					name: "Registry",
 					description: "Windows Registrierungsdatenbank",
