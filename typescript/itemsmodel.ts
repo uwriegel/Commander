@@ -1,11 +1,4 @@
-﻿enum DriveItem {
-    Unknown,
-	HardDrive,
-	Rom,
-	Removable
-}
-
-enum ItemsKind {
+﻿enum ItemsKind {
     Drive,
     Parent,
     File,
@@ -66,21 +59,7 @@ class ItemsModel implements IModel
                 this.currentItems = SavedViews.getItems(this.id, lastCurrentDir)
                 break
             case "drives":
-                var drives = this.fileSystemAccess.getDrives()
-                this.currentItems = {
-                    currentDirectory: directory,
-                    items: drives.map(drive => {
-                        return {
-                            name: drive.name,
-                            description: drive.description,
-                            fileSize: 12345,
-                            parent: null,
-                            kind: ItemsKind.Drive,
-                            imageUrl: "images/drive.png" // TODO: drive.DriveType == DriveType.Network ? "images/networkdrive.png" : "images/drive.png"
-                        }
-                    })
-                    // TODO: Registry, Dienste, History, Favoriten
-                }
+                this.currentItems = Drives.getItems(this.fileSystemAccess)
                 break
             default:
                 this.currentItems = await Connection.getItems(this.id, ++this.requestNumber, directory)
