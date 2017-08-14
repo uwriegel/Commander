@@ -15,7 +15,7 @@ namespace Drives
 	 */
     export function getItems(fileSystemAccess: FileSystem): GetItemsOutput
     {
-		var drives = fileSystemAccess.getDrives()
+		var drives = fileSystemAccess.getDrives(test => alert(test))
         return {
             currentDirectory: "drives",
             items: drives.map(drive => {

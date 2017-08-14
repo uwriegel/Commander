@@ -1,5 +1,5 @@
 ﻿interface FileSystem {
-    getDrives(): Drive[]
+    getDrives(callback: (test: string)=>any): Drive[]
 }
 
 declare class Drive {
