@@ -1,5 +1,11 @@
 ﻿interface FileSystem {
     getDrives(callback: (test: string)=>any): Drive[]
+    Access(): FileSystemAccess
+}
+
+interface FileSystemAccess
+{
+    getValue() : string
 }
 
 declare class Drive {

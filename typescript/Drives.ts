@@ -15,25 +15,25 @@ namespace Drives
 	 */
     export function getItems(fileSystemAccess: FileSystem): GetItemsOutput
     {
-		var affe = new fileSystemAccess.Access()
+		var affe = fileSystemAccess.Access()
 		var wällju = affe.getValue()
 		alert(wällju)
 
 		fileSystemAccess.getDrives(test => console.log(test))
 		//var drives = fileSystemAccess.getDrives(test => alert(test))
         return 
-            // currentDirectory: "drives",
-            // items: drives.map(drive => {
-			// 	return {
-			// 		name: drive.name,
-			// 		description: drive.description,
-			// 		fileSize: drive.size,
-			// 		parent: null,
-			// 		kind: ItemsKind.Drive,
-			// 		imageUrl: getDriveIcon(drive.type)
-			// 	}
-			// }).concat([
-				[
+        //     // currentDirectory: "drives",
+        //     // items: drives.map(drive => {
+		// 	// 	return {
+		// 	// 		name: drive.name,
+		// 	// 		description: drive.description,
+		// 	// 		fileSize: drive.size,
+		// 	// 		parent: null,
+		// 	// 		kind: ItemsKind.Drive,
+		// 	// 		imageUrl: getDriveIcon(drive.type)
+		// 	// 	}
+		// 	// }).concat([
+		 		[
 				{
 					name: "Registry",
 					description: "Windows Registrierungsdatenbank",
@@ -66,9 +66,7 @@ namespace Drives
 					fileSize: -1,
 					imageUrl: "images/favorite.png"
 				}
-			])
-		}
-		
+			]
 		
 		function getDriveIcon(driveType: DriveItem)
 		{
