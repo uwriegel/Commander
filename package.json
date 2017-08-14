@@ -8,5 +8,8 @@
     "show": false
   },
   "gypfile": true,
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^8.0.20"
+  }
 }
