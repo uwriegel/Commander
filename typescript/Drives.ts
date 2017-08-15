@@ -15,13 +15,13 @@ namespace Drives
 	 */
     export function getItems(fileSystemAccess: FileSystem): GetItemsOutput
     {
-		var affe = new fileSystemAccess.Access()
+		var affe = fileSystemAccess.createAccess()
 		var wällju = affe.getValue()
 		alert(wällju)
 
 		fileSystemAccess.getDrives(test => console.log(test))
 		//var drives = fileSystemAccess.getDrives(test => alert(test))
-        return 
+        return null 
             // currentDirectory: "drives",
             // items: drives.map(drive => {
 			// 	return {
@@ -33,41 +33,41 @@ namespace Drives
 			// 		imageUrl: getDriveIcon(drive.type)
 			// 	}
 			// }).concat([
-				[
-				{
-					name: "Registry",
-					description: "Windows Registrierungsdatenbank",
-					kind: ItemsKind.Drive,
-					parent: null,
-					fileSize: -1,
-					imageUrl: "images/registry.png"
-				},
-				{
-					name: "Dienste",
-					description: "Dienstesteuerung",
-					kind: ItemsKind.Drive,
-					parent: null,
-					fileSize: -1,
-					imageUrl: "images/service.png"
-				},
-				{
-					name: "History",
-					description: "Verlauf der Verzeichnisse",
-					kind: ItemsKind.Drive,
-					parent: null,
-					fileSize: -1,
-					imageUrl: "images/history.png"
-				},
-				{
-					name: "Favoriten",
-					description: "Abgespeicherte Verzeichnispfade",
-					kind: ItemsKind.Drive,
-					parent: null,
-					fileSize: -1,
-					imageUrl: "images/favorite.png"
-				}
-			])
-		}
+		// 		[
+		// 		{
+		// 			name: "Registry",
+		// 			description: "Windows Registrierungsdatenbank",
+		// 			kind: ItemsKind.Drive,
+		// 			parent: null,
+		// 			fileSize: -1,
+		// 			imageUrl: "images/registry.png"
+		// 		},
+		// 		{
+		// 			name: "Dienste",
+		// 			description: "Dienstesteuerung",
+		// 			kind: ItemsKind.Drive,
+		// 			parent: null,
+		// 			fileSize: -1,
+		// 			imageUrl: "images/service.png"
+		// 		},
+		// 		{
+		// 			name: "History",
+		// 			description: "Verlauf der Verzeichnisse",
+		// 			kind: ItemsKind.Drive,
+		// 			parent: null,
+		// 			fileSize: -1,
+		// 			imageUrl: "images/history.png"
+		// 		},
+		// 		{
+		// 			name: "Favoriten",
+		// 			description: "Abgespeicherte Verzeichnispfade",
+		// 			kind: ItemsKind.Drive,
+		// 			parent: null,
+		// 			fileSize: -1,
+		// 			imageUrl: "images/favorite.png"
+		// 		}
+		// 	]
+		// }
 		
 		
 		function getDriveIcon(driveType: DriveItem)

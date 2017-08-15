@@ -1,5 +1,10 @@
 ﻿interface FileSystem {
     getDrives(callback: (test: string)=>any): Drive[]
+    createAccess(): FileSystemAccess
+}
+
+interface FileSystemAccess {
+    getValue(): string
 }
 
 declare class Drive {
@@ -8,7 +13,6 @@ declare class Drive {
     type: DriveItem
     size: number
 }
-
 
 declare class GetItemsInput {
     directory: string
