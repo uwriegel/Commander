@@ -23,7 +23,7 @@ class ItemsModel implements IModel
     constructor(id: string)
     {
         this.id = id
-        this.fileSystemAccess = require('./plugins/filesystem') 
+        this.fileSystem = new FileSystem()
         Connection.addFileEventSource(this.id, this.update.bind(this))
         Connection.addServiceEventSource(this.id, this.updateServiceItem.bind(this))
     }
@@ -59,7 +59,7 @@ class ItemsModel implements IModel
                 this.currentItems = SavedViews.getItems(this.id, lastCurrentDir)
                 break
             case "drives":
-                this.currentItems = Drives.getItems(this.fileSystemAccess)
+                this.currentItems = await this.fileSystem.getDriveItems()
                 break
             default:
                 this.currentItems = await Connection.getItems(this.id, ++this.requestNumber, directory)
@@ -194,9 +194,6 @@ class ItemsModel implements IModel
     */
     private exifDates: { [name: string]: string } 
 
-    /**
-     * Zugriff auf das FileSystem über das Plugin 'filesystem' auf das  Windows API
-     */
-    private fileSystemAccess: FileSystem
+    private fileSystem: FileSystem
 }
 
