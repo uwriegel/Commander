@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () =>
         currentWindow.height = position.height
     }
 
-    currentWindow.show()
+    setTimeout(() => currentWindow.show(), 0)
     currentWindow.on('close', () => {
         localStorage['position'] = JSON.stringify( {
             x: currentWindow.x,
