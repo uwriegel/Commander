@@ -67,3 +67,4 @@ Scripts/Drives.js
 Scripts/Drives.js.map
 Scripts/FileSystem.js.map
 Scripts/FileSystem.js
+plugins/filesystem.node
