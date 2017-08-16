@@ -61,6 +61,9 @@ class ItemsModel implements IModel
             case "drives":
                 this.currentItems = await this.fileSystem.getDriveItems()
                 break
+            case "affe":
+                this.fileSystem.getFiles()
+                break;
             default:
                 this.currentItems = await Connection.getItems(this.id, ++this.requestNumber, directory)
                 if (this.exifDates)

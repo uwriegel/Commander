@@ -10,8 +10,13 @@ class FileSystem
 {
     constructor()
     {
-        var fs = <FileSystem>require('./plugins/filesystem') 
+        var fs = <FileSystemModule>require('./plugins/filesystem') 
         this.access = fs.createAccess()
+    }
+
+    getFiles()
+    {
+        this.access.listFiles("das schöne Dieräcktori")
     }
 
     getDriveItems()

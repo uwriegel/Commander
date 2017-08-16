@@ -1,9 +1,10 @@
-interface FileSystem {
+interface FileSystemModule {
     createAccess(): FileSystemAccess
 }
 
 interface FileSystemAccess {
     getDrives(callback: (drives: Drive[])=>any)
+    listFiles(directory: string);
 }
 
 declare class Drive {
