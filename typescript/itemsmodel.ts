@@ -62,7 +62,10 @@ class ItemsModel implements IModel
                 this.currentItems = await this.fileSystem.getDriveItems()
                 break
             case "affe":
-                this.fileSystem.getFiles()
+                this.fileSystem.getFiles('c:\\', affe => {
+                    var aff = affe
+                    var af = aff
+                })
                 break;
             default:
                 this.currentItems = await Connection.getItems(this.id, ++this.requestNumber, directory)

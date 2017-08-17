@@ -3,8 +3,8 @@ interface FileSystemModule {
 }
 
 interface FileSystemAccess {
-    getDrives(callback: (drives: Drive[])=>any)
-    listFiles(directory: string);
+    getDrives(callback: (drives: Drive[])=>void)
+    listFiles(directory: string, callback: (affe)=>void);
 }
 
 declare class Drive {

@@ -14,9 +14,9 @@ class FileSystem
         this.access = fs.createAccess()
     }
 
-    getFiles()
+    getFiles(directory: string, callback: (affe)=>void)
     {
-        this.access.listFiles("das schöne Dieräcktori")
+        this.access.listFiles(directory, callback)
     }
 
     getDriveItems()
