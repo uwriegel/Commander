@@ -4,7 +4,7 @@ interface FileSystemModule {
 
 interface FileSystemAccess {
     getDrives(callback: (drives: Drive[])=>void)
-    listFiles(directory: string, callback: (affe)=>void);
+    listFiles(directory: string, callback: (items: Item[])=>void);
 }
 
 declare class Drive {

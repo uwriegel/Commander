@@ -14,9 +14,16 @@ class FileSystem
         this.access = fs.createAccess()
     }
 
-    getFiles(directory: string, callback: (affe)=>void)
+    getFiles(directory: string)
     {
-        this.access.listFiles(directory, callback)
+        return new Promise<GetItemsOutput>((resolve, reject) => {
+            this.access.listFiles(directory, items => {
+                resolve({
+                    currentDirectory: "drives",
+                    items: items
+                })
+            })
+       })
     }
 
     getDriveItems()
