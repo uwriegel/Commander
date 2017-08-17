@@ -1,10 +1,11 @@
 interface FileSystemModule {
     createAccess(): FileSystemAccess
+    showHidden(value: boolean)
 }
 
 interface FileSystemAccess {
     getDrives(callback: (drives: Drive[])=>void)
-    listFiles(directory: string, callback: (items: Item[])=>void);
+    listFiles(directory: string, callback: (items: GetItemsOutput)=>void);
 }
 
 declare class Drive {

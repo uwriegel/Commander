@@ -42,8 +42,6 @@ class Commander
 
         this.initializeOnKeyDownHandler();
 
-        if (localStorage["showHidden"] == "true")
-            this.showHidden(true)
         if (localStorage["darkTheme"] == "true")
             this.darkTheme(true)
     }
@@ -156,15 +154,14 @@ class Commander
         }
     }
 
-    async showHidden(show: boolean)
+    showHidden(show: boolean)
     {
-        await Connection.showHidden(show)
-        localStorage["showHidden"] = show
+        FileSystem.showHidden = show
         this.leftView.refresh()
         this.rightView.refresh()
     }
 
-    async darkTheme(activate: boolean)
+    darkTheme(activate: boolean)
     {
         if (activate)
         {

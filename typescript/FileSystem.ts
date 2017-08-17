@@ -10,20 +10,19 @@ class FileSystem
 {
     constructor()
     {
-        var fs = <FileSystemModule>require('./plugins/filesystem') 
         this.access = fs.createAccess()
+    }
+
+    static set showHidden(value: boolean)
+    {
+        fs.showHidden(value)
     }
 
     getFiles(directory: string)
     {
         return new Promise<GetItemsOutput>((resolve, reject) => {
-            this.access.listFiles(directory, items => {
-                resolve({
-                    currentDirectory: "drives",
-                    items: items
-                })
-            })
-       })
+            this.access.listFiles(directory, items => resolve(items))
+        })
     }
 
     getDriveItems()
@@ -96,3 +95,5 @@ class FileSystem
 
     private access: FileSystemAccess
 }
+
+var fs = <FileSystemModule>require('./plugins/filesystem') 
