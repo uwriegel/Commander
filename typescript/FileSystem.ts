@@ -40,23 +40,7 @@ class FileSystem
                             kind: ItemsKind.Drive,
                             imageUrl: getDriveIcon(drive.type)
                         }
-                    }).concat([
-                        {
-                            name: "Registry",
-                            description: "Windows Registrierungsdatenbank",
-                            kind: ItemsKind.Drive,
-                            parent: null,
-                            fileSize: -1,
-                            imageUrl: "images/registry.png"
-                        },
-                        {
-                            name: "Dienste",
-                            description: "Dienstesteuerung",
-                            kind: ItemsKind.Drive,
-                            parent: null,
-                            fileSize: -1,
-                            imageUrl: "images/service.png"
-                        },
+                    }).concat([                       
                         {
                             name: "History",
                             description: "Verlauf der Verzeichnisse",
