@@ -25,12 +25,12 @@ class FileSystem
         })
     }
 
-    getDriveItems()
+    getRootItems()
     {
         return new Promise<GetItemsOutput>((resolve, reject) => {
-            this.access.getDrives(drives => {
+            this.access.getRootItems(drives => {
                 resolve({
-                    currentDirectory: "drives",
+                    currentDirectory: "root",
                     items: drives.map(drive => {
                         return {
                             name: drive.name,

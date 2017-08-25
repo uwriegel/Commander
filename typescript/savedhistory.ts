@@ -35,7 +35,7 @@
                 kind: ItemsKind.Parent,
                 name: "..",
                 fileSize: 0,
-                parent: lastCurrentDir || "drives"
+                parent: lastCurrentDir || "root"
             }].concat(get().reverse().map(n =>
             {
                 return {
@@ -44,7 +44,7 @@
                     name: FileHelper.getNameFromPath(n),
                     favoriteTarget: n,
                     fileSize: 0,
-                    parent: "drives"
+                    parent: "root"
                 }
             }))
         }

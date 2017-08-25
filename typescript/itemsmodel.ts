@@ -58,8 +58,8 @@ class ItemsModel implements IModel
             case "SavedViews":
                 this.currentItems = SavedViews.getItems(this.id, lastCurrentDir)
                 break
-            case "drives":
-                this.currentItems = await this.fileSystem.getDriveItems()
+            case "root":
+                this.currentItems = await this.fileSystem.getRootItems()
                 break
             default:
                 this.currentItems = await this.fileSystem.getFiles(directory)                

@@ -274,7 +274,7 @@ class CommanderView
     {
         var currentDirectory = localStorage[this.id]
         if (!currentDirectory)
-            currentDirectory = "drives"
+            currentDirectory = "root"
         this.changeDirectory(currentDirectory)
     }
 
@@ -311,7 +311,7 @@ class CommanderView
         var historyDirectory
         switch (directory)
         {
-            case "drives":
+            case "root":
                 if (this.tableView.Columns != this.drivesColumnControl)
                     this.tableView.Columns = this.drivesColumnControl
                 break;

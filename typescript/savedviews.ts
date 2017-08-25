@@ -40,7 +40,7 @@ var SavedViews = (function ()
                 name: "..",
                 savedViewParent: true,
                 fileSize: 0,
-                parent: lastCurrentDir || "drives"
+                parent: lastCurrentDir || "root"
             }].concat(get(commanderId).reverse().map(n =>
             {
                 return {
@@ -50,7 +50,7 @@ var SavedViews = (function ()
                     favoriteTarget: n,
                     savedViewParent: false,
                     fileSize: 0,
-                    parent: "drives"
+                    parent: "root"
                 }
             }))
         }

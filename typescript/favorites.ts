@@ -78,7 +78,7 @@ var Favorites = (function ()
             kind: ItemsKind.Parent,
             name: "..",
             fileSize: 0,
-            parent: "drives"
+            parent: "root"
         }].concat(get().map(n =>
             {
             return {
