@@ -3,7 +3,9 @@ enum DriveItem {
     HardDrive,
     Rom,
     Removable,
-    Network
+    Network,
+    Registry,
+    Services
 }
 
 class FileSystem
@@ -35,7 +37,7 @@ class FileSystem
                         return {
                             name: drive.name,
                             description: drive.description,
-                            fileSize: drive.size,
+                            fileSize: drive.size ? drive.size : -1,
                             parent: null,
                             kind: ItemsKind.Drive,
                             imageUrl: getDriveIcon(drive.type)
@@ -69,6 +71,10 @@ class FileSystem
                         // case DriveItem.Removable:
                         case DriveItem.Rom:
                             return "images/rom.png"
+                        case DriveItem.Registry:
+                            return "images/registry.png"
+                        case DriveItem.Services:
+                            return "images/service.png"
                         default:
                             return "images/drive.png"
                     }
