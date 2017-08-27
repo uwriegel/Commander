@@ -5,7 +5,7 @@
   "window": {
     "title": "Commander",
     "icon": "images/kirk.png",
-    "show": false
+    "show": true
   },
   "gypfile": true,
   "dependencies": {},
