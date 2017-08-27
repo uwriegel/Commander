@@ -4,7 +4,7 @@
   "main": "index.html",
   "window": {
     "title": "Commander",
-    "icon": "images/kirk.png",
+    "icon": "images/kirk2.png",
     "show": true
   },
   "gypfile": true,
