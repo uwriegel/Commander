@@ -86,4 +86,4 @@ class FileSystem
     private access: FileSystemAccess
 }
 
-var fs = <FileSystemModule>require('./plugins/filesystem') 
+var fs //= <FileSystemModule>require('./plugins/filesystem') 

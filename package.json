@@ -1,0 +1,23 @@
+{
+  "name": "commander",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scripts/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uwriegel/Commander.git"
+  },
+  "author": "Uwe Riegel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uwriegel/Commander/issues"
+  },
+  "homepage": "https://github.com/uwriegel/Commander#readme",
+  "dependencies": {
+    "@types/electron": "^1.6.10",
+    "@types/node": "^8.0.26"
+  }
+}

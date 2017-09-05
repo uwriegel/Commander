@@ -7,7 +7,7 @@ var commanderInstance: Commander
 
 document.addEventListener("DOMContentLoaded", () =>
 {
-    var gui = require('nw.gui')    
+    var gui// = require('nw.gui')    
     var currentWindow = gui.Window.get()
 
     var data = localStorage['position']

@@ -1,5 +1,3 @@
-
-
-download nwjs-sdk.0.24.zip
-entpacken in verzeichnis
-npm install @types/node --save-dev
+npm init
+npm install @types/node --save
+npm install @types/electron --save
