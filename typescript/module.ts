@@ -3,32 +3,39 @@
 // TODO: Icons per c-Plugin (ILspy) aufbereiten
 
 
-var commanderInstance: Commander 
+const commanderInstance = new Commander()
 
-document.addEventListener("DOMContentLoaded", () =>
-{
-    var gui// = require('nw.gui')    
-    var currentWindow = gui.Window.get()
+document.ondragover = document.ondrop = (ev) => {
+    ev.preventDefault()
+  }
+  
+  document.body.ondrop = (ev) => {
+    console.log(ev.dataTransfer.files[0].path)
+    ev.preventDefault()
+  }
 
-    var data = localStorage['position']
-    if (data) {
-        var position = JSON.parse(data)
-        currentWindow.x = position.x
-        currentWindow.y = position.y
-        currentWindow.width = position.width
-        currentWindow.height = position.height
-    }
+// document.addEventListener("DOMContentLoaded", () =>
+// {
+//     var gui// = require('nw.gui')    
+//     var currentWindow = gui.Window.get()
 
-    setTimeout(() => currentWindow.show(), 0)
-    currentWindow.on('close', () => {
-        localStorage['position'] = JSON.stringify( {
-            x: currentWindow.x,
-            y: currentWindow.y,
-            width: currentWindow.width,
-            height: currentWindow.height
-        })
-        currentWindow.close(true)
-    })
+//     var data = localStorage['position']
+//     if (data) {
+//         var position = JSON.parse(data)
+//         currentWindow.x = position.x
+//         currentWindow.y = position.y
+//         currentWindow.width = position.width
+//         currentWindow.height = position.height
+//     }
 
-    commanderInstance = new Commander()   
-})  
+//     setTimeout(() => currentWindow.show(), 0)
+//     currentWindow.on('close', () => {
+//         localStorage['position'] = JSON.stringify( {
+//             x: currentWindow.x,
+//             y: currentWindow.y,
+//             width: currentWindow.width,
+//             height: currentWindow.height
+//         })
+//         currentWindow.close(true)
+//     })
+
