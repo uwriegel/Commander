@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu }  from 'electron'
+import { app, BrowserWindow, Menu, ipcMain }  from 'electron'
 import * as settings from 'electron-settings'
 
 app.on('ready', () => {
@@ -96,7 +96,8 @@ app.on('ready', () => {
             },
             {
                 label: '&Dunkles Thema',
-                type: "checkbox"
+                type: "checkbox",
+                click: evt => mainWindow.webContents.send("darkTheme", evt.checked)
             },
             {
                 type: 'separator'
