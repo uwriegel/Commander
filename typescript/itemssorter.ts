@@ -1,8 +1,21 @@
-﻿// interface ISorter
-// {
-//     sort(columnIndex: ItemSortKind, ascending: boolean, preserveCurrentItem: boolean);
-// }
+﻿
+interface ISorter
+{
+    sort(columnIndex: ItemSortKind, ascending: boolean, preserveCurrentItem: boolean): void
+}
 
+enum ItemSortKind 
+{
+    Name,
+    Extension,
+    Description,
+    Size,
+    Date,
+    Version,
+    ServiceItemStatus,
+    ServiceItemStartKind,
+    RegistryValue
+}
 
 // /**
 //  * Der Sortierer befindet sich zwischen ItemsModel und ItemsViewModel und ist für das Sortieren der Einträge zuständig
@@ -384,15 +397,4 @@
 //     private selectionChanged: ISelectionChanged
 // }
 
-enum ItemSortKind 
-{
-    Name,
-    Extension,
-    Description,
-    Size,
-    Date,
-    Version,
-    ServiceItemStatus,
-    ServiceItemStartKind,
-    RegistryValue
-}
+export { ItemSortKind, ISorter }

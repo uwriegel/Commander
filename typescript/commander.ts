@@ -9,40 +9,35 @@
 import { ipcRenderer }  from 'electron'
 import { Grid }  from './grid'
 import { VerticalGrid }  from './vgrid'
+import { CommanderView }  from './commanderview'
+import { Viewer }  from './viewer'
 
 class Commander
 {
     constructor()
     {
-        // this.leftView = new CommanderView("leftView")
-        // this.rightView = new CommanderView("rightView")
-        // this.leftView.otherView = this.rightView
-        // this.rightView.otherView = this.leftView
-        // this.viewer = new Viewer()
-        // this.leftView.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
-        // this.rightView.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
+        this.leftView.otherView = this.rightView
+        this.rightView.otherView = this.leftView
+        this.leftView.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
+        this.rightView.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
 
-        // this.focusedView = this.leftView
-        // this.leftView.setOnFocus(() => this.focusedView = this.leftView)
-        // this.rightView.setOnFocus(() =>this.focusedView = this.rightView)
+        this.focusedView = this.leftView
+        this.leftView.setOnFocus(() => this.focusedView = this.leftView)
+        this.rightView.setOnFocus(() =>this.focusedView = this.rightView)
 
-
-        // this.leftView.initialize()
-        // this.rightView.initialize()
-        // this.leftView.focus()
+        this.leftView.initialize()
+        this.rightView.initialize()
+        this.leftView.focus()
 
         const gridElement = <HTMLDivElement>document.getElementById("grid")
-        const viewerElement = document.getElementById("viewer")
+        const viewerElement = document.getElementById("viewer")!
         const grid = new Grid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
-            <HTMLDivElement>document.getElementById("grip"), 
-            //() => this.focusedView.focus())
-            () => {})
+            <HTMLDivElement>document.getElementById("grip"), () => this.focusedView.focus())
+            
         const vgrid = new VerticalGrid(<HTMLDivElement>document.getElementById("vgrid"), gridElement, viewerElement!,
-             <HTMLDivElement>document.getElementById("vgrip"), 
-             //() => this.focusedView.focus())
-             () => {})
+             <HTMLDivElement>document.getElementById("vgrip"), () => this.focusedView.focus())
 
-//        viewerElement.onclick = () =>this.focusedView.focus()
+        viewerElement.onclick = () =>this.focusedView.focus()
 
         this.initializeOnKeyDownHandler();
 
@@ -54,50 +49,49 @@ class Commander
     {
         switch (id)
         {
-        //     case "leftView":
-        //         return this.leftView
-        //     case "rightView":
-        //         return this.rightView
+            case "leftView":
+                return this.leftView
+            case "rightView":
+                return this.rightView
         }
     }
 
     getFocused()
     {
-        //return this.focusedView
-        return null
+        return this.focusedView
     }
 
-    dragOver(x: number, y: number)
-    {
-        // if (this.leftView.isMouseInTableView(x, y))
-        // {
-        //     // console.log(`Drag: ${x}, ${y}`);
-        // }
-        // if (this.rightView.isMouseInTableView(x, y))
-        // {
-        //     //console.log(`Drag: ${x}, ${y}`);
-        // }
-    }
+    // dragOver(x: number, y: number)
+    // {
+    //     // if (this.leftView.isMouseInTableView(x, y))
+    //     // {
+    //     //     // console.log(`Drag: ${x}, ${y}`);
+    //     // }
+    //     // if (this.rightView.isMouseInTableView(x, y))
+    //     // {
+    //     //     //console.log(`Drag: ${x}, ${y}`);
+    //     // }
+    // }
 
-    dragLeave()
-    {
-        // this.leftView.dragLeave()
-        // this.rightView.dragLeave()
-    }
+    // dragLeave()
+    // {
+    //     // this.leftView.dragLeave()
+    //     // this.rightView.dragLeave()
+    // }
 
-    drop(x: number, y: number, dragDropKind: DragDropKind, directory: string, items: Item[])
-    {
-        // if (this.leftView.isMouseInTableView(x, y))
-        // {
-        //     this.leftView.dragLeave()
-        //     this.rightView.drop(dragDropKind, directory, items)
-        // }
-        // if (this.rightView.isMouseInTableView(x, y))
-        // {
-        //     this.rightView.dragLeave()
-        //     this.leftView.drop(dragDropKind, directory, items)
-        // }
-    }
+    // drop(x: number, y: number, dragDropKind: DragDropKind, directory: string, items: Item[])
+    // {
+    //     // if (this.leftView.isMouseInTableView(x, y))
+    //     // {
+    //     //     this.leftView.dragLeave()
+    //     //     this.rightView.drop(dragDropKind, directory, items)
+    //     // }
+    //     // if (this.rightView.isMouseInTableView(x, y))
+    //     // {
+    //     //     this.rightView.dragLeave()
+    //     //     this.leftView.drop(dragDropKind, directory, items)
+    //     // }
+    // }
 
     private initializeOnKeyDownHandler()
     {
@@ -177,21 +171,21 @@ class Commander
         {
             var text = directory + '\\' + item.name
             this.footer!.textContent = text
-            //this.viewer.selectionChanged(text)
+            this.viewer.selectionChanged(text)
         }
         else
         {
             this.footer!.textContent = "Nichts selektiert"
-            //this.viewer.selectionChanged()
+            this.viewer.selectionChanged("")
         }
     }
 
-    // private leftView: CommanderView
-    // private rightView: CommanderView
-    // private focusedView: CommanderView
-    // private vgrid: VerticalGrid
+    private readonly leftView = new CommanderView("leftView")
+    private readonly rightView = new CommanderView("rightView")
     private readonly footer = document.getElementById("footer")
-//    private viewer: Viewer
+    private readonly viewer = new Viewer()
+
+    private focusedView: CommanderView
 }
 
 const commanderInstance = new Commander()

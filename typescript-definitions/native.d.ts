@@ -1,3 +1,11 @@
+
+declare enum DragDropKind
+{
+    Copy,
+    Move,
+    Link
+}
+
 interface FileSystemModule {
     createAccess(): FileSystemAccess
     showHidden(value: boolean): void
@@ -127,7 +135,7 @@ declare class ConflictItem
 
 interface IObservable {
     registerObservation(observator: IObservator): void
-    getItemsCount(): void
+    getItemsCount(): number
 }
 
 interface IModel
@@ -135,26 +143,6 @@ interface IModel
     getItemSource(): Item[]
     getItem(index: number): Item
     getSelectedItems(): Item[]
-}
-
-interface IItemsViewModel
-{
-//    setColumns(columnsControl: ColumnsControl)
-    /**
-     * Einfügen der View an der Position 'index'
-    * @param index Der Index des zugehörigen Eintrages
-    */
-    insertItem(index: number, startDrag?: (() => void)): HTMLTableRowElement
-    /**
-    * Einfügen eines Testeintrages, um die Ausmaße im DOM zu bestimmen
-    */
-    insertMeasureItem(): void
-    /**
-     * Einfügen der Daten in die TableRow
-    * @param itemElement
-    * @param index Index des Eintrages, mit dem die TableRow gefüllt werden soll
-    */
-    updateItem(itemElement: HTMLTableRowElement, index: number): void
 }
 
 interface IObservator
@@ -179,13 +167,6 @@ declare class OperationCheckResult
     conflictItems: ConflictItem[]
     result: OperationCheck
     exception?: string
-}
-
-declare class IColumn
-{
-    item: string
-    class: string
-    itemSortKind: ItemSortKind
 }
 
 interface ISelectionChanged

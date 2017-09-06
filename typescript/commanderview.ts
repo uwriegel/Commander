@@ -1,119 +1,109 @@
-// /**
-//  * Ein Commanderview besteht aus einer Tableview mit den Einträgen des aktuellen Verzeichnisses und einem Verzeichnis-Textfeldes
-//  * @param id Die ID des CommanderViews
-//  */
-// class CommanderView
-// {
-//     get id()
-//     {
-//         return this._id
-//     }
-//     private _id
-//      /**
-//     * Das andere CommanderView
-//     */
-//     get otherView()
-//     {
-//         return this._otherView
-//     }
-//     set otherView(value: CommanderView)
-//     {
-//         this._otherView = value
-//     }
-//     private _otherView
+import { TableView }  from './tableview'
+import { ColumnsControl }  from './columnscontrol'
+import { ItemSortKind }  from './itemssorter'
+
+/**
+ * Ein Commanderview besteht aus einer Tableview mit den Einträgen des aktuellen Verzeichnisses und einem Verzeichnis-Textfeldes
+ * @param id Die ID des CommanderViews
+ */
+class CommanderView
+{
+    /**
+    * Das andere CommanderView
+    */
+    otherView: CommanderView
 
 //     get currentDirectory()
 //     {
 //         return this.itemsModel.CurrentDirectory
 //     }
 
-//     constructor(id: string)
-//     {
-//         this._id = id
-//         this.parent = document.getElementById(id)
-//         this.commanderDirectory = document.createElement("input")
-//         this.commanderDirectory.classList.add('directory')
-//         this.parent.appendChild(this.commanderDirectory)
+    constructor(public id: string)
+    {
+        this.parent = document.getElementById(id)!
+        this.commanderDirectory = document.createElement("input")
+        this.commanderDirectory.classList.add('directory')
+        this.parent.appendChild(this.commanderDirectory)
 
-//         var commanderTable = document.createElement('div')
-//         commanderTable.classList.add('commanderTable')
+        const commanderTable = document.createElement('div')
+        commanderTable.classList.add('commanderTable')
 
-//         this.parent.appendChild(commanderTable)
-//         {
-//             let restrictor = document.createElement('input')
-//             restrictor.classList.add('restrictor')
-//             restrictor.classList.add('restrictorHide')
-//             this.parent.appendChild(restrictor)
-//         }
+        this.parent.appendChild(commanderTable)
+        {
+            const restrictor = document.createElement('input')
+            restrictor.classList.add('restrictor')
+            restrictor.classList.add('restrictorHide')
+            this.parent.appendChild(restrictor)
+        }
 
-//         this.tableView = new TableView(commanderTable)
-//         this.itemsModel = new ItemsModel(id)
-//         this.itemsSorter = new ItemsSorter(this.itemsModel)
+        this.tableView = new TableView(commanderTable)
+        // this.itemsModel = new ItemsModel(id)
+        // this.itemsSorter = new ItemsSorter(this.itemsModel)
 
-//         this.columnsControl = new ColumnsControl([
-//             {
-//                 item: "Name",
-//                 class: "",
-//                 itemSortKind: ItemSortKind.Name
-//             },
-//             {
-//                 item: "Erw.",
-//                 class: "it-extension",
-//                 itemSortKind: ItemSortKind.Extension
-//             },
-//             {
-//                 item: "Größe",
-//                 class: "it-size",
-//                 itemSortKind: ItemSortKind.Size
-//             },
-//             {
-//                 item: "Datum",
-//                 class: "it-time",
-//                 itemSortKind: ItemSortKind.Date
-//             },
-//             {
-//                 item: "Version",
-//                 class: "it-version",
-//                 itemSortKind: ItemSortKind.Version
-//             }], id + '-columns', this.itemsSorter)
-//         this.drivesColumnControl = new ColumnsControl([
-//             {
-//                 item: "Name",
-//                 class: "",
-//                 itemSortKind: ItemSortKind.Name
-//             },
-//             {
-//                 item: "Beschreibung",
-//                 class: "it-description",
-//                 itemSortKind: ItemSortKind.Description
-//             },
-//             {
-//                 item: "Größe",
-//                 class: "it-size",
-//                 itemSortKind: ItemSortKind.Size
-//             }], id + '-drivesColumns', this.itemsSorter)
-//         this.favoritesColumnControl = new ColumnsControl([
-//             {
-//                 item: "Name",
-//                 class: "",
-//                 itemSortKind: ItemSortKind.Name
-//             },
-//             {
-//                 item: "Beschreibung",
-//                 class: "it-description",
-//                 itemSortKind: ItemSortKind.Description
-//             }], id + '-favoritesColumns', this.itemsSorter)
-//         this.historyColumnControl = new ColumnsControl([
-//             {
-//                 item: "Name",
-//                 class: "",
-//                 itemSortKind: ItemSortKind.Name
-//             },
-//             {
-//                 item: "Pfad",
-//                 class: "it-path",
-//                 itemSortKind: ItemSortKind.Description
-//             }], id + '-historyColumns', this.itemsSorter)
+        this.columnsControl = new ColumnsControl([
+            {
+                item: "Name",
+                class: "",
+                itemSortKind: ItemSortKind.Name
+            },
+            {
+                item: "Erw.",
+                class: "it-extension",
+                itemSortKind: ItemSortKind.Extension
+            },
+            {
+                item: "Größe",
+                class: "it-size",
+                itemSortKind: ItemSortKind.Size
+            },
+            {
+                item: "Datum",
+                class: "it-time",
+                itemSortKind: ItemSortKind.Date
+            },
+            {
+                item: "Version",
+                class: "it-version",
+                itemSortKind: ItemSortKind.Version
+            }], id + '-columns', this.itemsSorter)
+        this.drivesColumnControl = new ColumnsControl([
+            {
+                item: "Name",
+                class: "",
+                itemSortKind: ItemSortKind.Name
+            },
+            {
+                item: "Beschreibung",
+                class: "it-description",
+                itemSortKind: ItemSortKind.Description
+            },
+            {
+                item: "Größe",
+                class: "it-size",
+                itemSortKind: ItemSortKind.Size
+            }], id + '-drivesColumns', this.itemsSorter)
+        this.favoritesColumnControl = new ColumnsControl([
+            {
+                item: "Name",
+                class: "",
+                itemSortKind: ItemSortKind.Name
+            },
+            {
+                item: "Beschreibung",
+                class: "it-description",
+                itemSortKind: ItemSortKind.Description
+            }], id + '-favoritesColumns', this.itemsSorter)
+        this.historyColumnControl = new ColumnsControl([
+            {
+                item: "Name",
+                class: "",
+                itemSortKind: ItemSortKind.Name
+            },
+            {
+                item: "Pfad",
+                class: "it-path",
+                itemSortKind: ItemSortKind.Description
+            }], id + '-historyColumns', this.itemsSorter)
 //         this.serviceColumnsControl
 //         this.registryColumnsControl
 
@@ -268,20 +258,18 @@
 //                     break
 //             }
 //         }
-//     }
+    }
 
-//     initialize()
-//     {
-//         var currentDirectory = localStorage[this.id]
-//         if (!currentDirectory)
-//             currentDirectory = "root"
-//         this.changeDirectory(currentDirectory)
-//     }
+    initialize()
+    {
+        const currentDirectory = localStorage[this.id] || "root"
+//        this.changeDirectory(currentDirectory)
+    }
 
-//     focus()
-//     {
+     focus()
+     {
 //         this.tableView.focus()
-//     }
+     }
 
 //     focusDirectoryInput()
 //     {
@@ -293,10 +281,10 @@
 //         return this.commanderDirectory.contains(document.activeElement)
 //     }
 
-//     setOnFocus(callback: () => void)
-//     {
-//         this.tableView.setOnFocus(() => callback())
-//     }
+    setOnFocus(callback: () => void)
+    {
+//        this.tableView.setOnFocus(() => callback())
+    }
 
 //     changeDirectory(directory: string)
 //     {
@@ -406,10 +394,10 @@
 //         this.changeDirectory(this.currentDirectory)
 //     }
 
-//     setOnCurrentItemChanged(callback: (item: Item, directory: string) => void)
-//     {
+     setOnCurrentItemChanged(callback: (item: Item, directory: string) => void)
+     {
 //         this.onCurrentItemChanged = callback
-//     }
+     }
 
 //     changeSavedView(index: number)
 //     {
@@ -973,23 +961,23 @@
 //         Dialog.show()
 //     }
 
-//     private tableView: TableView
-//     private parent: HTMLElement  
+    private tableView: TableView
+    private readonly parent: HTMLElement  
 //     private itemsModel: ItemsModel
-//     private itemsSorter: ItemsSorter
+    private itemsSorter: any // ItemsSorter
 //     /**
 //     * Das input-Element, welches die Beschränkungszeichen darstellt</var>
 //     */
 //     private restrictor: HTMLInputElement
-//     /**
-//     * Das Eingabefeld zur Eingabe eines Verzeichnisses
-//     */
-//     private commanderDirectory: HTMLInputElement
+    /**
+    * Das Eingabefeld zur Eingabe eines Verzeichnisses
+    */
+    private commanderDirectory: HTMLInputElement
 //     private onCurrentItemChanged: (item?: Item, directory?: string) => void
-//     private columnsControl: ColumnsControl
-//     private drivesColumnControl: ColumnsControl
-//     private favoritesColumnControl: ColumnsControl
-//     private historyColumnControl: ColumnsControl
+    private columnsControl: ColumnsControl
+    private drivesColumnControl: ColumnsControl
+    private favoritesColumnControl: ColumnsControl
+    private historyColumnControl: ColumnsControl
 //     private serviceColumnsControl: ColumnsControl
 //     private registryColumnsControl: ColumnsControl
 //     private lastCurrentDir: string
@@ -997,22 +985,6 @@
 //     private historyWriterTimeouter: NodeJS.Timer
 //     private extendedRename: ExtendedRename
 //     private dragStarted: boolean
-// }
-
-enum DragDropKind
-{
-    Copy,
-    Move,
-    Link
 }
 
-
-
-
-
-
-    
-
-        
- 
- 
+export { CommanderView }
