@@ -2,7 +2,6 @@
 //
 // Start as Admin im Hintergrund
 // drives: Gespeicherte Ansichten
-// F10 MENÜ Erklärung der Tastenkürzel oder Hilfe
 // RegistryItems anzeigen
 // NachRefresh Selektion erhalten
 // Conflicts: conflict liste in die Focusable anhängen

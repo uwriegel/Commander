@@ -79,7 +79,7 @@ app.on('ready', () => {
             }
         ]},
         {
-            label: '&Selection',
+            label: '&Selektion',
             submenu: [{
                 label: '&Alles'
             },
