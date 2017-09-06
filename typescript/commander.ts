@@ -7,6 +7,8 @@
 // Conflicts: conflict liste in die Focusable anhängen
 // Rename auch von mehreren Dateien
 import { ipcRenderer }  from 'electron'
+import { Grid }  from './grid'
+import { VerticalGrid }  from './vgrid'
 
 class Commander
 {
@@ -31,10 +33,14 @@ class Commander
 
         const gridElement = <HTMLDivElement>document.getElementById("grid")
         const viewerElement = document.getElementById("viewer")
-        // var grid = Grid(gridElement, document.getElementById("leftView"), document.getElementById("rightView"),
-        //     <HTMLDivElement>document.getElementById("grip"), () => this.focusedView.focus())
-        // this.vgrid = new VerticalGrid(<HTMLDivElement>document.getElementById("vgrid"), gridElement, viewerElement,
-        //     <HTMLDivElement>document.getElementById("vgrip"), () => this.focusedView.focus())
+        const grid = new Grid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
+            <HTMLDivElement>document.getElementById("grip"), 
+            //() => this.focusedView.focus())
+            () => {})
+        const vgrid = new VerticalGrid(<HTMLDivElement>document.getElementById("vgrid"), gridElement, viewerElement!,
+             <HTMLDivElement>document.getElementById("vgrip"), 
+             //() => this.focusedView.focus())
+             () => {})
 
 //        viewerElement.onclick = () =>this.focusedView.focus()
 
