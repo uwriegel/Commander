@@ -26,14 +26,14 @@ class VerticalGrid
         if (!this.topPercent)
             this.topPercent = 70
         grid.setSize(this.topPercent)
-        this.switchBottom()
+        this.switchBottom(false)
     }
 
     /**
      * Ein/Ausblenden der unteren Ansicht
      */
-    switchBottom() {
-        if (this.bottomView.classList.contains("displayNone")) {
+    switchBottom(preview: boolean) {
+        if (preview) {
             this.bottomView.classList.remove("displayNone")
             this.gridSplitter.classList.remove("displayNone")
             this.topView.style.height = `calc(${this.topPercent}% - 3px)`

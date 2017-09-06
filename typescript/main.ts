@@ -103,6 +103,15 @@ app.on('ready', () => {
                 type: 'separator'
             },            
             {
+                label: '&Vorschau',
+                type: "checkbox",
+                accelerator: "F3",
+                click: evt => mainWindow.webContents.send("preview", evt.checked)
+            },
+            {
+                type: 'separator'
+            },            
+            {
                 label: '&Vollbild',
                 click: () => mainWindow.setFullScreen(!mainWindow.isFullScreen()),
                 accelerator: "F11"

@@ -47,6 +47,7 @@ class Commander
         this.initializeOnKeyDownHandler();
 
         ipcRenderer.on("darkTheme", (evt: any, dark: boolean) => this.setDarkTheme(dark))
+        ipcRenderer.on("preview", (evt: any, preview: boolean) => vgrid.switchBottom(preview))
     }
 
     getCommanderView(id: string)
@@ -135,9 +136,6 @@ class Commander
                 //         this.leftView.changeDirectory("SavedViews")
                 //         this.rightView.changeDirectory("SavedViews")
                 //     }
-                //     break
-                // case 114: // F3
-                //     this.vgrid.switchBottom()
                 //     break
                 // case 116: // F5
                 //     break

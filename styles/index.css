@@ -25,7 +25,7 @@ body {
 
 #grip, #vgrip {
     position: absolute;
-    background-color: #efeeee;
+    background-color: #dcdcdc;
     transition: background-color 0.5s;
 }
 
