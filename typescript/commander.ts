@@ -29,8 +29,6 @@ class Commander
         this.rightView.initialize()
         this.leftView.focus()
 
-        this.menu = new MenuBar()
-
         var gridElement = <HTMLDivElement>document.getElementById("grid")
         var viewerElement = document.getElementById("viewer")
         var grid = Grid(gridElement, document.getElementById("leftView"), document.getElementById("rightView"),
@@ -200,9 +198,20 @@ class Commander
     private leftView: CommanderView
     private rightView: CommanderView
     private focusedView: CommanderView
-    private menu: MenuBar
     private vgrid: VerticalGrid
     private footer: HTMLElement
     private viewer: Viewer
 }
+
+const commanderInstance = new Commander()
+
+// TODO: 
+// document.ondragover = document.ondrop = (ev) => {
+//     ev.preventDefault()
+//   }
+  
+//   document.body.ondrop = (ev) => {
+//     console.log(ev.dataTransfer.files[0].path)
+//     ev.preventDefault()
+//   }
 

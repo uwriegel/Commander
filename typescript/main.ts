@@ -1,16 +1,35 @@
 import { app, BrowserWindow, Menu }  from 'electron'
-
+import * as settings from 'electron-settings'
 
 app.on('ready', () => {
-    const mainWindow = new BrowserWindow({
+
+    const bounds = JSON.parse(settings.get("window-bounds", JSON.stringify({ 
         width: 800,
         height: 600
-    })
+    })) as string)
+
+    const mainWindow = new BrowserWindow(bounds)
+
+    if (settings.get("isMaximized"))
+        mainWindow.maximize()
 
     mainWindow.loadURL(`file://${__dirname}/../index.html`)
 
     mainWindow.on('close', () => {
-        var position = mainWindow.getPosition()
+        if (!mainWindow.isMaximized()) {
+            const bounds = mainWindow.getBounds()
+            settings.set("window-bounds", JSON.stringify(bounds))
+        }
+    })
+
+    mainWindow.on('maximize', () => {
+        const bounds = mainWindow.getBounds()
+        settings.set("window-bounds", JSON.stringify(bounds))
+        settings.set("isMaximized", true)
+    })
+
+    mainWindow.on('unmaximize', () => {
+        settings.set("isMaximized", false)
     })
 
     const menu = Menu.buildFromTemplate([
@@ -78,6 +97,14 @@ app.on('ready', () => {
             {
                 label: '&Dunkles Thema',
                 type: "checkbox"
+            },
+            {
+                type: 'separator'
+            },            
+            {
+                label: '&Vollbild',
+                click: () => mainWindow.setFullScreen(!mainWindow.isFullScreen()),
+                accelerator: "F11"
             },
             {
                 type: 'separator'
