@@ -3,6 +3,9 @@
         "target": "es2017",
         "module": "commonjs",
         "outDir": "scripts",
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "strict": true,
         "sourceMap": true
     }
 }

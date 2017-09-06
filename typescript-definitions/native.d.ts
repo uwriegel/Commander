@@ -1,11 +1,11 @@
 interface FileSystemModule {
     createAccess(): FileSystemAccess
-    showHidden(value: boolean)
+    showHidden(value: boolean): void
 }
 
 interface FileSystemAccess {
-    getRootItems(callback: (drives: Drive[])=>void)
-    listFiles(directory: string, callback: (items: GetItemsOutput)=>void);
+    getRootItems(callback: (drives: Drive[])=>void): void
+    listFiles(directory: string, callback: (items: GetItemsOutput)=>void): void
 }
 
 declare class Drive {
@@ -126,8 +126,8 @@ declare class ConflictItem
 }
 
 interface IObservable {
-    registerObservation(observator: IObservator)
-    getItemsCount() 
+    registerObservation(observator: IObservator): void
+    getItemsCount(): void
 }
 
 interface IModel
@@ -139,7 +139,7 @@ interface IModel
 
 interface IItemsViewModel
 {
-    setColumns(columnsControl: ColumnsControl)
+//    setColumns(columnsControl: ColumnsControl)
     /**
      * Einfügen der View an der Position 'index'
     * @param index Der Index des zugehörigen Eintrages
@@ -148,21 +148,21 @@ interface IItemsViewModel
     /**
     * Einfügen eines Testeintrages, um die Ausmaße im DOM zu bestimmen
     */
-    insertMeasureItem()
+    insertMeasureItem(): void
     /**
      * Einfügen der Daten in die TableRow
     * @param itemElement
     * @param index Index des Eintrages, mit dem die TableRow gefüllt werden soll
     */
-    updateItem(itemElement: HTMLTableRowElement, index: number)
+    updateItem(itemElement: HTMLTableRowElement, index: number): void
 }
 
 interface IObservator
 {
-    ItemsCleared() 
-    itemsChanged(lastCurrentIndex: number)
-    updateItems()
-    refreshSelection(itemIndex: number, isSelected: boolean)
+    ItemsCleared(): void 
+    itemsChanged(lastCurrentIndex: number): void
+    updateItems(): void
+    refreshSelection(itemIndex: number, isSelected: boolean): void
     getCurrentItemIndex(): number
 }
 
@@ -190,7 +190,7 @@ declare class IColumn
 
 interface ISelectionChanged
 {
-    selectionChanged()
+    selectionChanged(): void
 }
 
 declare class ExtendedRenameParams
