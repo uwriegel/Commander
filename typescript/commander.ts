@@ -6,7 +6,7 @@
 // NachRefresh Selektion erhalten
 // Conflicts: conflict liste in die Focusable anhängen
 // Rename auch von mehreren Dateien
-import { ipcRenderer }  from 'electron'
+// import { ipcRenderer }  from 'electron'
 
 class Commander
 {
@@ -44,9 +44,9 @@ class Commander
         if (localStorage["darkTheme"] == "true")
             this.darkTheme(true)
 
-        ipcRenderer.on("darkTheme", (evt, arg) => {
-            var affe = arg
-        })
+        // ipcRenderer.on("darkTheme", (evt, arg) => {
+        //     var affe = arg
+        // })
     }
 
     getCommanderView(id: string)
