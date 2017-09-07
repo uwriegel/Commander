@@ -6,15 +6,15 @@ declare enum DragDropKind
     Link
 }
 
-interface FileSystemModule {
-    createAccess(): FileSystemAccess
-    showHidden(value: boolean): void
-}
+// interface FileSystemModule {
+//     createAccess(): FileSystemAccess
+//     showHidden(value: boolean): void
+// }
 
-interface FileSystemAccess {
-    getRootItems(callback: (drives: Drive[])=>void): void
-    listFiles(directory: string, callback: (items: GetItemsOutput)=>void): void
-}
+// interface FileSystemAccess {
+//     getRootItems(callback: (drives: Drive[])=>void): void
+//     listFiles(directory: string, callback: (items: GetItemsOutput)=>void): void
+// }
 
 declare class Drive {
     name: string
@@ -29,11 +29,6 @@ declare class GetItemsInput {
     id: string
 }
 
-declare class GetItemsOutput {
-    currentDirectory: string
-    items: Item[]
-}
-
 declare class Favorite
 {
     name: string
@@ -45,33 +40,6 @@ declare class HistoryItem
 {
     name: string
     path: string
-}
-
-declare class Item
-{
-    imageUrl: string
-    name: string
-    parent: string
-    dateTime?: string
-    isHidden?: boolean
-    kind: ItemsKind
-    updated?: string
-    fileSize: number
-    selected?: boolean
-
-    version?: string
-    exifDateTime?: string
-
-    favoriteTarget?: string
-    description?: string
-    savedViewParent?: boolean
-
-    serviceName?: string
-    startType?: any
-    status?: any 
-    value?: any
-
-    renamedName?: string
 }
 
 declare class ItemUpdate {
@@ -93,14 +61,14 @@ declare class DragOver
     y: number
 }
 
-declare class Drop
-{
-    x: number
-    y: number
-    dragDropKind: DragDropKind 
-    directory: string
-    items: Item[]
-}
+// declare class Drop
+// {
+//     x: number
+//     y: number
+//     dragDropKind: DragDropKind 
+//     directory: string
+//     items: Item[]
+// }
 
 declare class DragFinished
 {
@@ -116,33 +84,14 @@ declare class CommanderEvent
     itemUpdates: ItemUpdate[]
     dragOver: DragOver
     dragLeave?: boolean
-    drop: Drop
+    //drop: Drop
     dragFinished: DragFinished
 }
 
-declare class ConflictItem
-{
-    kind: ItemsKind
-    imageUrl: string
-    name: string
-    sourceFileSize: number
-    targetFileSize: number
-    sourceVersion: string
-    targetVersion: string
-    sourceDateTime: string
-    targetDateTime: string
-}
 
 interface IObservable {
     registerObservation(observator: IObservator): void
     getItemsCount(): number
-}
-
-interface IModel
-{
-    getItemSource(): Item[]
-    getItem(index: number): Item
-    getSelectedItems(): Item[]
 }
 
 interface IObservator
@@ -154,20 +103,7 @@ interface IObservator
     getCurrentItemIndex(): number
 }
 
-interface IOperationData
-{
-    operation: string
-    sourceDir: string
-    targetDir?: string
-    items: Item[]
-}
 
-declare class OperationCheckResult
-{
-    conflictItems: ConflictItem[]
-    result: OperationCheck
-    exception?: string
-}
 
 interface ISelectionChanged
 {

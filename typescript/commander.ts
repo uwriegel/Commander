@@ -11,6 +11,7 @@ import { Grid }  from './grid'
 import { VerticalGrid }  from './vgrid'
 import { CommanderView }  from './commanderview'
 import { Viewer }  from './viewer'
+import { Item }  from './itemsmodel'
 
 class Commander
 {
