@@ -9,7 +9,7 @@
 import { ipcRenderer }  from 'electron'
 import { Grid }  from './grid'
 import { VerticalGrid }  from './vgrid'
-import { CommanderView }  from './commanderview'
+//import { CommanderView }  from './commanderview'
 import { Viewer }  from './viewer'
 import { Item }  from './itemsmodel'
 
@@ -17,49 +17,49 @@ class Commander
 {
     constructor()
     {
-        this.leftView.otherView = this.rightView
-        this.rightView.otherView = this.leftView
-        this.leftView.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
-        this.rightView.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
+        // this.leftView.otherView = this.rightView
+        // this.rightView.otherView = this.leftView
+        // this.leftView.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
+        // this.rightView.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
 
-        this.focusedView = this.leftView
-        this.leftView.setOnFocus(() => this.focusedView = this.leftView)
-        this.rightView.setOnFocus(() =>this.focusedView = this.rightView)
+        // this.focusedView = this.leftView
+        // this.leftView.setOnFocus(() => this.focusedView = this.leftView)
+        // this.rightView.setOnFocus(() =>this.focusedView = this.rightView)
 
-        this.leftView.initialize()
-        this.rightView.initialize()
-        this.leftView.focus()
+        // this.leftView.initialize()
+        // this.rightView.initialize()
+        // this.leftView.focus()
 
         const gridElement = <HTMLDivElement>document.getElementById("grid")
         const viewerElement = document.getElementById("viewer")!
-        const grid = new Grid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
-            <HTMLDivElement>document.getElementById("grip"), () => this.focusedView.focus())
+        // const grid = new Grid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
+        //     <HTMLDivElement>document.getElementById("grip"), () => this.focusedView.focus())
             
-        const vgrid = new VerticalGrid(<HTMLDivElement>document.getElementById("vgrid"), gridElement, viewerElement!,
-             <HTMLDivElement>document.getElementById("vgrip"), () => this.focusedView.focus())
+        // const vgrid = new VerticalGrid(<HTMLDivElement>document.getElementById("vgrid"), gridElement, viewerElement!,
+        //      <HTMLDivElement>document.getElementById("vgrip"), () => this.focusedView.focus())
 
-        viewerElement.onclick = () =>this.focusedView.focus()
+//        viewerElement.onclick = () =>this.focusedView.focus()
 
         this.initializeOnKeyDownHandler();
 
         ipcRenderer.on("darkTheme", (evt: any, dark: boolean) => this.setDarkTheme(dark))
-        ipcRenderer.on("preview", (evt: any, preview: boolean) => vgrid.switchBottom(preview))
+//        ipcRenderer.on("preview", (evt: any, preview: boolean) => vgrid.switchBottom(preview))
     }
 
     getCommanderView(id: string)
     {
         switch (id)
         {
-            case "leftView":
-                return this.leftView
-            case "rightView":
-                return this.rightView
+            // case "leftView":
+            //     return this.leftView
+            // case "rightView":
+            //     return this.rightView
         }
     }
 
     getFocused()
     {
-        return this.focusedView
+//        return this.focusedView
     }
 
     // dragOver(x: number, y: number)
@@ -181,12 +181,12 @@ class Commander
         }
     }
 
-    private readonly leftView = new CommanderView("leftView")
-    private readonly rightView = new CommanderView("rightView")
+    // private readonly leftView = new CommanderView("leftView")
+    // private readonly rightView = new CommanderView("rightView")
     private readonly footer = document.getElementById("footer")
     private readonly viewer = new Viewer()
 
-    private focusedView: CommanderView
+//    private focusedView: CommanderView
 }
 
 const commanderInstance = new Commander()

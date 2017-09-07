@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" lang="de">
+        <title>Commander</title>
+        <link rel="stylesheet" href="styles/index.css">
+        <link rel="stylesheet" href="styles/tableView.css">
+        <link rel="stylesheet" href="styles/waitingitem.css">
+        <link rel="stylesheet" href="styles/scrollbar.css">
+        <link rel="stylesheet" href="styles/dialog.css">
+    </head>
+    <body>
+        <div id="testview"></div>
+        <footer id="footer">Nichts selektiert</footer>
+        
+        <template id="conflictItemTemplate">
+            <tr tabindex="0">
+                <td class="it-name"><div class="it-iconName"><img class="it-image" src='images/fault.png' alt="" onerror="this.src='images/fault.png'"><span class="it-nameValue"></span></div></td>
+                <td class="it-size">
+                    <span class="it-sourcesize"></span><br>
+                    <span class="it-targetsize"></span>
+                </td>
+                <td>
+                    <span class="it-sourceTime"></span><br>
+                    <span class="it-targetTime"></span>
+                </td>
+                <td>
+                    <span class="it-sourceVersion"></span><br>
+                    <span class="it-targetVersion"></span>
+                </td>
+            </tr>
+        </template>
+        <template id="extendedRenameTemplate">
+            <div id="extendedRename">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="prefix">Prefix:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="prefix" value="Bild" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="initial">Initialwert:</label>
+                        </td>
+                        <td>
+                            <input type="number" id="initial" value="1" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="digits">Stellenzahl:</label>
+                        </td>
+                        <td>
+                            <select id="digits">
+                                <option value="1">1-Stellig</option>
+                                <option value="2">2-Stellig</option>
+                                <option value="3">3-Stellig</option>
+                                <option value="4">4-Stellig</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </template>
+
+        <script>require('./scripts/commandertest.js')</script>        
+    </body>
+</html>
