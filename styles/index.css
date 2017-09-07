@@ -280,3 +280,8 @@ tr.selected:focus {
 
 
 
+#testview {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 22px);
+}

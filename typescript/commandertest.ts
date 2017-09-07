@@ -2,11 +2,14 @@ import { ipcRenderer }  from 'electron'
 import { Grid }  from './grid'
 import { VerticalGrid }  from './vgrid'
 import { Viewer }  from './viewer'
+import { TableView }  from './tableview'
 
 class Commander
 {
     constructor()
     {
+        const div = document.getElementById('testview')!
+        this.tableView = new TableView(div)
         ipcRenderer.on("darkTheme", (evt: any, dark: boolean) => this.setDarkTheme(dark))
     }
 
@@ -25,6 +28,8 @@ class Commander
             styleSheet!.remove()
         }
     }
+
+    private tableView: TableView
 }
 
 const commanderInstance = new Commander()
