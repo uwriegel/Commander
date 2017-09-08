@@ -113,7 +113,12 @@ class TableView implements IView
             {
                 item: "Name",
                 class: "nein"
+            },
+            {
+                item: "Beschreibung",
+                class: "nein"
             }
+            
         ], "4"))
     }
 
@@ -291,7 +296,7 @@ class TableView implements IView
             theadrow.appendChild(th)
         })
 
-        this.itemsViewModel.setColumns(value)
+        //this.itemsViewModel.setColumns(value)
         this.columnsControl.initialize(this.tableView)
     }
 

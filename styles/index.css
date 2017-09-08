@@ -284,4 +284,5 @@ tr.selected:focus {
     position: absolute;
     width: 100%;
     height: calc(100% - 20px);
+    top: 0px;
 }
