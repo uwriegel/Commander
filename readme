@@ -1,4 +1,5 @@
 npm init
+npm install electron --save
 npm install @types/node --save
 npm install @types/electron --save
 npm install --save electron-settings
