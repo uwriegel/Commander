@@ -1,5 +1,6 @@
 ﻿import { IModel, Item, ItemsModel, ItemsKind }  from './itemsmodel'
 import { FileHelper }  from './filehelper'
+import { Presenter }  from './presenter'
 
 interface ISorter
 {
@@ -23,7 +24,7 @@ enum ItemSortKind
  * Der Sortierer befindet sich zwischen ItemsModel und ItemsViewModel und ist für das Sortieren der Einträge zuständig
  * @param itemsModelToSet Das zugehörige ItemsModel
  */
-class ItemsSorter implements IView, Presenter, IModel, ISorter
+class ItemsSorter implements IView, IModel, ISorter
 {
     constructor(private itemsModel: ItemsModel)
     {

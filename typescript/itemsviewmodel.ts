@@ -9,17 +9,6 @@ interface IItemsViewModel
      * Einfügen der View an der Position 'index'
     * @param index Der Index des zugehörigen Eintrages
     */
-    insertItem(index: number, startDrag?: (() => void)): HTMLTableRowElement
-    /**
-    * Einfügen eines Testeintrages, um die Ausmaße im DOM zu bestimmen
-    */
-    insertMeasureItem(): HTMLElement
-    /**
-     * Einfügen der Daten in die TableRow
-    * @param itemElement
-    * @param index Index des Eintrages, mit dem die TableRow gefüllt werden soll
-    */
-    updateItem(itemElement: HTMLTableRowElement, index: number): void
 }
 
 class ItemsViewModel implements IItemsViewModel

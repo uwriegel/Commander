@@ -89,11 +89,6 @@ declare class CommanderEvent
 }
 
 
-interface Presenter {
-    registerView(view: IView): void
-    getItemsCount(): number
-}
-
 interface IView
 {
     ItemsCleared(): void 

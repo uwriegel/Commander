@@ -1,6 +1,7 @@
 import { Scrollbar }  from './scrollbar'
 import { ColumnsControl }  from './columnscontrol'
 import { IItemsViewModel }  from './itemsviewmodel'
+import { Presenter }  from './presenter'
 
 class TableView implements IView
 {
@@ -9,7 +10,7 @@ class TableView implements IView
      * 
      * @param parent Das Elternelement, das die Tableview beinhaltet
      */
-    constructor(parent: HTMLElement) 
+    constructor(parent: HTMLElement, private readonly presenter: Presenter) 
     {
         this.id = 'tableView-' + TableView.tableViewId++
         this.tableView = document.createElement("div")
@@ -120,6 +121,8 @@ class TableView implements IView
             }
             
         ], "4"))
+
+        this.presenter.registerView(this)
     }
 
     getCurrentItemIndex()
@@ -151,7 +154,7 @@ class TableView implements IView
         var trs = this.tbody.querySelectorAll('tr')
         for (var i = 0; i < trs.length; i++)
         {
-            this.itemsViewModel.updateItem(trs[i], i + this.startPosition)
+            this.presenter.updateItem(trs[i], i + this.startPosition)
         }
     }
 
@@ -164,17 +167,6 @@ class TableView implements IView
             item.classList.remove("selected")
     }
     
-    setPresenter(presenter: Presenter)
-    {
-        this.presenter = presenter
-        this.presenter.registerView(this)
-    }
-
-    setItemsViewModel(itemsViewModel: IItemsViewModel)
-    {
-        this.itemsViewModel = itemsViewModel
-    }
-
     setOnSelectedCallback(callback: (itemIndex: number, openWith: boolean, showProperties: boolean) => void)
     {
         this.onSelectedCallback = callback
@@ -302,7 +294,7 @@ class TableView implements IView
 
     private initializeRowHeight()
     {
-        var node = this.itemsViewModel.insertMeasureItem()
+        var node = this.presenter.insertMeasureItem()
         this.tbody.appendChild(node)
         var td = this.tbody.querySelector('td')!
         this.rowHeight = td.clientHeight
@@ -325,7 +317,7 @@ class TableView implements IView
 
     private insertItem(index: number): HTMLTableRowElement
     {
-        return this.itemsViewModel.insertItem(index, this.onDragCallback)
+        return this.presenter.insertItem(index, this.onDragCallback)
     }
 
     private clearItems()
@@ -520,8 +512,6 @@ class TableView implements IView
 
     private readonly id: string
     private columnsControl: ColumnsControl
-    private presenter: Presenter
-    private itemsViewModel: IItemsViewModel
     private readonly tableView: HTMLDivElement
     private itemsCount = 0
     /**
