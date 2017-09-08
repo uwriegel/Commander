@@ -108,7 +108,7 @@
 // //         this.serviceColumnsControl
 // //         this.registryColumnsControl
 
-//         this.tableView.setObservable(this.itemsSorter)
+         //this.tableView.set(this.itemsSorter)
 
 //         var itemsViewModel = new ItemsViewModel(this.itemsSorter)
 //         this.tableView.setItemsViewModel(itemsViewModel)

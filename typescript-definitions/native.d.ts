@@ -89,12 +89,12 @@ declare class CommanderEvent
 }
 
 
-interface IObservable {
-    registerObservation(observator: IObservator): void
+interface Presenter {
+    registerView(view: IView): void
     getItemsCount(): number
 }
 
-interface IObservator
+interface IView
 {
     ItemsCleared(): void 
     itemsChanged(lastCurrentIndex: number): void

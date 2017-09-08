@@ -2,7 +2,7 @@ import { Scrollbar }  from './scrollbar'
 import { ColumnsControl }  from './columnscontrol'
 import { IItemsViewModel }  from './itemsviewmodel'
 
-class TableView implements IObservator
+class TableView implements IView
 {
     /**
      * Listview mit mehreren Spalten
@@ -107,7 +107,14 @@ class TableView implements IObservator
                 tr.focus()
             else if (this.onToggleSelection)
                 this.onToggleSelection(this.currentItemIndex)
-        };
+        }
+
+        this.setColumns(new ColumnsControl([
+            {
+                item: "Name",
+                class: "nein"
+            }
+        ], "4"))
     }
 
     getCurrentItemIndex()
@@ -152,34 +159,10 @@ class TableView implements IObservator
             item.classList.remove("selected")
     }
     
-    set Columns(value: ColumnsControl)
+    setPresenter(presenter: Presenter)
     {
-        this.columnsControl = value
-
-        const theadrow = this.thead.querySelector('tr')!
-        theadrow.innerHTML = ""
-        this.columnsControl.initializeEachColumn(item =>
-        {
-            var th = document.createElement("th")
-            th.innerHTML = item.item
-            if (item.class)
-                th.classList.add(item.class)
-            theadrow.appendChild(th)
-        })
-
-        this.itemsViewModel.setColumns(value)
-        this.columnsControl.initialize(this.tableView)
-    }
-
-    get Columns(): ColumnsControl
-    {
-        return this.columnsControl
-    }
-
-    setObservable(observable: IObservable)
-    {
-        this.observableItems = observable
-        this.observableItems.registerObservation(this)
+        this.presenter = presenter
+        this.presenter.registerView(this)
     }
 
     setItemsViewModel(itemsViewModel: IItemsViewModel)
@@ -293,6 +276,25 @@ class TableView implements IObservator
         this.tableView.classList.remove("highlight")
     }
 
+    private setColumns(value: ColumnsControl)
+    {
+        this.columnsControl = value
+
+        const theadrow = this.thead.querySelector('tr')!
+        theadrow.innerHTML = ""
+        this.columnsControl.initializeEachColumn(item =>
+        {
+            var th = document.createElement("th")
+            th.innerHTML = item.item
+            if (item.class)
+                th.classList.add(item.class)
+            theadrow.appendChild(th)
+        })
+
+        this.itemsViewModel.setColumns(value)
+        this.columnsControl.initialize(this.tableView)
+    }
+
     private initializeRowHeight()
     {
         var node = this.itemsViewModel.insertMeasureItem()
@@ -337,7 +339,7 @@ class TableView implements IObservator
     private displayItems(start: number)
     {
         this.startPosition = start
-        this.itemsCount = this.observableItems.getItemsCount()
+        this.itemsCount = this.presenter.getItemsCount()
 
         if (this.tableCapacity == -1)
         {
@@ -513,7 +515,7 @@ class TableView implements IObservator
 
     private readonly id: string
     private columnsControl: ColumnsControl
-    private observableItems: IObservable
+    private presenter: Presenter
     private itemsViewModel: IItemsViewModel
     private readonly tableView: HTMLDivElement
     private itemsCount = 0

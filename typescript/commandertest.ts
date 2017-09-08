@@ -4,12 +4,27 @@ import { VerticalGrid }  from './vgrid'
 import { Viewer }  from './viewer'
 import { TableView }  from './tableview'
 
+/*
+
+              Presenter (Steuert die Daten, passt die Views an)
+                 /\
+                /  \
+               /    \
+            Model  View (TableView, ColumnsControl)
+
+        Der Presenter kann einen Sorter hinzugefügt bekommen
+
+        Presenter 
+*/
+
+
 class Commander
 {
     constructor()
     {
         const div = document.getElementById('testview')!
         this.tableView = new TableView(div)
+
         ipcRenderer.on("darkTheme", (evt: any, dark: boolean) => this.setDarkTheme(dark))
     }
 

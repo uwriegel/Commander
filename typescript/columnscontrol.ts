@@ -4,7 +4,7 @@ declare class IColumn
 {
     item: string
     class: string
-    itemSortKind: ItemSortKind
+//    itemSortKind: ItemSortKind
 }
 
 class ColumnsControl
@@ -15,11 +15,11 @@ class ColumnsControl
      * @param id Die Id dieses ColumnControls
      * @param sortOffset
      */
-    constructor(columns: IColumn[], id: string, itemsSorter: ISorter)
+    constructor(columns: IColumn[], id: string) //, itemsSorter: ISorter)
     {
         this.columns = columns
         this.id = id
-        this.itemsSorter = itemsSorter
+        //this.itemsSorter = itemsSorter
 
         this.itemTemplate = document.createElement("tr")
         this.itemTemplate.style.userSelect = "none"
@@ -83,7 +83,7 @@ class ColumnsControl
                     }
                         
                     column.classList.add(ascending ? "sortDescending" : "sortAscending")
-                    this.itemsSorter.sort(this.columns[columnIndex].itemSortKind, !ascending, true)
+                    //this.itemsSorter.sort(this.columns[columnIndex].itemSortKind, !ascending, true)
                 }
                 else
                     this.beginColumnDragging(evt.pageX, column)
@@ -222,7 +222,7 @@ class ColumnsControl
     private tableView: HTMLElement
     private itemTemplate: HTMLTableRowElement
     private previous: boolean
-    private itemsSorter: ISorter
+    //private itemsSorter: ISorter
 }
 
 export { ColumnsControl, IColumn }

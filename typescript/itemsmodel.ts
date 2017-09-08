@@ -96,7 +96,7 @@ class ItemsModel implements IModel
      * Registrierung eines Observables, welches über Änderungen im Model informiert werden möchte
      * @param observator
      */
-    registerObservation(observator: IObservator) {
+    registerObservation(observator: IView) {
         this.observator = observator
     }
 
@@ -240,7 +240,7 @@ class ItemsModel implements IModel
     /**
     * Das Element, welches über Änderungen benachrichtigt werden soll
     */
-    private observator: IObservator
+    private observator: IView
     /**
      * Die momentan angezeigten Items
      */

@@ -23,7 +23,7 @@ enum ItemSortKind
  * Der Sortierer befindet sich zwischen ItemsModel und ItemsViewModel und ist für das Sortieren der Einträge zuständig
  * @param itemsModelToSet Das zugehörige ItemsModel
  */
-class ItemsSorter implements IObservator, IObservable, IModel, ISorter
+class ItemsSorter implements IView, Presenter, IModel, ISorter
 {
     constructor(private itemsModel: ItemsModel)
     {
@@ -211,7 +211,7 @@ class ItemsSorter implements IObservator, IObservable, IModel, ISorter
      * Registrierung eines Observables, welches über Änderungen im Model informiert werden möchte
      * @param observator
      */
-    registerObservation(observator: IObservator) {
+    registerView(observator: IView) {
         this.observator = observator
     }
 
@@ -389,7 +389,7 @@ class ItemsSorter implements IObservator, IObservable, IModel, ISorter
     /**
     * Das Element, welches über Änderungen benachrichtigt werden soll
     */
-    private observator: IObservator
+    private observator: IView
 
     private selectionChanged: ISelectionChanged
 }
