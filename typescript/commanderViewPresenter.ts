@@ -10,17 +10,16 @@ class CommanderViewPresenter implements Presenter
     }
 
     insertItem(index: number, startDrag?: (() => void) | undefined): HTMLTableRowElement {
-        throw new Error("Method not implemented.");
+        return this.createItem(this.items[index].name)
     }
 
-    insertMeasureItem(): HTMLElement {
-        throw new Error("Method not implemented.");
+    insertMeasureItem(): HTMLTableRowElement {
+        return this.createItem("T")
     }
     
     updateItem(itemElement: HTMLTableRowElement, index: number): void {
         throw new Error("Method not implemented.");
     }
-
 
     fill() {
         this.items = [
@@ -43,6 +42,18 @@ class CommanderViewPresenter implements Presenter
         ];
 
         this.view.itemsChanged(0)
+    }
+
+    private createItem(name: string) : HTMLTableRowElement
+    {
+        const tr = document.createElement("tr")
+        const td = document.createElement("td")
+        const div = document.createElement("div")
+        div.innerText = name
+        td.appendChild(div)
+        tr.appendChild(td)
+        return tr
+        
     }
 
     private items: any[]
