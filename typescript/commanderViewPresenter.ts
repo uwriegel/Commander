@@ -52,6 +52,7 @@ class CommanderViewPresenter implements Presenter
         div.innerText = name
         td.appendChild(div)
         tr.appendChild(td)
+        tr.tabIndex = 1
         return tr
         
     }
