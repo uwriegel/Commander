@@ -1,6 +1,7 @@
+import { View }  from './view'
 
 interface Presenter {
-    registerView(view: IView): void
+    registerView(view: View): void
     getItemsCount(): number
 
     insertItem(index: number, startDrag?: (() => void)): HTMLTableRowElement

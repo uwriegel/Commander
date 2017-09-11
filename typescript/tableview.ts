@@ -2,16 +2,17 @@ import { Scrollbar }  from './scrollbar'
 import { ColumnsControl }  from './columnscontrol'
 import { IItemsViewModel }  from './itemsviewmodel'
 import { Presenter }  from './presenter'
+import { EmptyPresenter }  from './emptypresenter'
+import { View }  from './view'
 
-class TableView implements IView
+class TableView implements View
 {
     /**
      * Listview mit mehreren Spalten
      * 
      * @param parent Das Elternelement, das die Tableview beinhaltet
      */
-    constructor(parent: HTMLElement, private readonly presenter: Presenter) 
-    {
+    constructor(parent: HTMLElement) {
         this.id = 'tableView-' + TableView.tableViewId++
         this.tableView = document.createElement("div")
         this.tableView.classList.add('tableView')
@@ -109,35 +110,23 @@ class TableView implements IView
             else if (this.onToggleSelection)
                 this.onToggleSelection(this.currentItemIndex)
         }
+    }
 
-        this.setColumns(new ColumnsControl([
-            {
-                item: "Name",
-                class: "nein"
-            },
-            {
-                item: "Beschreibung",
-                class: "nein"
-            }
-            
-        ], "4"))
-
+    setPresenter(presenter: Presenter) {
+        this.presenter = presenter
         this.presenter.registerView(this)
     }
 
-    getCurrentItemIndex()
-    {
+    getCurrentItemIndex() {
         return this.currentItemIndex
     }
 
-    ItemsCleared()
-    {
+    ItemsCleared() {
         this.currentItemIndex = 0
         this.clearItems()
     }
 
-    itemsChanged(lastCurrentIndex: number)
-    {
+    itemsChanged(lastCurrentIndex: number) {
         this.ItemsCleared()
         this.currentItemIndex = lastCurrentIndex
         this.displayItems(0)
@@ -273,7 +262,7 @@ class TableView implements IView
         this.tableView.classList.remove("highlight")
     }
 
-    private setColumns(value: ColumnsControl)
+    setColumns(value: ColumnsControl)
     {
         this.columnsControl = value
 
@@ -517,7 +506,7 @@ class TableView implements IView
     /**
     * Index des aktuellen Eintrags in der Liste der Einträge (items)
     */
-     private currentItemIndex = 0
+    private currentItemIndex = 0
     private startPosition = 0
     /**
     * Die Anzahl der Einträge, die dieses TableView in der momentanen Größe tatsächlich auf dem Bildschirm anzeigen kann
@@ -525,6 +514,8 @@ class TableView implements IView
     private tableCapacity = -1
     private rowHeight: number
     private readonly scrollbar: Scrollbar
+
+    private presenter: Presenter = new EmptyPresenter()
 
     private readonly table: HTMLTableElement
     private recentHeight: number

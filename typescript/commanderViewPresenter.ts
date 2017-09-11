@@ -1,26 +1,8 @@
-import { Presenter }  from './presenter'
+import { PresenterBase }  from './presenterbase'
+import { ColumnsControl }  from './columnscontrol'
 
-class CommanderViewPresenter implements Presenter
+class CommanderViewPresenter extends PresenterBase
 {
-    registerView(view: IView): void {
-        this.view = view
-    }
-    getItemsCount(): number {
-        return this.items.length
-    }
-
-    insertItem(index: number, startDrag?: (() => void) | undefined): HTMLTableRowElement {
-        return this.createItem(this.items[index].name)
-    }
-
-    insertMeasureItem(): HTMLTableRowElement {
-        return this.createItem("T")
-    }
-    
-    updateItem(itemElement: HTMLTableRowElement, index: number): void {
-        throw new Error("Method not implemented.");
-    }
-
     fill() {
         this.items = [
             { 
@@ -38,13 +20,75 @@ class CommanderViewPresenter implements Presenter
             { 
                 name: "Pferd",
                 description: "Tracy"
-            }
+            },
+            { 
+                name: "Affe",
+                description: "Ein Affe"
+            },
+            { 
+                name: "Hund",
+                description: "Mambo"
+            },
+            { 
+                name: "Katze",
+                description: "Perry"
+            },
+            { 
+                name: "Pferd",
+                description: "Tracy"
+            },
+            { 
+                name: "Affe",
+                description: "Ein Affe"
+            },
+            { 
+                name: "Hund",
+                description: "Mambo"
+            },
+            { 
+                name: "Katze",
+                description: "Perry"
+            },
+            { 
+                name: "Pferd",
+                description: "Tracy"
+            },
+            { 
+                name: "Affe",
+                description: "Ein Affe"
+            },
+            { 
+                name: "Hund",
+                description: "Mambo"
+            },
+            { 
+                name: "Katze",
+                description: "Perry"
+            },
+            { 
+                name: "Pferd",
+                description: "Tracy"
+            },
         ];
 
         this.view.itemsChanged(0)
     }
 
-    private createItem(name: string) : HTMLTableRowElement
+    protected setColumns() {
+        this.view.setColumns(new ColumnsControl([
+            {
+                item: "Name",
+                class: "nein"
+            },
+            {
+                item: "Beschreibung",
+                class: "nein"
+            }
+            
+        ], "4"))
+    }
+
+    protected createItem(name: string) : HTMLTableRowElement
     {
         const tr = document.createElement("tr")
         const td = document.createElement("td")
@@ -54,11 +98,7 @@ class CommanderViewPresenter implements Presenter
         tr.appendChild(td)
         tr.tabIndex = 1
         return tr
-        
     }
-
-    private items: any[]
-    private view: IView
 }
 
 export { CommanderViewPresenter }

@@ -10,11 +10,12 @@ app.on('ready', () => {
 
     const mainWindow = new BrowserWindow(bounds)
 
+
     if (settings.get("isMaximized"))
         mainWindow.maximize()
 
     mainWindow.loadURL(`file://${__dirname}/../indextest.html`)
-
+    
     mainWindow.on('close', () => {
         if (!mainWindow.isMaximized()) {
             const bounds = mainWindow.getBounds()
@@ -128,5 +129,4 @@ app.on('ready', () => {
     ])
     
     Menu.setApplicationMenu(menu)
-    
 })

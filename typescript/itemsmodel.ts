@@ -92,13 +92,13 @@ class ItemsModel implements IModel
         // Connection.addServiceEventSource(this.id, this.updateServiceItem.bind(this))
     }
 
-    /**
-     * Registrierung eines Observables, welches über Änderungen im Model informiert werden möchte
-     * @param observator
-     */
-    registerObservation(observator: IView) {
-        this.observator = observator
-    }
+    // /**
+    //  * Registrierung eines Observables, welches über Änderungen im Model informiert werden möchte
+    //  * @param observator
+    //  */
+    // registerObservation(observator: IView) {
+    //     this.observator = observator
+    // }
 
     /**
      * Ermittlung aller Einträge für das angegebene Verzeichnis
@@ -106,7 +106,7 @@ class ItemsModel implements IModel
      * @param lastCurrentDir das Verzeichnis, welches durch das neue ersetzt wird
      */
     async getItems(directory: string, lastCurrentDir: string) {
-        this.observator.ItemsCleared()
+//        this.observator.ItemsCleared()
 
         if (directory != this.CurrentDirectory)
              this.exifDates = null
@@ -138,7 +138,7 @@ class ItemsModel implements IModel
                 break
         }
             
-        if (this.observator) {
+//        if (this.observator) {
             var lastCurrentIndex = 0;
             if (lastCurrentDir) {
                 this.currentItems.items.forEach((item, index) => {
@@ -146,8 +146,8 @@ class ItemsModel implements IModel
                         lastCurrentIndex = index
                 })
             }
-            this.observator.itemsChanged(lastCurrentIndex)
-        }
+//            this.observator.itemsChanged(lastCurrentIndex)
+  //      }
     }
 
     /**
@@ -194,8 +194,8 @@ class ItemsModel implements IModel
             }
             refresh = true;
         })
-        if (refresh && this.observator)
-            this.observator.updateItems()
+        // if (refresh && this.observator)
+        //     this.observator.updateItems()
     }
 
     /**
@@ -217,8 +217,8 @@ class ItemsModel implements IModel
                 refresh = true
             }
         })
-        if (refresh && this.observator)
-            this.observator.updateItems()
+        // if (refresh && this.observator)
+        //     this.observator.updateItems()
     }
 
     /**
@@ -240,7 +240,7 @@ class ItemsModel implements IModel
     /**
     * Das Element, welches über Änderungen benachrichtigt werden soll
     */
-    private observator: IView
+//    private observator: IView
     /**
      * Die momentan angezeigten Items
      */

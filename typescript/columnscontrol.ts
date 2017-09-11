@@ -1,5 +1,4 @@
-﻿import { ItemSortKind, ISorter }  from './itemssorter'
-
+﻿
 declare class IColumn
 {
     item: string

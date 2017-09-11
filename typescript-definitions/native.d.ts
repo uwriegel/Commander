@@ -88,18 +88,6 @@ declare class CommanderEvent
     dragFinished: DragFinished
 }
 
-
-interface IView
-{
-    ItemsCleared(): void 
-    itemsChanged(lastCurrentIndex: number): void
-    updateItems(): void
-    refreshSelection(itemIndex: number, isSelected: boolean): void
-    getCurrentItemIndex(): number
-}
-
-
-
 interface ISelectionChanged
 {
     selectionChanged(): void

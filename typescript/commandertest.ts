@@ -24,7 +24,9 @@ class Commander
     constructor()
     {
         const div = document.getElementById('testview')!
-        this.tableView = new TableView(div, this.presenter)
+        this.tableView = new TableView(div)
+
+        this.tableView.setPresenter(this.presenter)
         this.presenter.fill()
 
         ipcRenderer.on("darkTheme", (evt: any, dark: boolean) => this.setDarkTheme(dark))
