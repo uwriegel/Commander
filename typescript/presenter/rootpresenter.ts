@@ -12,6 +12,7 @@ interface RootItem
 
 // TODO: Sortierung
 // TODO: Statuszeile 
+// TODO: Favoriten, HIstorie, Windows/Linus-spezifische Anpassungen
 class RootPresenter extends PresenterBase
 {
     constructor()
