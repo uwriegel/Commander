@@ -3,7 +3,6 @@ import { Grid }  from './grid'
 import { VerticalGrid }  from './vgrid'
 import { Viewer }  from './viewer'
 import { TableView }  from './tableview'
-import { CommanderViewPresenter } from './presenter/commanderViewPresenter'
 import { RootPresenter } from './presenter/rootpresenter'
 
 /*
@@ -28,11 +27,13 @@ class Commander
         this.tableView = new TableView(div)
 
         this.tableView.setPresenter(this.presenter)
-        this.presenter.fill()
-
         ipcRenderer.on("darkTheme", (evt: any, dark: boolean) => this.setDarkTheme(dark))
     }
 
+    async fill() {
+        await this.presenter.fill()
+    } 
+    
     setDarkTheme(activate: boolean) {
         if (activate) {
             const head = document.getElementsByTagName('head')[0]
@@ -50,11 +51,11 @@ class Commander
     }
 
     private readonly tableView: TableView
-    //private readonly presenter = new CommanderViewPresenter()
     private readonly presenter = new RootPresenter()
 }
 
 const commanderInstance = new Commander()
+commanderInstance.fill()
 
 // TODO: 
 // document.ondragover = document.ondrop = (ev) => {

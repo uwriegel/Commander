@@ -10,21 +10,28 @@ interface RootItem
     size: number
 }
 
-// TODO: Promise
 // TODO: Sortierung
-// TODO: Icon
-// TODO: Template
-// TODO: CSS
+// TODO: Statuszeile 
 class RootPresenter extends PresenterBase
 {
-    fill() {
-        // TODO: Promise
-        driveList.list((error: any, drives: RootItem[]) => {
-            if (error) 
-                throw error;
+    constructor()
+    {
+        super()
+        this.itemIconNameTemplate = (document.getElementById('tableDataItemIconNameTemplate') as HTMLTemplateElement).content.querySelector('td')!
+        this.itemTemplate = (document.getElementById('tableDataItemTemplate') as HTMLTemplateElement).content.querySelector('td')!
+        this.itemRightTemplate = (document.getElementById('tableDataItemRightTemplate') as HTMLTemplateElement).content.querySelector('td')!
+    }
 
-            this.items = drives
-            this.view.itemsChanged(0)
+    fill() {
+        return new Promise<void>((resolve, reject) => {
+            driveList.list((error: any, drives: RootItem[]) => {
+                if (error) 
+                    reject(error)
+    
+                this.items = drives
+                this.view.itemsChanged(0)
+                resolve()
+            })
         })
     }
 
@@ -49,27 +56,33 @@ class RootPresenter extends PresenterBase
     protected createItem(item?: RootItem) : HTMLTableRowElement
     {
         const tr = document.createElement("tr")
-        let td = document.createElement("td")
-        let sp = document.createElement("span")
-        sp.innerText = item ? item.displayName : 'W'
-        td.appendChild(sp)
-        tr.appendChild(td)
-        
-        td = document.createElement("td")
-        sp = document.createElement("span")
-        sp.innerText = item ? item.description : 'W'
-        td.appendChild(sp)
-        tr.appendChild(td)
-        
-        td = document.createElement("td")
-        sp = document.createElement("span")
-        sp.innerText = item ? FileHelper.formatFileSize(item.size) : 'W'
-        td.appendChild(sp)
 
+        let td = this.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
+        let img = td.querySelector('img') as HTMLImageElement
+        img.src = "images/drive.png"
+        let span = td.querySelector('span') as HTMLSpanElement
+        span.innerText = item ? item.displayName : 'W'
+        tr.appendChild(td)
+        
+        td = this.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
+        td = this.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
+        span = td.querySelector('span') as HTMLSpanElement
+        span.innerText = item ? item.description : 'W'
+        tr.appendChild(td)
+
+        td = this.itemRightTemplate.cloneNode(true) as HTMLTableDataCellElement
+        span = td.querySelector('span') as HTMLSpanElement
+        span.innerText = item ? FileHelper.formatFileSize(item.size) : 'W'
+        tr.appendChild(td)
+        
         tr.appendChild(td)
         tr.tabIndex = 1
         return tr
     }
+
+    private readonly itemIconNameTemplate: HTMLTableDataCellElement
+    private readonly itemTemplate: HTMLTableDataCellElement
+    private readonly itemRightTemplate: HTMLTableDataCellElement
 }
 
 export { RootPresenter }

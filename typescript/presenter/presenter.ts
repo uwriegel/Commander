@@ -15,6 +15,8 @@ interface Presenter {
     * @param index Index des Eintrages, mit dem die TableRow gefüllt werden soll
     */
     updateItem(itemElement: HTMLTableRowElement, index: number): void
+
+    fill(): Promise<void>
 }
 
 export { Presenter }

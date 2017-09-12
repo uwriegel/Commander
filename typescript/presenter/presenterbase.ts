@@ -27,6 +27,8 @@ abstract class PresenterBase implements Presenter
         throw new Error("Method not implemented.");
     }
 
+    abstract fill(): Promise<void>
+
     protected abstract createItem(name?: Item) : HTMLTableRowElement
     protected abstract setColumns(): void
 
