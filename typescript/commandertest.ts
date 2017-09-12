@@ -3,7 +3,8 @@ import { Grid }  from './grid'
 import { VerticalGrid }  from './vgrid'
 import { Viewer }  from './viewer'
 import { TableView }  from './tableview'
-import { CommanderViewPresenter } from './commanderViewPresenter'
+import { CommanderViewPresenter } from './presenter/commanderViewPresenter'
+import { RootPresenter } from './presenter/rootpresenter'
 
 /*
 
@@ -49,7 +50,8 @@ class Commander
     }
 
     private readonly tableView: TableView
-    private readonly presenter = new CommanderViewPresenter()
+    //private readonly presenter = new CommanderViewPresenter()
+    private readonly presenter = new RootPresenter()
 }
 
 const commanderInstance = new Commander()

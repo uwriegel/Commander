@@ -1,4 +1,6 @@
 
+declare module 'drivelist'
+
 declare enum DragDropKind
 {
     Copy,

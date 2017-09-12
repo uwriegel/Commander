@@ -1,4 +1,4 @@
-import { View }  from './view'
+import { View }  from '../view'
 
 interface Presenter {
     registerView(view: View): void

@@ -1,5 +1,9 @@
 import { Presenter }  from './presenter'
-import { View }  from './view'
+import { View }  from '../view'
+
+interface Item
+{
+}
 
 abstract class PresenterBase implements Presenter
 {
@@ -12,21 +16,21 @@ abstract class PresenterBase implements Presenter
     }
 
     insertItem(index: number, startDrag?: (() => void) | undefined): HTMLTableRowElement {
-        return this.createItem(this.items[index].name)
+        return this.createItem(this.items[index])
     }
 
     insertMeasureItem(): HTMLTableRowElement {
-        return this.createItem("T")
+        return this.createItem(undefined)
     }
     
     updateItem(itemElement: HTMLTableRowElement, index: number): void {
         throw new Error("Method not implemented.");
     }
 
-    protected abstract createItem(name: string) : HTMLTableRowElement
+    protected abstract createItem(name?: Item) : HTMLTableRowElement
     protected abstract setColumns(): void
 
-    protected items: any[]
+    protected items: Item[] = []
     protected view: View
 }
 

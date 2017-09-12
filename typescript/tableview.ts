@@ -1,8 +1,8 @@
 import { Scrollbar }  from './scrollbar'
 import { ColumnsControl }  from './columnscontrol'
 import { IItemsViewModel }  from './itemsviewmodel'
-import { Presenter }  from './presenter'
-import { EmptyPresenter }  from './emptypresenter'
+import { Presenter }  from './presenter/presenter'
+import { EmptyPresenter }  from './presenter/emptypresenter'
 import { View }  from './view'
 
 class TableView implements View

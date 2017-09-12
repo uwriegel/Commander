@@ -1,5 +1,5 @@
 import { PresenterBase }  from './presenterbase'
-import { ColumnsControl }  from './columnscontrol'
+import { ColumnsControl }  from '../columnscontrol'
 
 class CommanderViewPresenter extends PresenterBase
 {
