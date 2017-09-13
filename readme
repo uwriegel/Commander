@@ -8,5 +8,5 @@ npm install --save drivelist
 
 Unter Windows:
 npm install --save-dev electron-rebuild
-npm install --save drivelist in einem node-Projekt
+npm install --save drivelist
 ./node_modules/.bin/electron-rebuild
