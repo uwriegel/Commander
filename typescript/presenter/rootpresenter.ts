@@ -2,8 +2,9 @@ import { PresenterBase }  from './presenterbase'
 import { ColumnsControl }  from '../columnscontrol'
 import * as driveList from 'drivelist'
 import { FileHelper } from '../filehelper' 
+import { Platform, getPlatform }from '../platform/platform-creator' 
 
-interface RootItem
+export interface RootItem
 {
     displayName: string
     description: string
@@ -12,27 +13,28 @@ interface RootItem
 
 // TODO: Sortierung
 // TODO: Statuszeile 
-// TODO: Favoriten, HIstorie, Windows/Linus-spezifische Anpassungen
+// TODO: Favoriten, Historie, Windows-spezifische Anpassungen, DVD-Laufwerke
 class RootPresenter extends PresenterBase
 {
     constructor()
     {
         super()
+
+        this.platform = getPlatform()
+
         this.itemIconNameTemplate = (document.getElementById('tableDataItemIconNameTemplate') as HTMLTemplateElement).content.querySelector('td')!
         this.itemTemplate = (document.getElementById('tableDataItemTemplate') as HTMLTemplateElement).content.querySelector('td')!
         this.itemRightTemplate = (document.getElementById('tableDataItemRightTemplate') as HTMLTemplateElement).content.querySelector('td')!
     }
 
     fill() {
-        return new Promise<void>((resolve, reject) => {
-            driveList.list((error: any, drives: RootItem[]) => {
-                if (error) 
-                    reject(error)
-    
-                this.items = drives
-                this.view.itemsChanged(0)
-                resolve()
-            })
+        return new Promise<void>(async (resolve, reject) => {
+            var initialItems = await this.platform.getInitialRootItems()
+            var rootItems = await this.getRootItems()
+
+            this.items = initialItems.concat(rootItems)
+            this.view.itemsChanged(0)
+            resolve()
         })
     }
 
@@ -81,6 +83,17 @@ class RootPresenter extends PresenterBase
         return tr
     }
 
+    private getRootItems() {
+        return new Promise<RootItem[]>((resolve, reject) => 
+            driveList.list((error: any, drives: RootItem[]) => {
+                if (error) 
+                    reject(error)
+                resolve(drives)
+            })
+        )
+    }
+
+    private readonly platform: Platform
     private readonly itemIconNameTemplate: HTMLTableDataCellElement
     private readonly itemTemplate: HTMLTableDataCellElement
     private readonly itemRightTemplate: HTMLTableDataCellElement
