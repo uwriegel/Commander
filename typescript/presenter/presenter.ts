@@ -16,7 +16,7 @@ interface Presenter {
     */
     updateItem(itemElement: HTMLTableRowElement, index: number): void
 
-    fill(): Promise<void>
+    fill(path: string): Promise<void>
 }
 
 export { Presenter }

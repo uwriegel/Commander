@@ -33,100 +33,100 @@ app.on('ready', () => {
         settings.set("isMaximized", false)
     })
 
-    const menu = Menu.buildFromTemplate([
-        {
-            label: '&Datei',
-            submenu: [{
-                label: '&Umbenennen',
-                accelerator: "F2"
-            },
+        const menu = Menu.buildFromTemplate([
             {
-                type: 'separator'
-            },            
+                label: '&Datei',
+                submenu: [{
+                    label: '&Umbenennen',
+                    accelerator: "F2"
+                },
+                {
+                    type: 'separator'
+                },            
+                {
+                    label: '&Kopieren',
+                    accelerator: "F5"
+                },
+                {
+                    label: '&Verschieben',
+                    accelerator: "F6"
+                },
+                {
+                    label: '&Löschen',
+                    accelerator: "F8"
+                },
+                {
+                    type: 'separator'
+                },            
+                {
+                    label: '&Eigenschaften',
+                    accelerator: "Alt+Enter"
+                },
+                {
+                    label: '&Beenden',
+                    accelerator: 'Alt+F4',
+                    role: "quit"
+                }
+            ]},
             {
-                label: '&Kopieren',
-                accelerator: "F5"
-            },
+                label: '&Navigation',
+                submenu: [{
+                    label: '&Erstes Element',
+                    accelerator: 'Home'
+                },
+                {
+                    label: '&Favoriten',
+                    accelerator: 'F1'
+                }
+            ]},
             {
-                label: '&Verschieben',
-                accelerator: "F6"
-            },
+                label: '&Selektion',
+                submenu: [{
+                    label: '&Alles'
+                },
+                {
+                    label: '&Nichts'
+                }
+            ]},
             {
-                label: '&Löschen',
-                accelerator: "F8"
-            },
-            {
-                type: 'separator'
-            },            
-            {
-                label: '&Eigenschaften',
-                accelerator: "Alt+Enter"
-            },
-            {
-                label: '&Beenden',
-                accelerator: 'Alt+F4',
-                role: "quit"
-            }
-        ]},
-        {
-            label: '&Navigation',
-            submenu: [{
-                label: '&Erstes Element',
-                accelerator: 'Home'
-            },
-            {
-                label: '&Favoriten',
-                accelerator: 'F1'
-            }
-        ]},
-        {
-            label: '&Selektion',
-            submenu: [{
-                label: '&Alles'
-            },
-            {
-                label: '&Nichts'
-            }
-        ]},
-        {
-            label: '&Ansicht',
-            submenu: [{
-                label: '&Versteckte Dateien',
-                accelerator: "Ctrl+H",
-                type: "checkbox"
-            },
-            {
-                label: '&Dunkles Thema',
-                type: "checkbox",
-                click: evt => mainWindow.webContents.send("darkTheme", evt.checked)
-            },
-            {
-                type: 'separator'
-            },            
-            {
-                label: '&Vorschau',
-                type: "checkbox",
-                accelerator: "F3",
-                click: evt => mainWindow.webContents.send("preview", evt.checked)
-            },
-            {
-                type: 'separator'
-            },            
-            {
-                label: '&Vollbild',
-                click: () => mainWindow.setFullScreen(!mainWindow.isFullScreen()),
-                accelerator: "F11"
-            },
-            {
-                type: 'separator'
-            },            
-            {
-                label: '&Entwicklerwerkzeuge',
-                click: () => mainWindow.webContents.openDevTools(),
-                accelerator: "F12"
-            }
-        ]}
-    ])
+                label: '&Ansicht',
+                submenu: [{
+                    label: '&Versteckte Dateien',
+                    accelerator: "Ctrl+H",
+                    type: "checkbox"
+                },
+                {
+                    label: '&Dunkles Thema',
+                    type: "checkbox",
+                    click: evt => mainWindow.webContents.send("darkTheme", evt.checked)
+                },
+                {
+                    type: 'separator'
+                },            
+                {
+                    label: '&Vorschau',
+                    type: "checkbox",
+                    accelerator: "F3",
+                    click: evt => mainWindow.webContents.send("preview", evt.checked)
+                },
+                {
+                    type: 'separator'
+                },            
+                {
+                    label: '&Vollbild',
+                    click: () => mainWindow.setFullScreen(!mainWindow.isFullScreen()),
+                    accelerator: "F11"
+                },
+                {
+                    type: 'separator'
+                },            
+                {
+                    label: '&Entwicklerwerkzeuge',
+                    click: () => mainWindow.webContents.openDevTools(),
+                    accelerator: "F12"
+                }
+            ]}
+        ])
     
-    Menu.setApplicationMenu(menu)
+        Menu.setApplicationMenu(menu)
 })

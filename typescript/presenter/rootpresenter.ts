@@ -27,7 +27,7 @@ class RootPresenter extends PresenterBase
         this.itemRightTemplate = (document.getElementById('tableDataItemRightTemplate') as HTMLTemplateElement).content.querySelector('td')!
     }
 
-    fill() {
+    fill(path: string) {
         return new Promise<void>(async (resolve, reject) => {
             var initialItems = await this.platform.getInitialRootItems()
             var rootItems = await this.getRootItems()

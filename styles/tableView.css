@@ -5,6 +5,7 @@
     height: 100%;
     outline-width: 0px;
     overflow-y: hidden;
+    color: rgba(0, 0, 0, 0.75)
 }
 
 .tableView td,th {

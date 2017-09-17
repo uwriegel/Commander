@@ -4,6 +4,7 @@ import { VerticalGrid }  from './vgrid'
 import { Viewer }  from './viewer'
 import { TableView }  from './tableview'
 import { RootPresenter } from './presenter/rootpresenter'
+import { DirectoryPresenter } from './presenter/directory-presenter'
 
 /*
 
@@ -31,7 +32,7 @@ class Commander
     }
 
     async fill() {
-        await this.presenter.fill()
+        await this.presenter.fill("~")
     } 
     
     setDarkTheme(activate: boolean) {
@@ -52,11 +53,11 @@ class Commander
 
     private readonly tableView: TableView
     private readonly presenter = new RootPresenter()
+    //private readonly presenter = new DirectoryPresenter()
 }
 
 const commanderInstance = new Commander()
 commanderInstance.fill()
-
 // TODO: 
 // document.ondragover = document.ondrop = (ev) => {
 //     ev.preventDefault()

@@ -1,11 +1,11 @@
 import { Presenter }  from './presenter'
 import { View }  from '../view'
 
-interface Item
+export interface Item
 {
 }
 
-abstract class PresenterBase implements Presenter
+export abstract class PresenterBase implements Presenter
 {
     registerView(view: View): void {
         this.view = view
@@ -27,7 +27,7 @@ abstract class PresenterBase implements Presenter
         throw new Error("Method not implemented.");
     }
 
-    abstract fill(): Promise<void>
+    abstract fill(path: string): Promise<void>
 
     protected abstract createItem(name?: Item) : HTMLTableRowElement
     protected abstract setColumns(): void
@@ -36,4 +36,3 @@ abstract class PresenterBase implements Presenter
     protected view: View
 }
 
-export { PresenterBase }
