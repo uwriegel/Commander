@@ -14,7 +14,7 @@ app.on('ready', () => {
     if (settings.get("isMaximized"))
         mainWindow.maximize()
 
-    mainWindow.loadURL(`file://${__dirname}/../indextest.html`)
+    mainWindow.loadURL(`file://${__dirname}/../index.html`)
     
     mainWindow.on('close', () => {
         if (!mainWindow.isMaximized()) {

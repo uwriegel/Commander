@@ -6,18 +6,7 @@ import { TableView }  from './tableview'
 import { RootPresenter } from './presenter/rootpresenter'
 import { DirectoryPresenter } from './presenter/directory-presenter'
 
-/*
 
-              Presenter (Steuert die Daten, passt die Views an)
-                 /\
-                /  \
-               /    \
-            Model  View (TableView, ColumnsControl)
-
-        Der Presenter kann einen Sorter hinzugefügt bekommen
-
-        Presenter 
-*/
 
 
 class Commander

@@ -1,44 +1,44 @@
-// import { TableView }  from './tableview'
-// import { ColumnsControl }  from './columnscontrol'
-// import { ItemSortKind, ItemsSorter }  from './itemssorter'
-// import { Item, ItemsModel, IModel }  from './itemsmodel'
-// import { ItemsViewModel }  from './itemsviewmodel'
+import { TableView }  from './tableview'
+import { DirectoryPresenter } from './presenter/directory-presenter'
 
-// /**
-//  * Ein Commanderview besteht aus einer Tableview mit den Einträgen des aktuellen Verzeichnisses und einem Verzeichnis-Textfeldes
-//  * @param id Die ID des CommanderViews
-//  */
-// class CommanderView
-// {
-//     /**
-//     * Das andere CommanderView
-//     */
-//     otherView: CommanderView
 
-//     get currentDirectory() {
-//         return this.itemsModel.CurrentDirectory
-//     }
+/**
+ * Ein Commanderview besteht aus einer Tableview mit den Einträgen des aktuellen Verzeichnisses und einem Verzeichnis-Textfeldes
+ * @param id Die ID des CommanderViews
+ */
+class CommanderView
+{
+    /**
+    * Das andere CommanderView
+    */
+    otherView: CommanderView
 
-//     constructor(public id: string)
-//     {
-//         this.parent = document.getElementById(id)!
-//         this.commanderDirectory = document.createElement("input")
-//         this.commanderDirectory.classList.add('directory')
-//         this.parent.appendChild(this.commanderDirectory)
+    // get currentDirectory() {
+    //     return this.itemsModel.CurrentDirectory
+    // }
 
-//         const commanderTable = document.createElement('div')
-//         commanderTable.classList.add('commanderTable')
+    constructor(public id: string)
+    {
+        this.parent = document.getElementById(id)!
+        this.commanderDirectory = document.createElement("input")
+        this.commanderDirectory.classList.add('directory')
+        this.parent.appendChild(this.commanderDirectory)
 
-//         this.parent.appendChild(commanderTable)
-//         {
-//             const restrictor = document.createElement('input')
-//             restrictor.classList.add('restrictor')
-//             restrictor.classList.add('restrictorHide')
-//             this.parent.appendChild(restrictor)
-//         }
+        const commanderTable = document.createElement('div')
+        commanderTable.classList.add('commanderTable')
 
-//         this.tableView = new TableView(commanderTable)
-//         this.itemsModel = new ItemsModel(id)
+        this.parent.appendChild(commanderTable)
+        const restrictor = document.createElement('input')
+        restrictor.classList.add('restrictor')
+        restrictor.classList.add('restrictorHide')
+        this.parent.appendChild(restrictor)
+
+        this.tableView = new TableView(commanderTable)
+        this.tableView.setPresenter(this.presenter)
+        const fill = async () => await this.presenter.fill("~")         
+        fill()
+        
+//        this.itemsModel = new ItemsModel(id)
 //         this.itemsSorter = new ItemsSorter(this.itemsModel)
 
 //         this.columnsControl = new ColumnsControl([
@@ -249,16 +249,16 @@
 //                     break
 //             }
 //         }
-//     }
+     }
 
 //     initialize() {
 //         const currentDirectory = localStorage[this.id] || "root"
 //         this.changeDirectory(currentDirectory)
 //     }
 
-//      focus() {
-//          this.tableView.focus()
-//      }
+      focus() {
+          this.tableView.focus()
+      }
 
 //     focusDirectoryInput() {
 //         this.commanderDirectory.focus()
@@ -945,18 +945,19 @@
 //   //      Dialog.show()
 //     }
 
-//     private tableView: TableView
-//     private readonly parent: HTMLElement  
+    private tableView: TableView
+    private readonly parent: HTMLElement  
 //     private itemsModel: ItemsModel
 //     private itemsSorter: any // ItemsSorter
 //     /**
 //     * Das input-Element, welches die Beschränkungszeichen darstellt</var>
 //     */
 //     private restrictor: HTMLInputElement
-//     /**
-//     * Das Eingabefeld zur Eingabe eines Verzeichnisses
-//     */
-//     private commanderDirectory: HTMLInputElement
+    /**
+    * Das Eingabefeld zur Eingabe eines Verzeichnisses
+    */
+    private commanderDirectory: HTMLInputElement
+    private readonly presenter = new DirectoryPresenter()
 //     private onCurrentItemChanged: (item?: Item, directory?: string) => void
 //     private columnsControl: ColumnsControl
 //     private drivesColumnControl: ColumnsControl
@@ -969,6 +970,6 @@
 //     private historyWriterTimeouter: NodeJS.Timer
 // //    private extendedRename: ExtendedRename
 //     private dragStarted: boolean
-// }
+}
 
-// export { CommanderView }
+export { CommanderView }
