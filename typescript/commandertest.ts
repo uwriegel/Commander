@@ -52,8 +52,8 @@ class Commander
     }
 
     private readonly tableView: TableView
-    private readonly presenter = new RootPresenter()
-    //private readonly presenter = new DirectoryPresenter()
+    //private readonly presenter = new RootPresenter()
+    private readonly presenter = new DirectoryPresenter()
 }
 
 const commanderInstance = new Commander()

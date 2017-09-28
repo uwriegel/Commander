@@ -1,4 +1,4 @@
-import { PresenterBase }  from './presenterbase'
+import { PresenterBase, Item }  from './presenterbase'
 
 export class EmptyPresenter extends PresenterBase
 {
@@ -6,7 +6,7 @@ export class EmptyPresenter extends PresenterBase
 
     protected setColumns() { }
     
-    protected createItem(name: string): HTMLTableRowElement
+    protected createItem(name?: Item): HTMLTableRowElement
     {
         const tr = document.createElement("tr")
         return tr

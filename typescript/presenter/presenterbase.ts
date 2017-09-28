@@ -3,6 +3,7 @@ import { View }  from '../view'
 
 export interface Item
 {
+    isDirectory: boolean
 }
 
 export abstract class PresenterBase implements Presenter
@@ -28,6 +29,13 @@ export abstract class PresenterBase implements Presenter
     }
 
     abstract fill(path: string): Promise<void>
+
+    protected static readonly itemIconNameTemplate: HTMLTableDataCellElement = 
+        (document.getElementById('tableDataItemIconNameTemplate') as HTMLTemplateElement).content.querySelector('td')!
+    protected static readonly itemTemplate: HTMLTableDataCellElement = 
+        (document.getElementById('tableDataItemTemplate') as HTMLTemplateElement).content.querySelector('td')!
+    protected static readonly itemRightTemplate: HTMLTableDataCellElement = 
+        (document.getElementById('tableDataItemRightTemplate') as HTMLTemplateElement).content.querySelector('td')!
 
     protected abstract createItem(name?: Item) : HTMLTableRowElement
     protected abstract setColumns(): void
