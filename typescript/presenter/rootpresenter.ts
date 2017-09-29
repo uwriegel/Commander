@@ -1,5 +1,6 @@
 import { PresenterBase, Item }  from './presenterbase'
 import { ColumnsControl }  from '../columnscontrol'
+import { View }  from '../view'
 import * as driveList from 'drivelist'
 import { FileHelper } from '../filehelper' 
 import { Platform, getPlatform }from '../platform/platform-creator' 
@@ -16,7 +17,7 @@ export interface RootItem extends Item
 // TODO: Favoriten, Historie, Windows-spezifische Anpassungen, DVD-Laufwerke
 class RootPresenter extends PresenterBase
 {
-    constructor()
+    constructor(view?: View)
     {
         super()
 
@@ -36,6 +37,10 @@ class RootPresenter extends PresenterBase
 
     getSelectedDirectory(index: number): string {
         return ""
+    }
+
+    checkPath(path: string) {
+        return path == "root"
     }
 
     protected setColumns() {

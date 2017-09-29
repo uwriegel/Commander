@@ -1,6 +1,6 @@
 import { Presenter, Item }  from './presenter'
 import { View }  from '../view'
-export { Item }  from './presenter'
+export { Item, Presenter }  from './presenter'
 
 export abstract class PresenterBase implements Presenter
 {
@@ -8,6 +8,7 @@ export abstract class PresenterBase implements Presenter
         this.view = view
         this.setColumns()
     }
+    
     getItemsCount(): number {
         return this.items.length
     }
@@ -31,6 +32,10 @@ export abstract class PresenterBase implements Presenter
     }
 
     abstract getSelectedDirectory(index: number): string
+
+    abstract checkPath(path: string): boolean
+
+    isDefault = false
 
     protected static readonly itemIconNameTemplate: HTMLTableDataCellElement = 
         (document.getElementById('tableDataItemIconNameTemplate') as HTMLTemplateElement).content.querySelector('td')!

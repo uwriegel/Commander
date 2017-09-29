@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import * as Path from 'path'
 import { PresenterBase, Item }  from './presenterbase'
 import { ColumnsControl }  from '../columnscontrol'
+import { View }  from '../view'
 import { FileHelper } from '../filehelper' 
 
 export interface DirectoryItem extends Item
@@ -13,10 +14,6 @@ export interface DirectoryItem extends Item
 
 export class DirectoryPresenter extends PresenterBase
 {
-    constructor() {
-        super()
-    }
-
     fill(path: string): Promise<void> {
         this.path = path
         return new Promise(async (resolve, reject) => {
@@ -38,6 +35,12 @@ export class DirectoryPresenter extends PresenterBase
             return ""
         return Path.join(this.path, item.displayName)
     }
+
+    checkPath(path: string) {
+        return false
+    }
+
+    isDefault = true
 
     protected createItem(item?: DirectoryItem | undefined): HTMLTableRowElement {
         const tr = document.createElement("tr")
@@ -86,7 +89,7 @@ export class DirectoryPresenter extends PresenterBase
         ], "6"))
     }
 
-    async readDir(path: string)
+    private async readDir(path: string)
     {
         return new Promise<string[]>((resolve, reject) => {
             fs.readdir(path, (err, files) => {
@@ -98,7 +101,7 @@ export class DirectoryPresenter extends PresenterBase
         })
     }
 
-    async stat(path: string, fileName: string)
+    private async stat(path: string, fileName: string)
     {
         const file = Path.join(path, fileName)
         return new Promise<DirectoryItem>((resolve, reject) => {

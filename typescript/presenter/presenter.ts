@@ -26,6 +26,10 @@ interface Presenter {
     getItem(index: number): Item
 
     getSelectedDirectory(index: number): string
+
+    checkPath(path: string): boolean
+
+    readonly isDefault: boolean
 }
 
 export { Presenter }

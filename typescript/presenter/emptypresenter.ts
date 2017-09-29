@@ -15,5 +15,9 @@ export class EmptyPresenter extends PresenterBase
     getSelectedDirectory(index: number) {
         return ""
     }
+
+    checkPath(path: string) {
+        return false
+    }
 }
 

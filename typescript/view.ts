@@ -1,4 +1,5 @@
 import { ColumnsControl }  from './columnscontrol'
+import { Presenter }  from './presenter/presenter'
 
 interface View
 {
@@ -8,6 +9,7 @@ interface View
     refreshSelection(itemIndex: number, isSelected: boolean): void
     getCurrentItemIndex(): number
     setColumns(value: ColumnsControl): void
+    setPresenter(presenter: Presenter): void
 }
 
 export { View }
