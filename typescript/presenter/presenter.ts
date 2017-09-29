@@ -1,5 +1,10 @@
 import { View }  from '../view'
 
+export interface Item
+{
+    isDirectory: boolean
+}
+
 interface Presenter {
     registerView(view: View): void
     getItemsCount(): number
@@ -17,6 +22,10 @@ interface Presenter {
     updateItem(itemElement: HTMLTableRowElement, index: number): void
 
     fill(path: string): Promise<void>
+
+    getItem(index: number): Item
+
+    getSelectedDirectory(index: number): string
 }
 
 export { Presenter }

@@ -117,13 +117,13 @@ class Commander
                         // if (this.focusedView.isDirectoryInputFocused())
                         //     this.focusedView.focus()
                         // else
-                        // {
-                        //     var toFocus = this.focusedView == this.leftView ? this.rightView : this.leftView
-                        //     toFocus.focus()
-                        // }
+                        {
+                            var toFocus = this.focusedView == this.leftView ? this.rightView : this.leftView
+                            toFocus.focus()
+                        }
                     }
-  //                  else
-//                        this.focusedView.focusDirectoryInput()
+                    // else
+                    //     this.focusedView.focusDirectoryInput()
                     break
                 // case 83: // s
                 //     if (evt.ctrlKey)

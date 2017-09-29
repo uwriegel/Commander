@@ -18,8 +18,8 @@ export class DirectoryPresenter extends PresenterBase
     }
 
     fill(path: string): Promise<void> {
+        this.path = path
         return new Promise(async (resolve, reject) => {
-            const path = process.env.HOME!
             const result = (await this.readDir(path))
             const items = await Promise.all(result.map(async file => await this.stat(path, file)))
             const folderItems = items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
@@ -30,6 +30,13 @@ export class DirectoryPresenter extends PresenterBase
             resolve()
             
         })
+    }
+
+    getSelectedDirectory(index: number): string {
+        var item = this.getItem(index) as DirectoryItem
+        if (!item.isDirectory)
+            return ""
+        return Path.join(this.path, item.displayName)
     }
 
     protected createItem(item?: DirectoryItem | undefined): HTMLTableRowElement {
@@ -109,5 +116,6 @@ export class DirectoryPresenter extends PresenterBase
             })
         })
     }
-   
+ 
+    private path: string
 }

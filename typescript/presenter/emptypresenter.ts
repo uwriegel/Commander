@@ -11,5 +11,9 @@ export class EmptyPresenter extends PresenterBase
         const tr = document.createElement("tr")
         return tr
     }
+
+    getSelectedDirectory(index: number) {
+        return ""
+    }
 }
 

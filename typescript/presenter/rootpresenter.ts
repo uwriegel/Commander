@@ -34,6 +34,10 @@ class RootPresenter extends PresenterBase
         })
     }
 
+    getSelectedDirectory(index: number): string {
+        return ""
+    }
+
     protected setColumns() {
         this.view.setColumns(new ColumnsControl([
             {

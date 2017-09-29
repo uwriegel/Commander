@@ -114,7 +114,7 @@ class CommanderView
 //         this.tableView.setItemsViewModel(itemsViewModel)
 //         this.tableView.Columns = this.columnsControl
 
-// //         this.tableView.setOnSelectedCallback((i, o, sp) => this.processItem(i, o, sp))
+        this.tableView.setOnSelectedCallback((i, o, sp) => this.processItem(i, o, sp))
 //         this.tableView.setOnToggleSelection(i => this.itemsSorter.toggleSelection(i))
 // //         this.tableView.setOnDragCallback(() =>
 // //         {
@@ -134,19 +134,19 @@ class CommanderView
 
 //          this.commanderDirectory.onfocus = () => this.commanderDirectory.select
 
-//          this.commanderDirectory.onkeydown = e => {
-//              switch (e.which) {
-//                  case 13: // Enter
-//                     //  if (e.altKey)
-//                     //      Connection.processItem(FileHelper.pathCombine(this.itemsModel.CurrentDirectory, this.commanderDirectory.value), true)
-// //                     else
-//                      {
-//                          this.changeDirectory(this.commanderDirectory.value)
-//                          this.tableView.focus()
-//                      }
-//                      break;
-//              }
-//          }
+          this.commanderDirectory.onkeydown = e => {
+              switch (e.which) {
+                  case 13: // Enter
+                     //  if (e.altKey)
+                     //      Connection.processItem(FileHelper.pathCombine(this.itemsModel.CurrentDirectory, this.commanderDirectory.value), true)
+ //                     else
+                      {
+                          this.changeDirectory(this.commanderDirectory.value)
+                          this.tableView.focus()
+                      }
+                      break;
+              }
+          }
 
 //          this.tableView.setOnCurrentItemChanged(item => {
 //              if (this.onCurrentItemChanged) {
@@ -161,8 +161,8 @@ class CommanderView
 //             this.keysRestrict(e)
 //         }
 
-//         commanderTable.onkeydown = e => {
-//             switch (e.which) {
+         commanderTable.onkeydown = e => {
+             switch (e.which) {
 //                 case 8: // BACKSPACE
 //                     if (this.restrictor != null)
 //                     {
@@ -244,11 +244,11 @@ class CommanderView
 //                 case 118: // F7
 //                     this.createDirectory()
 //                     break
-//                 case 120: // F9
+                 case 120: // F9
 //                     this.otherView.changeDirectory(this.currentDirectory)
-//                     break
-//             }
-//         }
+                     break
+             }
+         }
      }
 
 //     initialize() {
@@ -272,24 +272,21 @@ class CommanderView
 //         this.tableView.setOnFocus(() => callback())
 //     }
 
-//     changeDirectory(directory: string)
-//     {
-//         if (this.historyWriterTimeouter)
-//         {
-//             clearTimeout(this.historyWriterTimeouter)
-//             this.historyWriterTimeouter = null
-//         }
+     changeDirectory(directory: string) {
+        //  if (this.historyWriterTimeouter) {
+        //      clearTimeout(this.historyWriterTimeouter)
+        //      this.historyWriterTimeouter = null
+        //  }
 
 //         this.closeRestrict(true)
 
 //         var historyDirectory
-//         switch (directory)
-//         {
-//             case "root":
-//                 if (this.tableView.Columns != this.drivesColumnControl)
-//                     this.tableView.Columns = this.drivesColumnControl
-//                 break;
-//             case "Favoriten":
+//          switch (directory) {
+//              case "root":
+//                  if (this.tableView.Columns != this.drivesColumnControl)
+//                      this.tableView.Columns = this.drivesColumnControl
+//                  break;
+// //             case "Favoriten":
 //                 if (this.tableView.Columns != this.favoritesColumnControl)
 //                     this.tableView.Columns = this.favoritesColumnControl
 //                 break;
@@ -363,8 +360,9 @@ class CommanderView
 //         }
 
 //         localStorage[this.id] = directory
-//         this.itemsModel.getItems(directory, this.lastCurrentDir)
-//         this.commanderDirectory.value = directory
+        this.presenter.fill(directory)
+         //this.itemsModel.getItems(directory, this.lastCurrentDir)
+         this.commanderDirectory.value = directory
 
 //         if (historyDirectory)
 //         {
@@ -373,7 +371,7 @@ class CommanderView
 //                 SavedHistory.saveHistory(historyDirectory)
 //             }, 6000)
 //         }
-//     }
+     }
 
 //     refresh() {
 //         this.changeDirectory(this.currentDirectory)
@@ -554,75 +552,74 @@ class CommanderView
 //         this.itemsSorter.selectAll(false)
 //     }
 
-//     private processItem(itemIndex: number, openWith: boolean, showProperties: boolean, fromOtherView?: boolean)
-//     {
-//         var dir: string
-//         this.lastCurrentDir = null
-//         var item = <Item>this.itemsSorter.getItem(itemIndex)
-//         var selectedItems = this.itemsModel.getSelectedItems()
+    private processItem(itemIndex: number, openWith: boolean, showProperties: boolean, fromOtherView?: boolean) {
+    //     this.lastCurrentDir = null
+        var selectedDirectory = this.presenter.getSelectedDirectory(itemIndex)
 
-//         if (selectedItems.length == 0 || (selectedItems[0].kind != ItemsKind.Service || item.kind == ItemsKind.Parent))
-//         {
-//             switch (item.kind)
-//             {
-//                 case ItemsKind.Drive:
-//                     if (showProperties)
-//                     {
-//                         Connection.processItem(item.name, true)
-//                         return
-//                     }
-//                     dir = item.name
-//                     this.recentDirectories.push(dir)
-//                     break
-//                 case ItemsKind.Parent:
-//                     dir = item.parent
-//                     this.lastCurrentDir = this.recentDirectories.pop()
-//                     if (item.savedViewParent && !fromOtherView)
-//                         this.otherView.changeSavedView(0)
-//                     break
-//                 case ItemsKind.Directory:
-//                     if (showProperties)
-//                     {
-//                         Connection.processItem(FileHelper.pathCombine(this.itemsModel.CurrentDirectory, item.name), true)
-//                         return
-//                     }
-//                     dir = FileHelper.pathCombine(this.itemsModel.CurrentDirectory, item.name)
-//                     this.recentDirectories.push(item.name)
-//                     break
-//                 case ItemsKind.File:
-//                     Connection.processItem(FileHelper.pathCombine(this.itemsModel.CurrentDirectory, item.name), showProperties, openWith)
-//                     return
-//                 case ItemsKind.Favorite:
-//                     dir = FileHelper.pathCombine(item.parent, item.favoriteTarget)
-//                     this.recentDirectories.push(item.favoriteTarget)
-//                     break
-//                 case ItemsKind.History:
-//                     dir = item.favoriteTarget
-//                     break
-//                 case ItemsKind.SavedView:
-//                     dir = item.favoriteTarget
-//                     if (!fromOtherView)
-//                         this.otherView.changeSavedView(this.tableView.getCurrentItemIndex())
-//                     break
-//                 case ItemsKind.Service:
-//                     var selItems = [];
-//                     selItems.push(item);
-//                     Connection.startServices(selItems)
-//                     return
-//                 case ItemsKind.Registry:
-//                     dir = FileHelper.pathCombine(this.itemsModel.CurrentDirectory, item.name)
-//                     this.recentDirectories.push(item.name)
-//                     break
-//                 default:
-//                     return
-//             }
-//         }
-//         else
-//             Connection.startServices(selectedItems)
+    //     var selectedItems = this.itemsModel.getSelectedItems()
 
-//         this.changeDirectory(dir)
-//         this.tableView.focus()
-//     }
+    //     if (selectedItems.length == 0 || (selectedItems[0].kind != ItemsKind.Service || item.kind == ItemsKind.Parent))
+    //     {
+    //         switch (item.kind)
+    //         {
+    //             case ItemsKind.Drive:
+    //                 if (showProperties)
+    //                 {
+    //                     Connection.processItem(item.name, true)
+    //                     return
+    //                 }
+    //                 dir = item.name
+    //                 this.recentDirectories.push(dir)
+    //                 break
+    //             case ItemsKind.Parent:
+    //                 dir = item.parent
+    //                 this.lastCurrentDir = this.recentDirectories.pop()
+    //                 if (item.savedViewParent && !fromOtherView)
+    //                     this.otherView.changeSavedView(0)
+    //                 break
+    //             case ItemsKind.Directory:
+    //                 if (showProperties)
+    //                 {
+    //                     Connection.processItem(FileHelper.pathCombine(this.itemsModel.CurrentDirectory, item.name), true)
+    //                     return
+    //                 }
+    //                 dir = FileHelper.pathCombine(this.itemsModel.CurrentDirectory, item.name)
+    //                 this.recentDirectories.push(item.name)
+    //                 break
+    //             case ItemsKind.File:
+    //                 Connection.processItem(FileHelper.pathCombine(this.itemsModel.CurrentDirectory, item.name), showProperties, openWith)
+    //                 return
+    //             case ItemsKind.Favorite:
+    //                 dir = FileHelper.pathCombine(item.parent, item.favoriteTarget)
+    //                 this.recentDirectories.push(item.favoriteTarget)
+    //                 break
+    //             case ItemsKind.History:
+    //                 dir = item.favoriteTarget
+    //                 break
+    //             case ItemsKind.SavedView:
+    //                 dir = item.favoriteTarget
+    //                 if (!fromOtherView)
+    //                     this.otherView.changeSavedView(this.tableView.getCurrentItemIndex())
+    //                 break
+    //             case ItemsKind.Service:
+    //                 var selItems = [];
+    //                 selItems.push(item);
+    //                 Connection.startServices(selItems)
+    //                 return
+    //             case ItemsKind.Registry:
+    //                 dir = FileHelper.pathCombine(this.itemsModel.CurrentDirectory, item.name)
+    //                 this.recentDirectories.push(item.name)
+    //                 break
+    //             default:
+    //                 return
+    //         }
+    //     }
+    //     else
+    //         Connection.startServices(selectedItems)
+
+         this.changeDirectory(selectedDirectory)
+         this.tableView.focus()
+     }
 
 //     private keysRestrict(e)
 //     {

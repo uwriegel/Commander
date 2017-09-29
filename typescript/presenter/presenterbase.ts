@@ -1,10 +1,6 @@
-import { Presenter }  from './presenter'
+import { Presenter, Item }  from './presenter'
 import { View }  from '../view'
-
-export interface Item
-{
-    isDirectory: boolean
-}
+export { Item }  from './presenter'
 
 export abstract class PresenterBase implements Presenter
 {
@@ -29,6 +25,12 @@ export abstract class PresenterBase implements Presenter
     }
 
     abstract fill(path: string): Promise<void>
+
+    getItem(index: number) {
+        return this.items[index]
+    }
+
+    abstract getSelectedDirectory(index: number): string
 
     protected static readonly itemIconNameTemplate: HTMLTableDataCellElement = 
         (document.getElementById('tableDataItemIconNameTemplate') as HTMLTemplateElement).content.querySelector('td')!
