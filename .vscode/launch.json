@@ -18,11 +18,10 @@
             },
             "runtimeArgs": [
                 ".",
-                "--enable-logging",
                 "--remote-debugging-port=9222"
             ],
             "env": {},
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "sourceMaps": true
         },
         {
