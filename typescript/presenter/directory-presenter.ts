@@ -116,37 +116,23 @@ export class DirectoryPresenter extends PresenterBase {
     {
         const file = Path.join(path, fileName)
         return new Promise<DirectoryItem>((resolve, reject) => {
-
-
-
-
-            resolve({
-                displayName: fileName,
-                size: 0,
-                date: new Date(),
-                isDirectory: true
+            fs.stat(file, (err, stats) => {
+                if (err)
+                    resolve({
+                        displayName: fileName,
+                        size: 0,
+                        date: new Date(),
+                        isDirectory: false                                              
+                    })
+                else {
+                    resolve({
+                        displayName: fileName,
+                        size: stats.size,
+                        date: stats.ctime,
+                        isDirectory: stats.isDirectory()                                              
+                    })
+                }
             })
-
-
-
-
-            // fs.stat(file, (err, stats) => {
-            //     if (err)
-            //         resolve({
-            //             displayName: fileName,
-            //             size: 0,
-            //             date: new Date(),
-            //             isDirectory: false                                              
-            //         })
-            //     else {
-            //         resolve({
-            //             displayName: fileName,
-            //             size: stats.size,
-            //             date: stats.ctime,
-            //             isDirectory: stats.isDirectory()                                              
-            //         })
-            //     }
-            // })
         })
     }
 }

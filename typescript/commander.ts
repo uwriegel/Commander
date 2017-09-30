@@ -1,6 +1,4 @@
 ﻿// TODO: Weiterentwicklung
-// Windows
-// Gibt es unter Windows auch . und ..? dann .. nicht mehr unterdrücken
 
 // Hidden different color
 // Tab und Shift TAb
@@ -8,6 +6,7 @@
 // Css-Definitions, Theme
 // Sortierung
 // ~ bei Linux zu /home umwandeln
+// stat ersetzen durch natives
 //
 // Start as Admin im Hintergrund
 // drives: Gespeicherte Ansichten
