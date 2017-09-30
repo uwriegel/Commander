@@ -7,6 +7,8 @@
 // Sortierung
 // ~ bei Linux zu /home umwandeln
 // stat ersetzen durch natives
+// Icons (on windows)
+// Version (on windows)
 //
 // Start as Admin im Hintergrund
 // drives: Gespeicherte Ansichten
