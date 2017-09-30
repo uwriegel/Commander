@@ -5,42 +5,53 @@ import { ColumnsControl }  from '../columnscontrol'
 import { View }  from '../view'
 import { FileHelper } from '../filehelper' 
 
-export interface DirectoryItem extends Item
-{
-    displayName: string
+export interface DirectoryItem extends Item {
     size: number
     date: Date
 }
 
-export class DirectoryPresenter extends PresenterBase
-{
-    fill(path: string): Promise<void> {
-        this.path = path
-        return new Promise(async (resolve, reject) => {
-            const result = (await this.readDir(path))
-            const items = await Promise.all(result.map(async file => await this.stat(path, file)))
-            const folderItems = items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
-            const fileItems = items.filter(a => !a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
-            this.items = folderItems.concat(fileItems)
-
-            this.view.itemsChanged(0)
-            resolve()
-            
-        })
-    }
-
-    getSelectedDirectory(index: number): string {
+export class DirectoryPresenter extends PresenterBase {
+    
+    getSelectedPath(index: number) {
         var item = this.getItem(index) as DirectoryItem
         if (!item.isDirectory)
-            return ""
-        return Path.join(this.path, item.displayName)
+            return { selectedPath: "", currentPath: "" }
+        return { selectedPath: Path.join(this.path, item.displayName), 
+            currentPath: item.displayName == ".." ? this.path : "" }
     }
-
+    
     checkPath(path: string) {
         return false
     }
 
     isDefault = true
+
+    protected processFill(selectPath?: string) {
+        return new Promise<void>(async (resolve, reject) => {
+            const result = (await this.readDir(this.path))
+            const items = await Promise.all(result.map(async file => await this.stat(this.path, file)))
+            const folderItems = items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
+            const fileItems = items.filter(a => !a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
+            this.items = [{
+                    displayName: "..",
+                    size: -1,
+                    isDirectory: true
+                }
+            ].concat(folderItems).concat(fileItems)
+
+            let lastIndex = 0
+            if (selectPath) {
+                const directoryItems = this.items as DirectoryItem[]
+                const dir = Path.basename(selectPath)
+                const lastItem = directoryItems.find(n => n.displayName == dir)
+                if (lastItem)
+                    lastIndex = directoryItems.indexOf(lastItem)
+            }
+
+            this.view.itemsChanged(lastIndex)
+            resolve()
+        })
+    }
 
     protected createItem(item?: DirectoryItem | undefined): HTMLTableRowElement {
         const tr = document.createElement("tr")
@@ -54,7 +65,7 @@ export class DirectoryPresenter extends PresenterBase
         
         td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
         span = td.querySelector('span') as HTMLSpanElement
-        span.innerText = "Affe"// item ? item.description : 'W'
+        span.innerText = item ? FileHelper.formatDate(item.date) : 'W'
         tr.appendChild(td)
 
         td = PresenterBase.itemRightTemplate.cloneNode(true) as HTMLTableDataCellElement
@@ -119,6 +130,4 @@ export class DirectoryPresenter extends PresenterBase
             })
         })
     }
- 
-    private path: string
 }

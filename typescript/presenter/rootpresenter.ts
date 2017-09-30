@@ -24,7 +24,14 @@ class RootPresenter extends PresenterBase
         this.platform = getPlatform()
     }
 
-    fill(path: string) {
+    getSelectedPath(index: number) {
+        return { selectedPath: "", currentPath: "" }
+    }
+    checkPath(path: string) {
+        return path == "root"
+    }
+
+    protected processFill(selectPath?: string) {
         return new Promise<void>(async (resolve, reject) => {
             var initialItems = await this.platform.getInitialRootItems()
             var rootItems = await this.getRootItems()
@@ -33,14 +40,6 @@ class RootPresenter extends PresenterBase
             this.view.itemsChanged(0)
             resolve()
         })
-    }
-
-    getSelectedDirectory(index: number): string {
-        return ""
-    }
-
-    checkPath(path: string) {
-        return path == "root"
     }
 
     protected setColumns() {

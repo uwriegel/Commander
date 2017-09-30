@@ -1,6 +1,5 @@
 import { Scrollbar }  from './scrollbar'
 import { ColumnsControl }  from './columnscontrol'
-import { IItemsViewModel }  from './itemsviewmodel'
 import { Presenter }  from './presenter/presenter'
 import { EmptyPresenter }  from './presenter/emptypresenter'
 import { View }  from './view'
@@ -68,9 +67,6 @@ class TableView implements View
         }
 
         this.recentHeight = this.tableView.clientHeight
-
-        window.requestAnimationFrame(() => this.resizeChecking())
-
         this.thead = document.createElement("thead")
         this.table.appendChild(this.thead)
 
@@ -110,6 +106,8 @@ class TableView implements View
             else if (this.onToggleSelection)
                 this.onToggleSelection(this.currentItemIndex)
         }
+
+        window.addEventListener('resize', () => this.resizeChecking())        
     }
 
     setPresenter(presenter: Presenter) {
@@ -161,7 +159,7 @@ class TableView implements View
         this.onSelectedCallback = callback
     }
 
-    setOnCurrentItemChanged(callback: (itemIndex: number)=>void)
+    setOnCurrentItemChanged(callback: (itemIndex: number) => void)
     {
         this.onCurrentItemChanged = callback
     }
@@ -466,27 +464,20 @@ class TableView implements View
             this.tableView.focus()
     }
 
-    private resizeChecking()
-    {
-        if (this.tableView.clientHeight != this.recentHeight)
-        {
+    private resizeChecking() {
+        if (this.tableView.clientHeight != this.recentHeight) {
             var isFocused = this.tableView.contains(document.activeElement)
             this.recentHeight = this.tableView.clientHeight
-            if (this.tableCapacity == -1)
-                window.requestAnimationFrame(() => this.resizeChecking())
             var tableCapacityOld = this.tableCapacity
             this.calculateTableHeight()
             var itemsCountOld = Math.min(tableCapacityOld + 1, this.itemsCount - this.startPosition)
             var itemsCountNew = Math.min(this.tableCapacity + 1, this.itemsCount - this.startPosition)
-            if (itemsCountNew < itemsCountOld)
-            {
+            if (itemsCountNew < itemsCountOld) {
                 for (i = itemsCountOld - 1; i >= itemsCountNew; i--)
                     this.tbody.children[i].remove()
             }
-            else
-            {
-                for (var i = itemsCountOld; i < itemsCountNew; i++)
-                {
+            else {
+                for (var i = itemsCountOld; i < itemsCountNew; i++) {
                     var node = this.insertItem(i + this.startPosition)
                     this.tbody.appendChild(node)
                 }
@@ -494,7 +485,6 @@ class TableView implements View
             if (isFocused)
                 this.focus()
         }
-        window.requestAnimationFrame(() => this.resizeChecking())
     }
 
     private static tableViewId = 1000;

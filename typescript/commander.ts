@@ -1,4 +1,13 @@
 ﻿// TODO: Weiterentwicklung
+// Windows
+// Gibt es unter Windows auch . und ..? dann .. nicht mehr unterdrücken
+
+// Hidden different color
+// Tab und Shift TAb
+// ShowHidden
+// Css-Definitions, Theme
+// Sortierung
+// ~ bei Linux zu /home umwandeln
 //
 // Start as Admin im Hintergrund
 // drives: Gespeicherte Ansichten
@@ -6,16 +15,17 @@
 // NachRefresh Selektion erhalten
 // Conflicts: conflict liste in die Focusable anhängen
 // Rename auch von mehreren Dateien
+import * as Path from 'path'
 import { ipcRenderer }  from 'electron'
 import { Grid }  from './grid'
 import { VerticalGrid }  from './vgrid'
 import { CommanderView }  from './commanderview'
 import { Viewer }  from './viewer'
-import { Item }  from './itemsmodel'
+import { Item } from './presenter/presenterbase'
 
 /*
 
-              Presenter (Steuert die Daten, passt die Views an)
+              Presenter (Steuert die Daten, passt die Views an, sorgt für die Sortierung und Ansichtsfilterung)
                  /\
                 /  \
                /    \
@@ -26,21 +36,21 @@ import { Item }  from './itemsmodel'
         Presenter 
 */
 
-class Commander
-{
-    constructor()
-    {
+class Commander {
+    
+    get focused() {
+        return this.focusedView
+    }
+
+    constructor() {
         this.leftView.otherView = this.rightView
         this.rightView.otherView = this.leftView
-        //this.leftView.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
-        //this.rightView.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
+        this.leftView.setOnCurrentItemChanged((item: Item, path: string) => this.currentItemChanged(item, path))
+        this.rightView.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
 
         this.focusedView = this.leftView
-        //this.leftView.setOnFocus(() => this.focusedView = this.leftView)
-        //this.rightView.setOnFocus(() =>this.focusedView = this.rightView)
-
-        // this.leftView.initialize()
-        // this.rightView.initialize()
+        this.leftView.setOnFocus(() => this.focusedView = this.leftView)
+        this.rightView.setOnFocus(() =>this.focusedView = this.rightView)
         this.leftView.focus()
 
         const gridElement = <HTMLDivElement>document.getElementById("grid")
@@ -69,51 +79,11 @@ class Commander
         }
     }
 
-    getFocused() {
-            return this.focusedView
-    }
-
-    // dragOver(x: number, y: number)
-    // {
-    //     // if (this.leftView.isMouseInTableView(x, y))
-    //     // {
-    //     //     // console.log(`Drag: ${x}, ${y}`);
-    //     // }
-    //     // if (this.rightView.isMouseInTableView(x, y))
-    //     // {
-    //     //     //console.log(`Drag: ${x}, ${y}`);
-    //     // }
-    // }
-
-    // dragLeave()
-    // {
-    //     // this.leftView.dragLeave()
-    //     // this.rightView.dragLeave()
-    // }
-
-    // drop(x: number, y: number, dragDropKind: DragDropKind, directory: string, items: Item[])
-    // {
-    //     // if (this.leftView.isMouseInTableView(x, y))
-    //     // {
-    //     //     this.leftView.dragLeave()
-    //     //     this.rightView.drop(dragDropKind, directory, items)
-    //     // }
-    //     // if (this.rightView.isMouseInTableView(x, y))
-    //     // {
-    //     //     this.rightView.dragLeave()
-    //     //     this.leftView.drop(dragDropKind, directory, items)
-    //     // }
-    // }
-
-    private initializeOnKeyDownHandler()
-    {
-        document.onkeydown = evt =>
-        {
-            switch (evt.which)
-            {
+    private initializeOnKeyDownHandler() {
+        document.onkeydown = evt => {
+            switch (evt.which) {
                 case 9: // TAB
-                    if (!evt.shiftKey)
-                    {
+                    if (!evt.shiftKey) {
                         // if (this.focusedView.isDirectoryInputFocused())
                         //     this.focusedView.focus()
                         // else
@@ -125,28 +95,6 @@ class Commander
                     // else
                     //     this.focusedView.focusDirectoryInput()
                     break
-                // case 83: // s
-                //     if (evt.ctrlKey)
-                //     {
-                //         SavedViews.save({
-                //             left: this.leftView.currentDirectory,
-                //             right: this.rightView.currentDirectory
-                //         })
-                //         break
-                //     }
-                //     else
-                //         return
-                // case 112: // F1
-                //     if (evt.ctrlKey)
-                //     {
-                //         this.leftView.changeDirectory("SavedViews")
-                //         this.rightView.changeDirectory("SavedViews")
-                //     }
-                //     break
-                // case 116: // F5
-                //     break
-                // case 121: // F10
-                //     break
                 default:
                     return
             }
@@ -154,8 +102,7 @@ class Commander
         }
     }
 
-    showHidden(show: boolean)
-    {
+    showHidden(show: boolean) {
         //FileSystem.showHidden = show
         // this.leftView.refresh()
         // this.rightView.refresh()
@@ -177,16 +124,13 @@ class Commander
         }
     }
 
-    private currentItemChanged(item: Item, directory: string)
-    {
-        if (item)
-        {
-            var text = directory + '\\' + item.name
+    private currentItemChanged(item: Item, path: string) {
+        if (item) {
+            const text = Path.join(path, item.displayName)
             this.footer!.textContent = text
             this.viewer.selectionChanged(text)
         }
-        else
-        {
+        else {
             this.footer!.textContent = "Nichts selektiert"
             this.viewer.selectionChanged("")
         }
@@ -201,14 +145,4 @@ class Commander
 }
 
 const commanderInstance = new Commander()
-
-// TODO: 
-// document.ondragover = document.ondrop = (ev) => {
-//     ev.preventDefault()
-//   }
-  
-//   document.body.ondrop = (ev) => {
-//     console.log(ev.dataTransfer.files[0].path)
-//     ev.preventDefault()
-//   }
 

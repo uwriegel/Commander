@@ -2,12 +2,15 @@ import { View }  from '../view'
 
 export interface Item
 {
+    displayName: string
     isDirectory: boolean
 }
 
 interface Presenter {
     registerView(view: View): void
     getItemsCount(): number
+
+    getPath(): string
 
     insertItem(index: number, startDrag?: (() => void)): HTMLTableRowElement
     /**
@@ -21,11 +24,11 @@ interface Presenter {
     */
     updateItem(itemElement: HTMLTableRowElement, index: number): void
 
-    fill(path: string): Promise<void>
+    fill(path: string, selectPath?: string): Promise<void>
 
     getItem(index: number): Item
 
-    getSelectedDirectory(index: number): string
+    getSelectedPath(index: number): { selectedPath: string, currentPath: string }
 
     checkPath(path: string): boolean
 

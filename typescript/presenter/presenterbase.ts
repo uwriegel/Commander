@@ -8,6 +8,8 @@ export abstract class PresenterBase implements Presenter
         this.view = view
         this.setColumns()
     }
+
+    getPath() { return this.path }
     
     getItemsCount(): number {
         return this.items.length
@@ -25,17 +27,22 @@ export abstract class PresenterBase implements Presenter
         throw new Error("Method not implemented.");
     }
 
-    abstract fill(path: string): Promise<void>
+    fill(path: string, selectPath?: string): Promise<void> {
+        this.path = path
+        return this.processFill(selectPath)
+    }
 
     getItem(index: number) {
         return this.items[index]
     }
 
-    abstract getSelectedDirectory(index: number): string
+    abstract getSelectedPath(index: number): { selectedPath: string, currentPath: string }
 
     abstract checkPath(path: string): boolean
 
     isDefault = false
+
+    protected abstract processFill(selectPath?: string): Promise<void>
 
     protected static readonly itemIconNameTemplate: HTMLTableDataCellElement = 
         (document.getElementById('tableDataItemIconNameTemplate') as HTMLTemplateElement).content.querySelector('td')!
@@ -49,5 +56,6 @@ export abstract class PresenterBase implements Presenter
 
     protected items: Item[] = []
     protected view: View
+    protected path: string
 }
 

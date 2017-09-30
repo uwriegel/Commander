@@ -2,7 +2,7 @@ import { PresenterBase, Item }  from './presenterbase'
 
 export class EmptyPresenter extends PresenterBase
 {
-    fill(path: string) { return new Promise<void>((r, rj) => r() )}
+    protected processFill(selectPath?: string) { return new Promise<void>((r, rj) => r() )}
 
     protected setColumns() { }
     
@@ -12,8 +12,8 @@ export class EmptyPresenter extends PresenterBase
         return tr
     }
 
-    getSelectedDirectory(index: number) {
-        return ""
+    getSelectedPath(index: number) {
+        return { selectedPath: "", currentPath: "" }
     }
 
     checkPath(path: string) {

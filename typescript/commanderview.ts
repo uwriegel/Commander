@@ -1,5 +1,5 @@
 import { TableView }  from './tableview'
-import { PresenterBase, Presenter } from './presenter/presenterbase'
+import { PresenterBase, Presenter, Item } from './presenter/presenterbase'
 import { PresenterChooser } from './presenter/presenter-chooser'
 import { EmptyPresenter } from './presenter/emptypresenter'
 
@@ -39,14 +39,13 @@ class CommanderView
         this.commanderDirectory.onkeydown = e => {
             switch (e.which) {
                 case 13: // Enter
-                    this.changeDirectory(this.commanderDirectory.value)
+                    this.changePath(this.commanderDirectory.value)
                     this.tableView.focus()
                     break;
             }
         }
 
-        const currentDirectory = localStorage[this.id] || "root"
-        this.changeDirectory(currentDirectory)
+        this.changePath(localStorage[this.id] || "root")
     }
 
 
@@ -66,17 +65,23 @@ class CommanderView
         this.tableView.setOnFocus(() => callback())
     }
 
-    async changeDirectory(path: string) {
+    setOnCurrentItemChanged(callback: (item: Item, path: string) => void) {
+        this.tableView.setOnCurrentItemChanged(itemIndex => {
+            const item = this.presenter.getItem(itemIndex)
+            callback(item, this.presenter.getPath())
+        })
+    }
+
+    async changePath(path: string, selectPath?: string) {
         this.presenter = PresenterChooser.get(path, this.presenter, this.tableView)     
-        await this.presenter.fill(path)
+        await this.presenter.fill(path, selectPath)
         localStorage[this.id] = path
         this.commanderDirectory.value = path
     }
 
     private processItem(itemIndex: number, openWith: boolean, showProperties: boolean, fromOtherView?: boolean) {
-    //     this.lastCurrentDir = null
-        var selectedDirectory = this.presenter.getSelectedDirectory(itemIndex)
-        this.changeDirectory(selectedDirectory)
+        const { selectedPath, currentPath } = this.presenter.getSelectedPath(itemIndex)
+        this.changePath(selectedPath, currentPath)
         this.tableView.focus()
     }
 
