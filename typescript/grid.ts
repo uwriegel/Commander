@@ -2,14 +2,13 @@
 class Grid {
     /**
      * Mechanismus zur variablen Aufteilung zweier Ansichten mit Hilfe eines Teilers
-     * @param gridContainer der beinhaltende Container
      * @param firstView die erste Ansicht
      * @param secondView die zweite Ansicht
      * @param gridSplitter der Teiler
      * @param onChanged Callback, wird aufgerufen wenn die Aufteilung geändert wurde
      * @param isVertical Die Aufteilung erfolgt vertikal
      */
-    constructor(private gridContainer: HTMLDivElement, 
+    constructor(gridContainer: HTMLDivElement, 
         private firstView: HTMLElement, 
         private secondView: HTMLElement, 
         private gridSplitter: HTMLDivElement,

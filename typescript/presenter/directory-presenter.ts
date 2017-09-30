@@ -2,7 +2,6 @@ import * as fs from 'fs'
 import * as Path from 'path'
 import { PresenterBase, Item }  from './presenterbase'
 import { ColumnsControl }  from '../columnscontrol'
-import { View }  from '../view'
 import { FileHelper } from '../filehelper' 
 
 export interface DirectoryItem extends Item {
@@ -20,14 +19,14 @@ export class DirectoryPresenter extends PresenterBase {
             currentPath: item.displayName == ".." ? this.path : "" }
     }
     
-    checkPath(path: string) {
+    checkPath(_: string) {
         return false
     }
 
     isDefault = true
 
     protected processFill(selectPath?: string) {
-        return new Promise<void>(async (resolve, reject) => {
+        return new Promise<void>(async (resolve) => {
             const result = (await this.readDir(this.path))
             const items = await Promise.all(result.map(async file => await this.stat(this.path, file)))
             const folderItems = items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
@@ -115,7 +114,7 @@ export class DirectoryPresenter extends PresenterBase {
     private async stat(path: string, fileName: string)
     {
         const file = Path.join(path, fileName)
-        return new Promise<DirectoryItem>((resolve, reject) => {
+        return new Promise<DirectoryItem>(resolve => {
             fs.stat(file, (err, stats) => {
                 if (err)
                     resolve({

@@ -15,7 +15,7 @@ export abstract class PresenterBase implements Presenter
         return this.items.length
     }
 
-    insertItem(index: number, startDrag?: (() => void) | undefined): HTMLTableRowElement {
+    insertItem(index: number): HTMLTableRowElement {
         return this.createItem(this.items[index])
     }
 
@@ -23,7 +23,7 @@ export abstract class PresenterBase implements Presenter
         return this.createItem(undefined)
     }
     
-    updateItem(itemElement: HTMLTableRowElement, index: number): void {
+    updateItem(): void {
         throw new Error("Method not implemented.");
     }
 

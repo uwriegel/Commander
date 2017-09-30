@@ -66,9 +66,10 @@ class ColumnsControl
             this.setWidths()
 
         var grippingReady = false;
-        Array.from(ths).forEach((th, i) =>
+        //Array.from(ths).forEach((th, i) =>
+        Array.from(ths).forEach(th =>
         {
-            let columnIndex = i
+//            let columnIndex = i
             th.onmousedown = evt =>
             {
                 var column = <HTMLElement>evt.target
@@ -122,7 +123,6 @@ class ColumnsControl
     {
         document.body.style.cursor = 'ew-resize'
 
-        var currentWidth = 0
         var currentHeader: HTMLElement
         if (!this.previous)
             currentHeader = targetColumn

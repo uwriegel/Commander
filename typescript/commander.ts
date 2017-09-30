@@ -1,8 +1,9 @@
 ﻿// TODO: Weiterentwicklung
 
+// Debugging in vs code
 // Hidden different color
-// Tab und Shift TAb
 // ShowHidden
+// restrictor
 // Css-Definitions, Theme
 // Sortierung
 // ~ bei Linux zu /home umwandeln
@@ -56,7 +57,7 @@ class Commander {
 
         const gridElement = <HTMLDivElement>document.getElementById("grid")
         const viewerElement = document.getElementById("viewer")!
-        const grid = new Grid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
+        new Grid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
              <HTMLDivElement>document.getElementById("grip"), () => this.focusedView.focus())
             
         const vgrid = new VerticalGrid(<HTMLDivElement>document.getElementById("vgrid"), gridElement, viewerElement!,
@@ -66,8 +67,8 @@ class Commander {
 
         this.initializeOnKeyDownHandler();
 
-        ipcRenderer.on("darkTheme", (evt: any, dark: boolean) => this.setDarkTheme(dark))
-        ipcRenderer.on("preview", (evt: any, preview: boolean) => vgrid.switchBottom(preview))
+        ipcRenderer.on("darkTheme", (_: any, dark: boolean) => this.setDarkTheme(dark))
+        ipcRenderer.on("preview", (_: any, preview: boolean) => vgrid.switchBottom(preview))
     }
 
     getCommanderView(id: string) {
@@ -77,6 +78,8 @@ class Commander {
                 return this.leftView
             case "rightView":
                 return this.rightView
+            default:
+                return undefined
         }
     }
 
@@ -85,16 +88,15 @@ class Commander {
             switch (evt.which) {
                 case 9: // TAB
                     if (!evt.shiftKey) {
-                        // if (this.focusedView.isDirectoryInputFocused())
-                        //     this.focusedView.focus()
-                        // else
-                        {
-                            var toFocus = this.focusedView == this.leftView ? this.rightView : this.leftView
+                        if (this.focusedView.isDirectoryInputFocused())
+                           this.focusedView.focus()
+                        else {
+                            const toFocus = this.focusedView == this.leftView ? this.rightView : this.leftView
                             toFocus.focus()
                         }
                     }
-                    // else
-                    //     this.focusedView.focusDirectoryInput()
+                    else
+                        this.focusedView.focusDirectoryInput()
                     break
                 default:
                     return
@@ -103,7 +105,8 @@ class Commander {
         }
     }
 
-    showHidden(show: boolean) {
+    //showHidden(show: boolean) {
+    showHidden(_: boolean) {
         //FileSystem.showHidden = show
         // this.leftView.refresh()
         // this.rightView.refresh()
@@ -145,5 +148,5 @@ class Commander {
     private focusedView: CommanderView
 }
 
-const commanderInstance = new Commander()
+new Commander()
 

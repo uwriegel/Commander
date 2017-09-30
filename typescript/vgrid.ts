@@ -10,7 +10,7 @@ class VerticalGrid
      * @param gridSplitter der Teiler
      * @param onChanged Callback, wird aufgerufen wenn die Aufteilung geändert wurde
      */
-    constructor (private gridContainer: HTMLDivElement, 
+    constructor (gridContainer: HTMLDivElement, 
         private topView: HTMLElement, 
         private bottomView: HTMLElement, 
         private gridSplitter: HTMLDivElement, onChanged: ()=>void) {

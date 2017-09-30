@@ -1,5 +1,5 @@
 import { TableView }  from './tableview'
-import { PresenterBase, Presenter, Item } from './presenter/presenterbase'
+import { Presenter, Item } from './presenter/presenterbase'
 import { PresenterChooser } from './presenter/presenter-chooser'
 import { EmptyPresenter } from './presenter/emptypresenter'
 
@@ -44,10 +44,11 @@ class CommanderView
                     break;
             }
         }
+        
+        this.commanderDirectory.onfocus = () => this.commanderDirectory.select()
 
         this.changePath(localStorage[this.id] || "root")
     }
-
 
     focus() {
         this.tableView.focus()
@@ -79,7 +80,8 @@ class CommanderView
         this.commanderDirectory.value = path
     }
 
-    private processItem(itemIndex: number, openWith: boolean, showProperties: boolean, fromOtherView?: boolean) {
+    //private processItem(itemIndex: number, openWith: boolean, showProperties: boolean, fromOtherView?: boolean) {
+    private processItem(itemIndex: number, _: boolean, __: boolean, ___?: boolean) {
         const { selectedPath, currentPath } = this.presenter.getSelectedPath(itemIndex)
         this.changePath(selectedPath, currentPath)
         this.tableView.focus()
@@ -90,7 +92,7 @@ class CommanderView
     /**
     * Das input-Element, welches die Beschränkungszeichen darstellt</var>
     */
-    private restrictor: HTMLInputElement
+    //private restrictor: HTMLInputElement
     /**
     * Das Eingabefeld zur Eingabe eines Verzeichnisses
     */

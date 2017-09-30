@@ -1,4 +1,5 @@
-import { app, BrowserWindow, Menu, ipcMain }  from 'electron'
+//import { app, BrowserWindow, Menu, ipcMain }  from 'electron'
+import { app, BrowserWindow, Menu }  from 'electron'
 import * as settings from 'electron-settings'
 
 app.on('ready', () => {
@@ -10,11 +11,10 @@ app.on('ready', () => {
 
     const mainWindow = new BrowserWindow(bounds)
 
-
     if (settings.get("isMaximized"))
         mainWindow.maximize()
 
-    mainWindow.loadURL(`file://${__dirname}/../index.html`)
+    mainWindow.loadURL(`file://${__dirname}/../../index.html`)
     
     mainWindow.on('close', () => {
         if (!mainWindow.isMaximized()) {

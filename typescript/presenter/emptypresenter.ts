@@ -1,22 +1,22 @@
-import { PresenterBase, Item }  from './presenterbase'
+import { PresenterBase }  from './presenterbase'
 
 export class EmptyPresenter extends PresenterBase
 {
-    protected processFill(selectPath?: string) { return new Promise<void>((r, rj) => r() )}
+    protected processFill() { return new Promise<void>(r => r() )}
 
     protected setColumns() { }
     
-    protected createItem(name?: Item): HTMLTableRowElement
+    protected createItem(): HTMLTableRowElement
     {
         const tr = document.createElement("tr")
         return tr
     }
 
-    getSelectedPath(index: number) {
+    getSelectedPath() {
         return { selectedPath: "", currentPath: "" }
     }
 
-    checkPath(path: string) {
+    checkPath() {
         return false
     }
 }

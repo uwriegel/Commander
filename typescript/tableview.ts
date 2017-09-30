@@ -25,17 +25,14 @@ class TableView implements View
         this.table.classList.add('tableViewTable')
         this.tableView.appendChild(this.table)
 
-        this.tableView.addEventListener("focusin", e =>
-        {
+        this.tableView.addEventListener("focusin", () => {
             if (this.onFocus)
                 this.onFocus()
             this.focus()
         })
 
-        this.tableView.onkeydown = e =>
-        {
-            switch (e.which)
-            {
+        this.tableView.onkeydown = e => {
+            switch (e.which) {
                 case 13: // Return
                     if (this.onSelectedCallback)
                         this.onSelectedCallback(this.currentItemIndex, e.ctrlKey, e.altKey)

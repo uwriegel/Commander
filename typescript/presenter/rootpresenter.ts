@@ -1,6 +1,5 @@
 import { PresenterBase, Item }  from './presenterbase'
 import { ColumnsControl }  from '../columnscontrol'
-import { View }  from '../view'
 import * as driveList from 'drivelist'
 import { FileHelper } from '../filehelper' 
 import { Platform, getPlatform }from '../platform/platform-creator' 
@@ -17,22 +16,21 @@ export interface RootItem extends Item
 // TODO: Favoriten, Historie, Windows-spezifische Anpassungen, DVD-Laufwerke
 class RootPresenter extends PresenterBase
 {
-    constructor(view?: View)
-    {
+    constructor() {
         super()
 
         this.platform = getPlatform()
     }
 
-    getSelectedPath(index: number) {
+    getSelectedPath() {
         return { selectedPath: "", currentPath: "" }
     }
     checkPath(path: string) {
         return path == "root"
     }
 
-    protected processFill(selectPath?: string) {
-        return new Promise<void>(async (resolve, reject) => {
+    protected processFill() {
+        return new Promise<void>(async resolve => {
             var initialItems = await this.platform.getInitialRootItems()
             var rootItems = await this.getRootItems()
 

@@ -1,43 +1,12 @@
-// import { TableView }  from './tableview'
-// import { DirectoryPresenter } from './presenter/directory-presenter'
-
-
-// /**
-//  * Ein Commanderview besteht aus einer Tableview mit den Einträgen des aktuellen Verzeichnisses und einem Verzeichnis-Textfeldes
-//  * @param id Die ID des CommanderViews
-//  */
 // class CommanderView
 // {
-//     /**
-//     * Das andere CommanderView
-//     */
-//     otherView: CommanderView
-
-//     // get currentDirectory() {
-//     //     return this.itemsModel.CurrentDirectory
-//     // }
-
 //     constructor(public id: string)
 //     {
-//         this.parent = document.getElementById(id)!
-//         this.commanderDirectory = document.createElement("input")
-//         this.commanderDirectory.classList.add('directory')
-//         this.parent.appendChild(this.commanderDirectory)
-
-//         const commanderTable = document.createElement('div')
-//         commanderTable.classList.add('commanderTable')
-
-//         this.parent.appendChild(commanderTable)
 //         const restrictor = document.createElement('input')
 //         restrictor.classList.add('restrictor')
 //         restrictor.classList.add('restrictorHide')
 //         this.parent.appendChild(restrictor)
 
-//         this.tableView = new TableView(commanderTable)
-//         this.tableView.setPresenter(this.presenter)
-//         const fill = async () => await this.presenter.fill("~")         
-//         fill()
-        
 // //        this.itemsModel = new ItemsModel(id)
 // //         this.itemsSorter = new ItemsSorter(this.itemsModel)
 
@@ -108,13 +77,6 @@
 // // //         this.serviceColumnsControl
 // // //         this.registryColumnsControl
 
-//          //this.tableView.set(this.itemsSorter)
-
-// //         var itemsViewModel = new ItemsViewModel(this.itemsSorter)
-// //         this.tableView.setItemsViewModel(itemsViewModel)
-// //         this.tableView.Columns = this.columnsControl
-
-//         this.tableView.setOnSelectedCallback((i, o, sp) => this.processItem(i, o, sp))
 // //         this.tableView.setOnToggleSelection(i => this.itemsSorter.toggleSelection(i))
 // // //         this.tableView.setOnDragCallback(() =>
 // // //         {
@@ -132,30 +94,6 @@
 // // //             }
 // // //         })
 
-// //          this.commanderDirectory.onfocus = () => this.commanderDirectory.select
-
-//           this.commanderDirectory.onkeydown = e => {
-//               switch (e.which) {
-//                   case 13: // Enter
-//                      //  if (e.altKey)
-//                      //      Connection.processItem(FileHelper.pathCombine(this.itemsModel.CurrentDirectory, this.commanderDirectory.value), true)
-//  //                     else
-//                       {
-//                           this.changeDirectory(this.commanderDirectory.value)
-//                           this.tableView.focus()
-//                       }
-//                       break;
-//               }
-//           }
-
-// //          this.tableView.setOnCurrentItemChanged(item => {
-// //              if (this.onCurrentItemChanged) {
-// //                 if (!item)
-// //                     this.onCurrentItemChanged()
-// //                 else
-// //                     this.onCurrentItemChanged(this.itemsSorter.getItem(item), this.itemsModel.CurrentDirectory)
-// //             }
-// //         })
 
 // //         commanderTable.onkeypress = e => {
 // //             this.keysRestrict(e)
@@ -251,15 +189,6 @@
 //          }
 //      }
 
-// //     initialize() {
-// //         const currentDirectory = localStorage[this.id] || "root"
-// //         this.changeDirectory(currentDirectory)
-// //     }
-
-//       focus() {
-//           this.tableView.focus()
-//       }
-
 // //     focusDirectoryInput() {
 // //         this.commanderDirectory.focus()
 // //     }
@@ -268,9 +197,6 @@
 // //         return this.commanderDirectory.contains(document.activeElement)
 // //     }
 
-// //     setOnFocus(callback: () => void) {
-// //         this.tableView.setOnFocus(() => callback())
-// //     }
 
 //      changeDirectory(directory: string) {
 //         //  if (this.historyWriterTimeouter) {
@@ -359,11 +285,6 @@
 // //                 break;
 // //         }
 
-// //         localStorage[this.id] = directory
-//         this.presenter.fill(directory)
-//          //this.itemsModel.getItems(directory, this.lastCurrentDir)
-//          this.commanderDirectory.value = directory
-
 // //         if (historyDirectory)
 // //         {
 // //             this.historyWriterTimeouter = setTimeout(() =>
@@ -376,10 +297,6 @@
 // //     refresh() {
 // //         this.changeDirectory(this.currentDirectory)
 // //     }
-
-// //      setOnCurrentItemChanged(callback: (item: Item, directory: string) => void) {
-// //          this.onCurrentItemChanged = callback
-// //      }
 
 // //     changeSavedView(index: number)
 // //     {
@@ -942,31 +859,13 @@
 // //   //      Dialog.show()
 // //     }
 
-//     private tableView: TableView
-//     private readonly parent: HTMLElement  
-// //     private itemsModel: ItemsModel
-// //     private itemsSorter: any // ItemsSorter
 // //     /**
 // //     * Das input-Element, welches die Beschränkungszeichen darstellt</var>
 // //     */
 // //     private restrictor: HTMLInputElement
-//     /**
-//     * Das Eingabefeld zur Eingabe eines Verzeichnisses
-//     */
-//     private commanderDirectory: HTMLInputElement
-//     private readonly presenter = new DirectoryPresenter()
-// //     private onCurrentItemChanged: (item?: Item, directory?: string) => void
-// //     private columnsControl: ColumnsControl
-// //     private drivesColumnControl: ColumnsControl
-// //     private favoritesColumnControl: ColumnsControl
-// //     private historyColumnControl: ColumnsControl
-// //     private serviceColumnsControl: ColumnsControl
-// //     private registryColumnsControl: ColumnsControl
-// //     private lastCurrentDir: string
 // //     private recentDirectories: string[] = []
 // //     private historyWriterTimeouter: NodeJS.Timer
 // // //    private extendedRename: ExtendedRename
 // //     private dragStarted: boolean
 // }
 
-// export { CommanderView }
