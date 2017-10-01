@@ -1,7 +1,8 @@
 import { TableView }  from './tableview'
-import { Presenter, Item } from './presenter/presenterbase'
+import { Presenter } from './presenter/presenterbase'
 import { PresenterChooser } from './presenter/presenter-chooser'
 import { EmptyPresenter } from './presenter/emptypresenter'
+import { Item } from './model/item'
 
 /**
  * Ein Commanderview besteht aus einer Tableview mit den Einträgen des aktuellen Verzeichnisses und einem Verzeichnis-Textfeldes

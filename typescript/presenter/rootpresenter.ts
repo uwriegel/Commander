@@ -1,15 +1,9 @@
-import { PresenterBase, Item }  from './presenterbase'
+import { PresenterBase }  from './presenterbase'
 import { ColumnsControl }  from '../columnscontrol'
 import * as driveList from 'drivelist'
 import { FileHelper } from '../filehelper' 
 import { Platform, getPlatform }from '../platform/platform-creator' 
-
-export interface RootItem extends Item
-{
-    displayName: string
-    description: string
-    size: number
-}
+import { RootItem } from '../model/root-item'
 
 // TODO: Sortierung
 // TODO: Statuszeile 

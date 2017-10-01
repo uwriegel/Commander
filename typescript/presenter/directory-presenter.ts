@@ -1,13 +1,9 @@
 import * as fs from 'fs'
 import * as Path from 'path'
-import { PresenterBase, Item }  from './presenterbase'
+import { PresenterBase }  from './presenterbase'
 import { ColumnsControl }  from '../columnscontrol'
 import { FileHelper } from '../filehelper' 
-
-export interface DirectoryItem extends Item {
-    size: number
-    date: Date
-}
+import { DirectoryItem } from '../model/directory-item'
 
 export class DirectoryPresenter extends PresenterBase {
     

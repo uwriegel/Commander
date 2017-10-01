@@ -1,5 +1,5 @@
-import { RootItem } from '../presenter/rootpresenter'
-export { RootItem } from '../presenter/rootpresenter'
+import { DirectoryItem } from '../model/directory-item'
+import { RootItem } from '../model/root-item'
 
 export abstract class Platform
 {
@@ -8,6 +8,10 @@ export abstract class Platform
     }
     getAdditionalRootItems() {
         return new Promise<RootItem[]>(res => res([]))
+    }
+
+    filter(items: DirectoryItem[]) : DirectoryItem[] {
+        return items
     }
 }
 

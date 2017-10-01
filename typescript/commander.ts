@@ -1,6 +1,5 @@
 ﻿// TODO: Weiterentwicklung
 
-// Debugging in vs code
 // Hidden different color
 // ShowHidden
 // restrictor
@@ -23,7 +22,7 @@ import { Grid }  from './grid'
 import { VerticalGrid }  from './vgrid'
 import { CommanderView }  from './commanderview'
 import { Viewer }  from './viewer'
-import { Item } from './presenter/presenterbase'
+import { Item } from './model/item'
 
 /*
 

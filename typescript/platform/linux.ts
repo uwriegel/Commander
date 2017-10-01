@@ -1,5 +1,6 @@
-import { RootItem, Platform } from './platform'
-export { RootItem, Platform } from './platform'
+import { Platform } from './platform'
+import { DirectoryItem } from '../model/directory-item'
+import { RootItem } from '../model/root-item'
 
 export class Linux extends Platform
 {
@@ -11,5 +12,12 @@ export class Linux extends Platform
                 isDirectory: true
             }
         ]))
+    }
+
+    filter(items: DirectoryItem[]) : DirectoryItem[] {
+        return items.map(i => { 
+            i.isHidden = i.displayName.startsWith('.')
+            return i
+        })
     }
 }

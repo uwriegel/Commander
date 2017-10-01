@@ -1,6 +1,7 @@
-import { Presenter, Item }  from './presenter'
+import { Presenter }  from './presenter'
 import { View }  from '../view'
-export { Item, Presenter }  from './presenter'
+import { Item } from '../model/item'
+export { Presenter }  from './presenter'
 
 export abstract class PresenterBase implements Presenter
 {

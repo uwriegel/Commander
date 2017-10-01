@@ -1,10 +1,5 @@
 import { View }  from '../view'
-
-export interface Item
-{
-    displayName: string
-    isDirectory: boolean
-}
+import { Item } from '../model/item'
 
 interface Presenter {
     registerView(view: View): void
