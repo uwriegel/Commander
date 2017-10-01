@@ -10,7 +10,7 @@ export abstract class Platform
         return new Promise<RootItem[]>(res => res([]))
     }
 
-    filter(items: DirectoryItem[]) : DirectoryItem[] {
+    map(items: DirectoryItem[]) : DirectoryItem[] {
         return items
     }
 }

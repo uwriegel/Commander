@@ -2,7 +2,6 @@ import { PresenterBase }  from './presenterbase'
 import { ColumnsControl }  from '../columnscontrol'
 import * as driveList from 'drivelist'
 import { FileHelper } from '../filehelper' 
-import { Platform, getPlatform }from '../platform/platform-creator' 
 import { RootItem } from '../model/root-item'
 
 // TODO: Sortierung
@@ -12,8 +11,6 @@ class RootPresenter extends PresenterBase
 {
     constructor() {
         super()
-
-        this.platform = getPlatform()
     }
 
     getSelectedPath() {
@@ -87,8 +84,6 @@ class RootPresenter extends PresenterBase
             })
         )
     }
-
-    private readonly platform: Platform
 }
 
 export { RootPresenter }

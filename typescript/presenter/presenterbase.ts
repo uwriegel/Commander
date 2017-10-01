@@ -1,6 +1,7 @@
 import { Presenter }  from './presenter'
 import { View }  from '../view'
 import { Item } from '../model/item'
+import { getPlatform }from '../platform/platform-creator' 
 export { Presenter }  from './presenter'
 
 export abstract class PresenterBase implements Presenter
@@ -58,5 +59,6 @@ export abstract class PresenterBase implements Presenter
     protected items: Item[] = []
     protected view: View
     protected path: string
+    protected readonly platform = getPlatform()
 }
 

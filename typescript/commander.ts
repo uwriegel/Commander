@@ -1,7 +1,8 @@
 ﻿// TODO: Weiterentwicklung
 
+// Platform map -> stat oder FileInfo
 // Hidden different color
-// ShowHidden
+// ShowHidden (Windows)
 // restrictor
 // Css-Definitions, Theme
 // Sortierung
@@ -9,6 +10,7 @@
 // stat ersetzen durch natives
 // Icons (on windows)
 // Version (on windows)
+// Icon 
 //
 // Start as Admin im Hintergrund
 // drives: Gespeicherte Ansichten

@@ -4,12 +4,20 @@ import { Windows } from './windows'
 import { Platform } from './platform'
 export { Platform } from './platform'
 
+let platform: Platform | undefined
+
 export function getPlatform() {
-    switch (os.platform()) {
-        case 'linux':
-            return new Linux() as Platform
-        default:
-            return new Windows() as Platform
+
+    if (!platform) {
+        switch (os.platform()) {
+            case 'linux':
+                platform = new Linux() as Platform
+                break
+            default:
+                platform = new Windows() as Platform
+                break
+        }
     }
+    return platform
 }
 

@@ -34,6 +34,8 @@ export class DirectoryPresenter extends PresenterBase {
                 }
             ].concat(folderItems).concat(fileItems)
 
+            this.items = this.platform.map(this.items as DirectoryItem[]).filter(n => !n.isHidden)
+
             let lastIndex = 0
             if (selectPath) {
                 const directoryItems = this.items as DirectoryItem[]

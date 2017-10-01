@@ -14,9 +14,9 @@ export class Linux extends Platform
         ]))
     }
 
-    filter(items: DirectoryItem[]) : DirectoryItem[] {
+    map(items: DirectoryItem[]) : DirectoryItem[] {
         return items.map(i => { 
-            i.isHidden = i.displayName.startsWith('.')
+            i.isHidden = !(i.displayName == '..') && i.displayName.startsWith('.')
             return i
         })
     }
