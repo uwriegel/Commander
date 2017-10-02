@@ -10,8 +10,15 @@ export abstract class Platform
         return new Promise<RootItem[]>(res => res([]))
     }
 
-    map(items: DirectoryItem[]) : DirectoryItem[] {
-        return items
+    async getFileInfos(_: string, fileName: string) {
+        return new Promise<DirectoryItem>(resolve => {
+            resolve({
+                displayName: fileName,
+                size: 0,
+                date: new Date(),
+                isDirectory: false                                              
+            })
+        })
     }
 }
 

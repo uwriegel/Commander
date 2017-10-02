@@ -1,3 +1,4 @@
+import { PresenterChooser } from './presenter-chooser'
 import { PresenterBase }  from './presenterbase'
 import { ColumnsControl }  from '../columnscontrol'
 import * as driveList from 'drivelist'
@@ -13,11 +14,13 @@ class RootPresenter extends PresenterBase
         super()
     }
 
-    getSelectedPath() {
-        return { selectedPath: "", currentPath: "" }
+    getSelectedPath(index: number) {
+        var item = this.getItem(index) as RootItem
+        return { selectedPath: item.path, currentPath: "" }
     }
+
     checkPath(path: string) {
-        return path == "root"
+        return path == PresenterChooser.rootSelector
     }
 
     protected processFill() {
@@ -53,6 +56,9 @@ class RootPresenter extends PresenterBase
     {
         const tr = document.createElement("tr")
 
+        if (item && !item.path)
+            tr.classList.add("hidden")
+    
         let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
         let img = td.querySelector('img') as HTMLImageElement
         img.src = "images/drive.png"
@@ -76,11 +82,19 @@ class RootPresenter extends PresenterBase
     }
 
     private getRootItems() {
+        
         return new Promise<RootItem[]>((resolve, reject) => 
-            driveList.list((error: any, drives: RootItem[]) => {
+        driveList.list((error: any, drives: DriveItem[]) => {
                 if (error) 
                     reject(error)
-                resolve(drives)
+                const rootItems = drives.map(n => { return {
+                    description: n.description,
+                    displayName: n.displayName,
+                    isDirectory: true,
+                    size: n.size,
+                    path: n.mountpoints.length > 0 ? n.mountpoints[0].path : ""
+                }})
+                resolve(rootItems)
             })
         )
     }

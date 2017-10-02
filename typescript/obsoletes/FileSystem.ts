@@ -1,12 +1,3 @@
-enum DriveItem {
-    Unknown,
-    HardDrive,
-    Rom,
-    Removable,
-    Network,
-    Registry,
-    Services
-}
 
 // class FileSystem
 // {

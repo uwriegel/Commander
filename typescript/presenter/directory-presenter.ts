@@ -1,6 +1,8 @@
 import * as fs from 'fs'
 import * as Path from 'path'
+import { GlobalSettings } from '../global-settings'
 import { PresenterBase }  from './presenterbase'
+import { PresenterChooser } from './presenter-chooser'
 import { ColumnsControl }  from '../columnscontrol'
 import { FileHelper } from '../filehelper' 
 import { DirectoryItem } from '../model/directory-item'
@@ -11,6 +13,8 @@ export class DirectoryPresenter extends PresenterBase {
         var item = this.getItem(index) as DirectoryItem
         if (!item.isDirectory)
             return { selectedPath: "", currentPath: "" }
+        if (this.path == '/' && item.displayName == "..")
+            return { selectedPath: PresenterChooser.rootSelector, currentPath: this.path } 
         return { selectedPath: Path.join(this.path, item.displayName), 
             currentPath: item.displayName == ".." ? this.path : "" }
     }
@@ -24,7 +28,7 @@ export class DirectoryPresenter extends PresenterBase {
     protected processFill(selectPath?: string) {
         return new Promise<void>(async (resolve) => {
             const result = (await this.readDir(this.path))
-            const items = await Promise.all(result.map(async file => await this.stat(this.path, file)))
+            const items = await Promise.all(result.map(async file => await this.platform.getFileInfos(this.path, file)))
             const folderItems = items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
             const fileItems = items.filter(a => !a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
             this.items = [{
@@ -34,7 +38,8 @@ export class DirectoryPresenter extends PresenterBase {
                 }
             ].concat(folderItems).concat(fileItems)
 
-            this.items = this.platform.map(this.items as DirectoryItem[]).filter(n => !n.isHidden)
+            if (!GlobalSettings.showHidden)
+                this.items = this.items.filter(n => !n.isHidden)
 
             let lastIndex = 0
             if (selectPath) {
@@ -52,6 +57,9 @@ export class DirectoryPresenter extends PresenterBase {
 
     protected createItem(item?: DirectoryItem | undefined): HTMLTableRowElement {
         const tr = document.createElement("tr")
+
+        if (item && item.isHidden)
+            tr.classList.add("hidden")
         
         let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
         let img = td.querySelector('img') as HTMLImageElement
@@ -105,30 +113,6 @@ export class DirectoryPresenter extends PresenterBase {
                     reject(err)
                 else
                     resolve(files)
-            })
-        })
-    }
-
-    private async stat(path: string, fileName: string)
-    {
-        const file = Path.join(path, fileName)
-        return new Promise<DirectoryItem>(resolve => {
-            fs.stat(file, (err, stats) => {
-                if (err)
-                    resolve({
-                        displayName: fileName,
-                        size: 0,
-                        date: new Date(),
-                        isDirectory: false                                              
-                    })
-                else {
-                    resolve({
-                        displayName: fileName,
-                        size: stats.size,
-                        date: stats.ctime,
-                        isDirectory: stats.isDirectory()                                              
-                    })
-                }
             })
         })
     }

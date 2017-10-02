@@ -55,18 +55,6 @@
 //     }
 
 //     /**
-//      * Einfügen eines Testeintrages, um die Ausmaße im DOM zu bestimmen
-//      */
-//     insertMeasureItem()
-//     {
-//         const template = this.columnsControl.getItemTemplate()
-//         const img = template.querySelector('.it-image') as HTMLImageElement
-//         img.src = "images/fault.png"
-//         template.querySelector('.it-nameValue')!.innerHTML = "Test"
-//         return template
-//     }
-
-//     /**
 //      * Einfügen der Daten in die TableRow
 //      * @param itemElement
 //      * @param index Index des Eintrages, mit dem die TableRow gefüllt werden soll
@@ -78,34 +66,10 @@
 //             this.insertExtendedInfos(itemElement, item)
 //     }
 
-//     private insertParentItem(directory: Item)
-//     {
-//         const template = this.columnsControl.getItemTemplate()
-//         const img = template.querySelector('.it-image') as HTMLImageElement
-//         img.src = directory.imageUrl
-//         template.querySelector('.it-nameValue')!.innerHTML = directory.name
-//         return template
-//     }
-
-//     private insertDriveItem(drive: Item) {
-//         var template = this.columnsControl.getItemTemplate()
-//         const img = template.querySelector('.it-image') as HTMLImageElement
-//         img.src = drive.imageUrl
-//         template.querySelector('.it-nameValue')!.innerHTML = drive.name
-//         template.querySelector('.it-description')!.innerHTML = drive.description ? drive.description : ""
-//         template.querySelector('.it-size')!.innerHTML = FileHelper.formatFileSize(drive.fileSize)
-//         return template
-//     }
-
 //     private insertDirectoryItem(directory: Item, startDrag?: (() => void)): HTMLTableRowElement
 //     {
 //         var template = this.columnsControl.getItemTemplate()
 //         const img = template.querySelector('.it-image') as HTMLImageElement
-//         img.src = directory.imageUrl
-//         template.querySelector('.it-nameValue')!.innerHTML = directory.name
-//         template.querySelector('.it-time')!.innerHTML = FileHelper.formatDate(directory.dateTime || "")
-//         if (directory.isHidden)
-//             template.classList.add("hidden")
 //         this.insertExtendedInfos(template, directory)
 //         if (startDrag)
 //         {

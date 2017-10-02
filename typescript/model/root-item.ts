@@ -4,5 +4,6 @@ export interface RootItem extends Item
 {
     displayName: string
     description: string
-    size: number
+    size: number,
+    path: string
 }

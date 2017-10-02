@@ -45,11 +45,30 @@ class CommanderView
                     break;
             }
         }
+
+        commanderTable.onkeydown = e => {
+            switch (e.which) {
+                case 82: // r
+                    if (e.ctrlKey) {
+                        this.refresh()
+                        e.preventDefault()
+                    }
+                    break
+                 case 120: // F9
+                    this.otherView.changePath(this.presenter.getPath())
+                    break
+            }
+        }
         
         this.commanderDirectory.onfocus = () => this.commanderDirectory.select()
 
-        this.changePath(localStorage[this.id] || "root")
+        this.changePath(localStorage[this.id] || PresenterChooser.rootSelector)
     }
+
+    refresh() {
+        this.changePath(this.presenter.getPath())
+    }
+    
 
     focus() {
         this.tableView.focus()

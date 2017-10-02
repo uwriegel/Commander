@@ -78,7 +78,7 @@
 //             kind: ItemsKind.Parent,
 //             name: "..",
 //             fileSize: 0,
-//             parent: "root"
+//             parent: PresenterChooser.rootSelector
 //         }].concat(get().map(n =>
 //             {
 //             return {

@@ -6,6 +6,8 @@ export { Presenter }  from './presenter'
 
 export abstract class PresenterBase implements Presenter
 {
+    showHidden: boolean
+
     registerView(view: View): void {
         this.view = view
         this.setColumns()

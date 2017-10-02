@@ -93,7 +93,8 @@ app.on('ready', () => {
                 submenu: [{
                     label: '&Versteckte Dateien',
                     accelerator: "Ctrl+H",
-                    type: "checkbox"
+                    type: "checkbox",
+                    click: evt => mainWindow.webContents.send("showHidden", evt.checked)
                 },
                 {
                     label: '&Dunkles Thema',

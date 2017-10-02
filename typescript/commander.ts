@@ -1,16 +1,16 @@
 ﻿// TODO: Weiterentwicklung
 
-// Platform map -> stat oder FileInfo
-// Hidden different color
+// stat bei Windows
+// Root-Items -> DirItems (Windows)
 // ShowHidden (Windows)
 // restrictor
 // Css-Definitions, Theme
 // Sortierung
 // ~ bei Linux zu /home umwandeln
-// stat ersetzen durch natives
 // Icons (on windows)
 // Version (on windows)
 // Icon 
+// mount not mounted devices
 //
 // Start as Admin im Hintergrund
 // drives: Gespeicherte Ansichten
@@ -20,6 +20,7 @@
 // Rename auch von mehreren Dateien
 import * as Path from 'path'
 import { ipcRenderer }  from 'electron'
+import { GlobalSettings } from './global-settings'
 import { Grid }  from './grid'
 import { VerticalGrid }  from './vgrid'
 import { CommanderView }  from './commanderview'
@@ -40,7 +41,6 @@ import { Item } from './model/item'
 */
 
 class Commander {
-    
     get focused() {
         return this.focusedView
     }
@@ -68,6 +68,7 @@ class Commander {
 
         this.initializeOnKeyDownHandler();
 
+        ipcRenderer.on("showHidden", (_: any, showHidden: boolean) => this.showHidden(showHidden))
         ipcRenderer.on("darkTheme", (_: any, dark: boolean) => this.setDarkTheme(dark))
         ipcRenderer.on("preview", (_: any, preview: boolean) => vgrid.switchBottom(preview))
     }
@@ -106,11 +107,10 @@ class Commander {
         }
     }
 
-    //showHidden(show: boolean) {
-    showHidden(_: boolean) {
-        //FileSystem.showHidden = show
-        // this.leftView.refresh()
-        // this.rightView.refresh()
+    showHidden(show: boolean) {
+        GlobalSettings.showHidden = show
+        this.leftView.refresh()
+        this.rightView.refresh()
     }
 
     setDarkTheme(activate: boolean) {

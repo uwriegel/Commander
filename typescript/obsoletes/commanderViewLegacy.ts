@@ -150,13 +150,6 @@
 // //                         Connection.startExplorer(this.currentDirectory)
 // //                     }
 // //                     break
-// //                 case 82: // r
-// //                     if (e.ctrlKey)
-// //                     {
-// //                         this.refresh()
-// //                         e.preventDefault()
-// //                     }
-// //                     break
 // //                 case 107: // NUM +
 // //                     this.selectAll()
 // //                     break
@@ -182,9 +175,6 @@
 // //                 case 118: // F7
 // //                     this.createDirectory()
 // //                     break
-//                  case 120: // F9
-// //                     this.otherView.changeDirectory(this.currentDirectory)
-//                      break
 //              }
 //          }
 //      }
@@ -293,10 +283,6 @@
 // //             }, 6000)
 // //         }
 //      }
-
-// //     refresh() {
-// //         this.changeDirectory(this.currentDirectory)
-// //     }
 
 // //     changeSavedView(index: number)
 // //     {

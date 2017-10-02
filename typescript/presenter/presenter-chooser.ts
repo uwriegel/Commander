@@ -6,6 +6,8 @@ import { View }  from '../view'
 
 export class PresenterChooser
 {
+    static readonly rootSelector = "root"
+
     static get(path: string, currentPresenter: Presenter, view: View): Presenter {
         if (path == "root") {
             if (currentPresenter.checkPath(path))
