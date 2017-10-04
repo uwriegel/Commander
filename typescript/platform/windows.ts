@@ -1,6 +1,34 @@
+import * as Path from 'path'
+import * as fs from 'fs'
+import { DirectoryItem } from '../model/directory-item'
+
 import { Platform } from './platform'
 export { Platform } from './platform'
 
-export class Windows extends Platform
-{
+import * as addon from '../../build/Release/affe';
+
+export class Windows extends Platform {
+    
+    async getFiles(path: string) {
+        if (!path.endsWith('\\'))
+            path += '\\'
+        return new Promise<DirectoryItem[]>(resolve => {
+            addon.getFiles(path, (err, res) => {
+                if (err)
+                    resolve([])
+                else {
+                    const result = res.map(n => {
+                        return {
+                            displayName: n.displayName,
+                            isHidden: n.isHidden,
+                            size: n.size,
+                            date: n.time,
+                            isDirectory: n.isDirectory                                              
+                        }
+                    })
+                    resolve(result)
+                }
+            })
+        })
+    }    
 }

@@ -1,4 +1,3 @@
-import * as fs from 'fs'
 import * as Path from 'path'
 import { GlobalSettings } from '../global-settings'
 import { PresenterBase }  from './presenterbase'
@@ -27,8 +26,10 @@ export class DirectoryPresenter extends PresenterBase {
 
     protected processFill(selectPath?: string) {
         return new Promise<void>(async (resolve) => {
-            const result = (await this.readDir(this.path))
-            const items = await Promise.all(result.map(async file => await this.platform.getFileInfos(this.path, file)))
+
+            const items = await this.platform.getFiles(this.path)
+            //const result = (await this.readDir(this.path))
+            //const items = await Promise.all(result.map(async file => await this.platform.getFileInfos(this.path, file)))
             const folderItems = items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
             const fileItems = items.filter(a => !a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
             this.items = [{
@@ -103,17 +104,5 @@ export class DirectoryPresenter extends PresenterBase {
             },
             
         ], "6"))
-    }
-
-    private async readDir(path: string)
-    {
-        return new Promise<string[]>((resolve, reject) => {
-            fs.readdir(path, (err, files) => {
-                if (err)
-                    reject(err)
-                else
-                    resolve(files)
-            })
-        })
     }
 }
