@@ -1,11 +1,9 @@
-import * as Path from 'path'
-import * as fs from 'fs'
 import { DirectoryItem } from '../model/directory-item'
 
 import { Platform } from './platform'
 export { Platform } from './platform'
 
-import * as addon from '../../build/Release/affe';
+import * as addon from 'commander_native';
 
 export class Windows extends Platform {
     

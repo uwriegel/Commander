@@ -1,14 +1,10 @@
 npm init
 npm install electron --save
 npm install @types/node --save
-npm install @types/electron --save
 npm install --save electron-settings
 npm install --save @types/electron-settings
 npm install --save drivelist
-
-Unter Windows:
+npm install --save commander_native
 npm install --save-dev electron-rebuild
-npm install --save drivelist
 ./node_modules/.bin/electron-rebuild
 
-node-gyp configure build
