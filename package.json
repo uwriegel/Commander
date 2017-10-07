@@ -19,11 +19,13 @@
   "dependencies": {
     "@types/electron": "^1.6.10",
     "@types/electron-settings": "^3.0.0",
+    "@types/express": "^4.0.37",
     "@types/node": "^8.0.32",
     "commander_native": "0.0.2",
     "drivelist": "^5.2.4",
     "electron": "^1.7.8",
     "electron-rebuild": "^1.6.0",
-    "electron-settings": "^3.1.2"
+    "electron-settings": "^3.1.2",
+    "express": "^4.16.1"
   }
 }

@@ -1,5 +1,6 @@
 import * as Path from 'path'
 import * as fs from 'fs'
+import { Response } from "express"
 import { DirectoryItem } from '../model/directory-item'
 import { RootItem } from '../model/root-item'
 
@@ -21,6 +22,8 @@ export abstract class Platform
         else
             return this.internalGetIconUrl(item)
     }
+
+    abstract sendIconResponse(request: string, response: Response) : void
 
     async getFiles(path: string) {
         const result = (await this.readDir(path))

@@ -1,8 +1,12 @@
 //import { app, BrowserWindow, Menu, ipcMain }  from 'electron'
 import { app, BrowserWindow, Menu }  from 'electron'
+import { fork } from "child_process"
 import * as settings from 'electron-settings'
 
 app.on('ready', () => {
+
+    const child = fork("./scripts/child-processes/icon-server.js")
+    
 
     const bounds = JSON.parse(settings.get("window-bounds", JSON.stringify({ 
         width: 800,
@@ -20,7 +24,9 @@ app.on('ready', () => {
         if (!mainWindow.isMaximized()) {
             const bounds = mainWindow.getBounds()
             settings.set("window-bounds", JSON.stringify(bounds))
+            mainWindow.webContents.send("closed")
         }
+        child.send("kill")
     })
 
     mainWindow.on('maximize', () => {

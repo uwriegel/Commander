@@ -1,5 +1,6 @@
+import * as Path from 'path'
+import { Response } from "express"
 import { DirectoryItem } from '../model/directory-item'
-
 import { Platform } from './platform'
 export { Platform } from './platform'
 
@@ -29,6 +30,10 @@ export class Windows extends Platform {
             })
         })
     }    
+
+    sendIconResponse(_: string, response: Response) {
+        response.sendFile(Path.join(__dirname, "../fault.png"))
+    }        
 
     protected internalGetIconUrl(_: DirectoryItem) {
         return "images/drive.png"

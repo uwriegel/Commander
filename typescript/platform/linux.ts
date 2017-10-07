@@ -1,5 +1,7 @@
 import * as Path from 'path'
 import * as fs from 'fs'
+import { Response } from "express"
+import { spawn } from "child_process"
 import { Platform } from './platform'
 import { DirectoryItem } from '../model/directory-item'
 import { RootItem } from '../model/root-item'
@@ -21,6 +23,18 @@ export class Linux extends Platform
         const ext = Path.extname(item.displayName)    
         return ext ? `http://localhost:20001/icon?ext=${ext}` : "images/fault.png"
     }
+
+    sendIconResponse(request: string, response: Response) {
+        
+                const process = spawn('python',["./assets/python/icons.py", request])
+                process.stdout.on('data', (data: Buffer) => {
+                    const icon = data.toString('utf8').trim()
+                    if (icon != "None") 
+                        response.sendFile(icon)
+                    else
+                    response.sendFile(Path.join(__dirname, "../../images/fault.png"))
+                })
+            }
 
     async getFileInfos(path: string, fileName: string)
     {

@@ -26,7 +26,6 @@ import { VerticalGrid }  from './vgrid'
 import { CommanderView }  from './commanderview'
 import { Viewer }  from './viewer'
 import { Item } from './model/item'
-
 /*
 
               Presenter (Steuert die Daten, passt die Views an, sorgt für die Sortierung und Ansichtsfilterung)
@@ -145,7 +144,7 @@ class Commander {
     private readonly rightView = new CommanderView("rightView")
     private readonly footer = document.getElementById("footer")
     private readonly viewer = new Viewer()
-
+    
     private focusedView: CommanderView
 }
 
