@@ -17,6 +17,11 @@ export class Linux extends Platform
         ]))
     }
 
+    protected internalGetIconUrl(item: DirectoryItem) {
+        const ext = Path.extname(item.displayName)    
+        return ext ? `http://localhost:20001/icon?ext=${ext}` : "images/fault.png"
+    }
+
     async getFileInfos(path: string, fileName: string)
     {
         const file = Path.join(path, fileName)

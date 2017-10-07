@@ -61,10 +61,10 @@ export class DirectoryPresenter extends PresenterBase {
 
         if (item && item.isHidden)
             tr.classList.add("hidden")
-        
+
         let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
         let img = td.querySelector('img') as HTMLImageElement
-        img.src = item ? (item.isDirectory ?  "images/folder.png" : "images/fault.png") : "images/fault.png"
+        img.src = this.platform.getIconUrl(item!)
         let span = td.querySelector('span') as HTMLSpanElement
         span.innerText = item ? item.displayName : 'W'
         tr.appendChild(td)

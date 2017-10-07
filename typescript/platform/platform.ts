@@ -8,8 +8,18 @@ export abstract class Platform
     getInitialRootItems() {
         return new Promise<RootItem[]>(res => res([]))
     }
+    
     getAdditionalRootItems() {
         return new Promise<RootItem[]>(res => res([]))
+    }
+
+    getIconUrl(item: DirectoryItem) : string {
+        if (item && item.isDirectory)
+            return "images/folder.png"
+        else if (!item)
+            return "images/fault.png"
+        else
+            return this.internalGetIconUrl(item)
     }
 
     async getFiles(path: string) {
@@ -42,6 +52,8 @@ export abstract class Platform
         })
     }
 
+    protected abstract internalGetIconUrl(item: DirectoryItem) : string 
+        
     private async readDir(path: string) {
         return new Promise<string[]>((resolve, reject) => {
             fs.readdir(path, (err, files) => {

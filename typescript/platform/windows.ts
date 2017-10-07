@@ -29,4 +29,8 @@ export class Windows extends Platform {
             })
         })
     }    
+
+    protected internalGetIconUrl(_: DirectoryItem) {
+        return "images/drive.png"
+    }
 }
