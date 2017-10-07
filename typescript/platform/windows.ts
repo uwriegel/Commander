@@ -32,10 +32,11 @@ export class Windows extends Platform {
     }    
 
     sendIconResponse(_: string, response: Response) {
-        response.sendFile(Path.join(__dirname, "../fault.png"))
+        response.sendFile(Path.join(__dirname, "../../images/fault.png"))
     }        
 
-    protected internalGetIconUrl(_: DirectoryItem) {
-        return "images/drive.png"
+    protected internalGetIconUrl(item: DirectoryItem) {
+        const ext = Path.extname(item.displayName)    
+        return ext ? `http://localhost:20001/icon?ext=.${ext}` : "images/fault.png"
     }
 }
