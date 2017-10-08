@@ -3,6 +3,8 @@ npm install electron --save
 npm install @types/node --save
 npm install --save electron-settings
 npm install --save @types/electron-settings
+npm install --save express
+npm install --save @types/express
 npm install --save drivelist
 npm install --save commander_native
 npm install --save-dev electron-rebuild
