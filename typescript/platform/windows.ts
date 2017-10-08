@@ -31,8 +31,11 @@ export class Windows extends Platform {
         })
     }    
 
-    sendIconResponse(_: string, response: Response) {
-        response.sendFile(Path.join(__dirname, "../../images/fault.png"))
+    sendIconResponse(extension: string, response: Response) {
+        addon.getIcon(extension, (_, res) => {
+            response.setHeader("Content-type", "image/png")
+            response.send(res)
+        })
     }        
 
     protected internalGetIconUrl(item: DirectoryItem) {

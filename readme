@@ -10,3 +10,4 @@ npm install --save commander_native
 npm install --save-dev electron-rebuild
 ./node_modules/.bin/electron-rebuild
 
+npm update
