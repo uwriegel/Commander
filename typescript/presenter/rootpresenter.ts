@@ -1,3 +1,4 @@
+import { DirectoryPresenter } from './directory-presenter';
 import { PresenterChooser } from './presenter-chooser'
 import { PresenterBase }  from './presenterbase'
 import { ColumnsControl }  from '../columnscontrol'
@@ -87,12 +88,13 @@ class RootPresenter extends PresenterBase
         driveList.list((error: any, drives: DriveItem[]) => {
                 if (error) 
                     reject(error)
+                drives = drives.sort((a, b) => a.displayName.localeCompare(b.displayName))
                 const rootItems = drives.map(n => { return {
                     description: n.description,
                     displayName: n.displayName,
                     isDirectory: true,
                     size: n.size,
-                    path: n.mountpoints.length > 0 ? n.mountpoints[0].path : ""
+                    path: n.mountpoints.length > 0 ? (n.mountpoints[0].path.endsWith(':') ? n.mountpoints[0].path + '\\' : n.mountpoints[0].path) : ""
                 }})
                 resolve(rootItems)
             })

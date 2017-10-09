@@ -21,7 +21,7 @@
     "@types/electron-settings": "^3.0.0",
     "@types/express": "^4.0.37",
     "@types/node": "^8.0.33",
-    "commander_native": "0.0.4",
+    "commander_native": "0.0.5",
     "drivelist": "^5.2.4",
     "electron": "^1.8.1",
     "electron-rebuild": "^1.6.0",

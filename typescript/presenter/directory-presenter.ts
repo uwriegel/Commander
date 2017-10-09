@@ -12,7 +12,7 @@ export class DirectoryPresenter extends PresenterBase {
         var item = this.getItem(index) as DirectoryItem
         if (!item.isDirectory)
             return { selectedPath: "", currentPath: "" }
-        if (this.path == '/' && item.displayName == "..")
+        if ((this.path == '/' || (this.path.length == 3 && this.path[1] == ':')) && item.displayName == "..")
             return { selectedPath: PresenterChooser.rootSelector, currentPath: this.path } 
         return { selectedPath: Path.join(this.path, item.displayName), 
             currentPath: item.displayName == ".." ? this.path : "" }
@@ -26,7 +26,6 @@ export class DirectoryPresenter extends PresenterBase {
 
     protected processFill(selectPath?: string) {
         return new Promise<void>(async (resolve) => {
-
             const items = await this.platform.getFiles(this.path)
             //const result = (await this.readDir(this.path))
             //const items = await Promise.all(result.map(async file => await this.platform.getFileInfos(this.path, file)))
