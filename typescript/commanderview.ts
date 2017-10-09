@@ -18,6 +18,12 @@ class CommanderView
     constructor(public id: string)
     {
         this.parent = document.getElementById(id)!
+
+        this.restrictor = document.createElement('input')
+        this.restrictor.classList.add('restrictor')
+        this.restrictor.classList.add('restrictorHide')
+        this.parent.appendChild(this.restrictor)
+        
         this.commanderDirectory = document.createElement("input")
         this.commanderDirectory.classList.add('directory')
         this.parent.appendChild(this.commanderDirectory)
@@ -46,15 +52,27 @@ class CommanderView
             }
         }
 
+        commanderTable.onkeypress = e => this.keysRestrict(e)
+
         commanderTable.onkeydown = e => {
             switch (e.which) {
+                case 8: // BACKSPACE
+                    this.restrictBack()
+                    e.preventDefault()
+                    break
+                case 27: // ESC
+                    if (this.restrictor)
+                        this.closeRestrict()
+                    // else
+                    //     this.itemsSorter.selectAll(false)
+                    break
                 case 82: // r
                     if (e.ctrlKey) {
                         this.refresh()
                         e.preventDefault()
                     }
                     break
-                 case 120: // F9
+                case 120: // F9
                     this.otherView.changePath(this.presenter.getPath())
                     break
             }
@@ -107,16 +125,51 @@ class CommanderView
         this.tableView.focus()
     }
 
-    private tableView: TableView
+    private keysRestrict(e: KeyboardEvent) {
+        let restrict = String.fromCharCode(e.charCode).toLowerCase()
+        restrict = this.restrictor.value + restrict
+
+        if (this.presenter.restrict(restrict))
+            this.checkRestrict(restrict)
+        if (!this.tableView.focus())
+            this.tableView.pos1()
+
+    }
+
+    private checkRestrict(restrict: string) {
+        this.restrictor.classList.remove('restrictorHide')
+        this.restrictor.value = restrict
+    }
+
+    private closeRestrict(noRefresh?: boolean) {
+        this.restrictor.classList.add('restrictorHide')
+        this.restrictor.value = ""
+        this.presenter.closeRestrict(noRefresh)
+        this.tableView.focus()
+    }
+
+    private restrictBack() {
+        var restrict = this.restrictor.value
+        restrict = restrict.substring(0, restrict.length - 1)
+        if (restrict.length == 0)
+            this.closeRestrict()
+        else {
+            if (this.presenter.restrict(restrict, true))
+                this.checkRestrict(restrict)
+            this.tableView.focus()
+        }
+    }
+
+    private readonly tableView: TableView
     private readonly parent: HTMLElement  
     /**
     * Das input-Element, welches die Beschränkungszeichen darstellt</var>
     */
-    //private restrictor: HTMLInputElement
+    private readonly restrictor: HTMLInputElement
     /**
     * Das Eingabefeld zur Eingabe eines Verzeichnisses
     */
-    private commanderDirectory: HTMLInputElement
+    private readonly commanderDirectory: HTMLInputElement
     private presenter: Presenter = new EmptyPresenter()
 }
 

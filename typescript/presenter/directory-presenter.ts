@@ -27,8 +27,6 @@ export class DirectoryPresenter extends PresenterBase {
     protected processFill(selectPath?: string) {
         return new Promise<void>(async (resolve) => {
             const items = await this.platform.getFiles(this.path)
-            //const result = (await this.readDir(this.path))
-            //const items = await Promise.all(result.map(async file => await this.platform.getFileInfos(this.path, file)))
             const folderItems = items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
             const fileItems = items.filter(a => !a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
             this.items = [{

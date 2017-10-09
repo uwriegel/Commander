@@ -1,7 +1,5 @@
 ﻿// TODO: Weiterentwicklung
 
-// stat bei Windows
-// Root-Items -> DirItems (Windows)
 // ShowHidden (Windows)
 // restrictor
 // Css-Definitions, Theme

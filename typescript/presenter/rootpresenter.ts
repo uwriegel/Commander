@@ -1,4 +1,3 @@
-import { DirectoryPresenter } from './directory-presenter';
 import { PresenterChooser } from './presenter-chooser'
 import { PresenterBase }  from './presenterbase'
 import { ColumnsControl }  from '../columnscontrol'

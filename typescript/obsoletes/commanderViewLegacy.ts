@@ -95,28 +95,9 @@
 // // //         })
 
 
-// //         commanderTable.onkeypress = e => {
-// //             this.keysRestrict(e)
-// //         }
 
 //          commanderTable.onkeydown = e => {
 //              switch (e.which) {
-// //                 case 8: // BACKSPACE
-// //                     if (this.restrictor != null)
-// //                     {
-// //                         this.restrictBack()
-// //                         e.preventDefault()
-// //                         return
-// //                     }
-// //                     this.changeDirectory("History")
-// //                     e.preventDefault()
-// //                     break
-// //                 case 27: // ESC
-// //                     if (this.restrictor)
-// //                         this.closeRestrict()
-// //                     else
-// //                         this.itemsSorter.selectAll(false)
-// //                     break
 // //                 case 32: // _
 // //                     if (this.restrictor == null)
 // //                         this.itemsSorter.toggleSelection(this.tableView.getCurrentItemIndex())
@@ -523,54 +504,6 @@
 //          this.changeDirectory(selectedDirectory)
 //          this.tableView.focus()
 //      }
-
-// //     private keysRestrict(e)
-// //     {
-// //         var restrict = String.fromCharCode(e.charCode).toLowerCase()
-// //         if (this.restrictor != null)
-// //             restrict = this.restrictor.value + restrict
-
-// //         if (this.itemsSorter.restrict(restrict))
-// //             this.checkRestrict(restrict)
-// //         if (!this.tableView.focus())
-// //             this.tableView.pos1()
-
-// //     }
-
-// //     private checkRestrict(restrict)
-// //     {
-// //         if (this.restrictor == null)
-// //         {
-// //             this.restrictor = <HTMLInputElement>this.parent.getElementsByClassName("restrictor")[0]
-// //             this.restrictor.classList.remove('restrictorHide')
-// //         }
-// //         this.restrictor.value = restrict
-// //     }
-
-// //     private closeRestrict(noRefresh?: boolean)
-// //     {
-// //         if (this.restrictor)
-// //         {
-// //             this.restrictor.classList.add('restrictorHide')
-// //             this.restrictor = null
-// //             this.itemsSorter.closeRestrict(noRefresh)
-// //             this.tableView.focus()
-// //         }
-// //     }
-
-// //     private restrictBack()
-// //     {
-// //         var restrict = this.restrictor.value
-// //         restrict = restrict.substring(0, restrict.length - 1)
-// //         if (restrict.length == 0)
-// //             this.closeRestrict()
-// //         else
-// //         {
-// //             if (this.itemsSorter.restrict(restrict, true))
-// //                 this.checkRestrict(restrict)
-// //             this.tableView.focus()
-// //         }
-// //     }
 
 // //     private async processOperation(dropSelection: Item[], getOperationData: (items: Item[]) => IOperationData, operate: (result: OperationCheckResult) => void)
 // //     {

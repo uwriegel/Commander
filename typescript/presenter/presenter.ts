@@ -27,6 +27,10 @@ interface Presenter {
 
     checkPath(path: string): boolean
 
+    restrict(prefix: string, back?: boolean): boolean
+
+    closeRestrict(noRefresh?: boolean): void
+
     readonly isDefault: boolean
 }
 

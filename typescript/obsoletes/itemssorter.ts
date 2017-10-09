@@ -83,41 +83,7 @@
 //             this.selectionChanged.selectionChanged()
 //     }
 
-//     /**
-//      * Einschränken der Anzeige der Einträge auf die Beschränkten.
-//      * @param prefix Der eingegebene Prefix zur Beschänkung
-//      * @param back Im Prefix um einen Buchstaben zurückgehen
-//      * @returns true: Es wird restriktiert
-//      */
-//     restrict(prefix: string, back?: boolean): boolean {
-//         var restrictedItems: Item[] = []
-//         if (back)
-//             this.itemsToShow = this.items
-//         this.itemsToShow.forEach((item) => {
-//             if (item.name.toLowerCase().indexOf(prefix) == 0)
-//                 restrictedItems.push(item)
-//         })
 
-//         if (restrictedItems.length > 0) {
-//             this.itemsToShow = restrictedItems
-
-//             if (this.observator)
-//                 this.observator.itemsChanged(0)
-//             return true
-//         }
-//         return false
-//     }
-
-//     /**
-//      * Die Beschränkung aufheben
-//      * @param noRefresh
-//      */
-//     closeRestrict(noRefresh: boolean) {
-//         this.itemsToShow = this.items
-//         this.sortItems()
-//         if (!noRefresh && this.observator)
-//             this.observator.itemsChanged(0)
-//     }
 
 //     /**
 //      * Die Selektion invertieren
