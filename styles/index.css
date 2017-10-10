@@ -144,6 +144,9 @@ footer {
 
 .restrictor {
     margin-left: 3px;
+    border-width: 1px;
+    border-radius: 5px;
+    padding: 1px 3px;    
     border-style: solid;
     border-color: gray;
     background-color: white;
@@ -151,6 +154,7 @@ footer {
     position: absolute;
     width: 80%;
     height: 15px;
+    box-shadow: 3px 5px 13px 3px rgba(136, 136, 136, 0.55);
     transition: width 0.3s, height 0.3s, opacity 0.3s;
 }
 

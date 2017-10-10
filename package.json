@@ -1,5 +1,5 @@
 {
-  "name": "commander",
+  "name": "ucommander",
   "version": "1.0.0",
   "description": "",
   "main": "scripts/main/main.js",
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/uwriegel/Commander.git"
   },
   "author": "Uwe Riegel",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/uwriegel/Commander/issues"
   },

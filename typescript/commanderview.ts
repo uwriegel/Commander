@@ -112,6 +112,7 @@ class CommanderView
     }
 
     async changePath(path: string, selectPath?: string) {
+        this.closeRestrict(true)
         this.presenter = PresenterChooser.get(path, this.presenter, this.tableView)     
         await this.presenter.fill(path, selectPath)
         localStorage[this.id] = path

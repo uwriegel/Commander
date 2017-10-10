@@ -1,11 +1,7 @@
 ﻿// TODO: Weiterentwicklung
 
-// ShowHidden (Windows)
-// restrictor
 // Css-Definitions, Theme
 // Sortierung
-// ~ bei Linux zu /home umwandeln
-// Icons (on windows)
 // Version (on windows)
 // Icon 
 // mount not mounted devices

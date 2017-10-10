@@ -2,14 +2,6 @@
 // {
 //     constructor(public id: string)
 //     {
-//         const restrictor = document.createElement('input')
-//         restrictor.classList.add('restrictor')
-//         restrictor.classList.add('restrictorHide')
-//         this.parent.appendChild(restrictor)
-
-// //        this.itemsModel = new ItemsModel(id)
-// //         this.itemsSorter = new ItemsSorter(this.itemsModel)
-
 // //         this.columnsControl = new ColumnsControl([
 // //             {
 // //                 item: "Name",
@@ -174,8 +166,6 @@
 //         //      clearTimeout(this.historyWriterTimeouter)
 //         //      this.historyWriterTimeouter = null
 //         //  }
-
-// //         this.closeRestrict(true)
 
 // //         var historyDirectory
 // //          switch (directory) {
@@ -781,7 +771,6 @@
 // //     /**
 // //     * Das input-Element, welches die Beschränkungszeichen darstellt</var>
 // //     */
-// //     private restrictor: HTMLInputElement
 // //     private recentDirectories: string[] = []
 // //     private historyWriterTimeouter: NodeJS.Timer
 // // //    private extendedRename: ExtendedRename
