@@ -1,8 +1,11 @@
 ﻿// TODO: Weiterentwicklung
 
+// Sortierung: aktueller Eintrag erhalten lassen
+// DirectoryPresenter on Windows abgeleitet, um Version, Erweiterung und Namen hinzuzufügen
+// DirectoryPresenter on Windows abgeleitet, Sortierung berücksichtigen 
 // Css-Definitions, Theme
-// Sortierung
-// Version (on windows)
+// Selektion
+// Sortierung: Selection erhalten lassen
 // Icon 
 // mount not mounted devices
 //

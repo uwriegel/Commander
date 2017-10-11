@@ -32,6 +32,8 @@ interface Presenter {
     closeRestrict(noRefresh?: boolean): void
 
     readonly isDefault: boolean
+
+    sort(columnIndex: number, ascending: boolean): boolean
 }
 
 export { Presenter }

@@ -15,8 +15,7 @@ class CommanderView
     */
     otherView: CommanderView
 
-    constructor(public id: string)
-    {
+    constructor(public id: string) {
         this.parent = document.getElementById(id)!
 
         this.restrictor = document.createElement('input')
@@ -38,7 +37,7 @@ class CommanderView
         this.parent.appendChild(restrictor)
 
         this.tableView = new TableView(commanderTable)
-        this.tableView.setPresenter(this.presenter)
+        this.tableView.Presenter = this.presenter
         
         this.tableView.setOnSelectedCallback((i, o, sp) => this.processItem(i, o, sp))
         this.commanderDirectory.onfocus = () => this.commanderDirectory.select
@@ -86,7 +85,6 @@ class CommanderView
     refresh() {
         this.changePath(this.presenter.getPath())
     }
-    
 
     focus() {
         this.tableView.focus()

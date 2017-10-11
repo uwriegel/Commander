@@ -85,6 +85,10 @@ export abstract class PresenterBase implements Presenter
 
     isDefault = false
 
+    sort(_: number, __: boolean) {
+        return false
+    }
+
     protected abstract processFill(selectPath?: string): Promise<void>
 
     protected static readonly itemIconNameTemplate: HTMLTableDataCellElement = 
@@ -101,6 +105,7 @@ export abstract class PresenterBase implements Presenter
     protected view: View
     protected path: string
     protected readonly platform = getPlatform()
+    protected sortAscending = true
     private originalItems: Item[] = []        
 }
 

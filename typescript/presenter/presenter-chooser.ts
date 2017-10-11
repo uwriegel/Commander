@@ -14,16 +14,15 @@ export class PresenterChooser
                 return currentPresenter
             else {
                 const presenter = new RootPresenter()
-                view.setPresenter(presenter)
+                view.Presenter =presenter
                 return presenter
             }
         }
         else {
             if (currentPresenter.isDefault)
                 return currentPresenter
-            const presenter = new DirectoryPresenter()
-            view.setPresenter(presenter)
-            return presenter
+            view.Presenter = new DirectoryPresenter() 
+            return view.Presenter
         }
     }
 }

@@ -24,11 +24,31 @@ export class DirectoryPresenter extends PresenterBase {
 
     isDefault = true
 
+
+    sort(columnIndex: number, ascending: boolean) {
+        this.sortAscending = ascending
+        switch (columnIndex) {
+            case 0:
+                this.sortItem = (a: DirectoryItem, b: DirectoryItem) => a.displayName.localeCompare(b.displayName)                
+            break
+            case 1:
+            this.sortItem = (a: DirectoryItem, b: DirectoryItem )=> a.date.getTime() - b.date.getTime()
+            break
+            case 2:
+                this.sortItem = (a: DirectoryItem, b: DirectoryItem )=> a.size - b.size                
+            break
+        }
+
+        this.items = this.getFolderItems(this.items as DirectoryItem[]).concat(this.getFileItems(this.items as DirectoryItem[]))
+        this.view.itemsChanged(0)
+        return true
+    }
+
     protected processFill(selectPath?: string) {
         return new Promise<void>(async (resolve) => {
             const items = await this.platform.getFiles(this.path)
-            const folderItems = items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
-            const fileItems = items.filter(a => !a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
+            const folderItems = this.getFolderItems(items)
+            const fileItems = this.getFileItems(items)
             this.items = [{
                     displayName: "..",
                     size: -1,
@@ -102,4 +122,17 @@ export class DirectoryPresenter extends PresenterBase {
             
         ], "6"))
     }
+
+    private getFolderItems(items: DirectoryItem[]) {
+        return items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
+    }
+
+    private getFileItems(items: DirectoryItem[]) {
+        return items.filter(a => !a.isDirectory).sort((a, b) => {
+            const sort = this.sortItem(a, b)
+            return this.sortAscending ? sort : -sort
+        })
+    }
+
+    private sortItem = (a: DirectoryItem, b: DirectoryItem)=>a.displayName.localeCompare(b.displayName)
 }
