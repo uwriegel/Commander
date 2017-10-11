@@ -32,7 +32,8 @@ export class DirectoryPresenter extends PresenterBase {
                 this.sortItem = (a: DirectoryItem, b: DirectoryItem) => a.displayName.localeCompare(b.displayName)                
                 break
             case 1:
-                return false
+                this.sortItem = (a: DirectoryItem, b: DirectoryItem) => Path.extname(a.displayName).localeCompare(Path.extname(b.displayName))
+                break;
             case 2:
                 this.sortItem = (a: DirectoryItem, b: DirectoryItem )=> a.date.getTime() - b.date.getTime()
                 break
@@ -41,8 +42,10 @@ export class DirectoryPresenter extends PresenterBase {
                 break
         }
 
+        // const currentIndex = this.view.getCurrentItemIndex()
+        // const currentItem = this.items[currentIndex]
         this.items = this.getFolderItems(this.items as DirectoryItem[]).concat(this.getFileItems(this.items as DirectoryItem[]))
-        this.view.itemsChanged(0)
+        
         return true
     }
 
@@ -81,16 +84,18 @@ export class DirectoryPresenter extends PresenterBase {
         if (item && item.isHidden)
             tr.classList.add("hidden")
 
+        const ext = item ? Path.extname(item.displayName) : ""
+
         let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
         let img = td.querySelector('img') as HTMLImageElement
         img.src = this.platform.getIconUrl(item!)
         let span = td.querySelector('span') as HTMLSpanElement
-        span.innerText = item ? item.displayName : 'W'
+        span.innerText = item ? Path.basename(item.displayName, ext) : 'W'
         tr.appendChild(td)
         
         td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
         span = td.querySelector('span') as HTMLSpanElement
-        span.innerText = item ? "" : 'W'
+        span.innerText = item ? ext : 'W'
         tr.appendChild(td)
 
         td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
