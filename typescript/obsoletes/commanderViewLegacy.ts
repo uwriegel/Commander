@@ -2,48 +2,6 @@
 // {
 //     constructor(public id: string)
 //     {
-// //         this.columnsControl = new ColumnsControl([
-// //             {
-// //                 item: "Name",
-// //                 class: "",
-// //                 itemSortKind: ItemSortKind.Name
-// //             },
-// //             {
-// //                 item: "Erw.",
-// //                 class: "it-extension",
-// //                 itemSortKind: ItemSortKind.Extension
-// //             },
-// //             {
-// //                 item: "Größe",
-// //                 class: "it-size",
-// //                 itemSortKind: ItemSortKind.Size
-// //             },
-// //             {
-// //                 item: "Datum",
-// //                 class: "it-time",
-// //                 itemSortKind: ItemSortKind.Date
-// //             },
-// //             {
-// //                 item: "Version",
-// //                 class: "it-version",
-// //                 itemSortKind: ItemSortKind.Version
-// //             }], id + '-columns', this.itemsSorter)
-// //         this.drivesColumnControl = new ColumnsControl([
-// //             {
-// //                 item: "Name",
-// //                 class: "",
-// //                 itemSortKind: ItemSortKind.Name
-// //             },
-// //             {
-// //                 item: "Beschreibung",
-// //                 class: "it-description",
-// //                 itemSortKind: ItemSortKind.Description
-// //             },
-// //             {
-// //                 item: "Größe",
-// //                 class: "it-size",
-// //                 itemSortKind: ItemSortKind.Size
-// //             }], id + '-drivesColumns', this.itemsSorter)
 // //         this.favoritesColumnControl = new ColumnsControl([
 // //             {
 // //                 item: "Name",
