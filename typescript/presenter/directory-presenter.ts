@@ -42,10 +42,15 @@ export class DirectoryPresenter extends PresenterBase {
                 break
         }
 
-        // const currentIndex = this.view.getCurrentItemIndex()
-        // const currentItem = this.items[currentIndex]
+        const currentIndex = this.view.getCurrentItemIndex()
+        const currentItem = this.items[currentIndex]
         this.items = this.getFolderItems(this.items as DirectoryItem[]).concat(this.getFileItems(this.items as DirectoryItem[]))
+
+        const newCurrentIndex = currentIndex ? 
+            (this.items).findIndex((i: DirectoryItem) => i.displayName.localeCompare(currentItem.displayName) == 0)
+            : 0
         
+        this.view.itemsChanged(newCurrentIndex)
         return true
     }
 

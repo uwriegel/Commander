@@ -1,12 +1,4 @@
-﻿//         this.sortItems()
-//         if (preserveCurrentItem && !newCurrentIndex) {
-//             this.itemsToShow.forEach((item, i) => {
-//                 if (item.name == currentItem.name)
-//                     newCurrentIndex = i
-//             })
-//         }
-
-//     /**
+﻿//     /**
 //      * Die Selektion invertieren
 //      * @param itemIndex Der index des Eintrages, dessen Selektionsstatus invertiert werden soll
 //      */
@@ -136,24 +128,3 @@
 //         }
 //     }
 
-//     /**
-//     * Die Einträge des zugehörigen ItemsModel
-//     */
-//     private items: Item[]
-//     /**
-//     * Die ggf. sortierten Einträge, die angezeigt werden können
-//     */
-//     private itemsToShow: Item[]
-//     private ascending: boolean
-
-//     private itemSortKind: ItemSortKind
-
-//     /**
-//     * Das Element, welches über Änderungen benachrichtigt werden soll
-//     */
-//     private observator: IView
-
-//     private selectionChanged: ISelectionChanged
-// }
-
-// export { ItemSortKind, ISorter, ItemsSorter }

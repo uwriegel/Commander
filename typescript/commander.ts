@@ -1,6 +1,5 @@
 ﻿// TODO: Weiterentwicklung
 
-// Sortierung: aktueller Eintrag erhalten lassen
 // DirectoryPresenter on Windows abgeleitet, um Version hinzuzufügen, Sortierung berücksichtigen
 // Css-Definitions, Theme
 // Selektion
