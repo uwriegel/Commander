@@ -268,13 +268,10 @@ class TableView implements View
         this.columnsControl.initializeEachColumn(item =>
         {
             var th = document.createElement("th")
-            th.innerHTML = item.item
-            if (item.class)
-                th.classList.add(item.class)
+            th.innerHTML = item
             theadrow.appendChild(th)
         })
 
-        //this.itemsViewModel.setColumns(value)
         this.columnsControl.initialize(this.tableView, this)
     }
 

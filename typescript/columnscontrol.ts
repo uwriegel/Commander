@@ -12,7 +12,7 @@ class ColumnsControl {
      * @param id Die Id dieses ColumnControls
      * @param sortOffset
      */
-    constructor(columns: IColumn[], id: string) {
+    constructor(columns: string[], id: string) {
         this.columns = columns
         this.id = id
 
@@ -37,7 +37,6 @@ class ColumnsControl {
 
         for (var i = 1; i < columns.length; i++) {
             const td = document.createElement("td")
-            td.classList.add(columns[i].class)
             this.itemTemplate.appendChild(td)
         }
     }
@@ -95,7 +94,7 @@ class ColumnsControl {
         });
     }
 
-    initializeEachColumn(eachColumnAction: (item: IColumn)=>void) {
+    initializeEachColumn(eachColumnAction: (item: string)=>void) {
         this.columns.forEach(eachColumnAction)
     }
 
@@ -186,7 +185,7 @@ class ColumnsControl {
     * ID dieses Controls
     */
     private readonly id: string
-    private columns: IColumn[]
+    private columns: string[]
     
     /**
     * Das Element, das die TableView beinhaltet

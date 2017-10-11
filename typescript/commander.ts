@@ -1,8 +1,8 @@
 ﻿// TODO: Weiterentwicklung
 
+// Erweiterung
 // Sortierung: aktueller Eintrag erhalten lassen
-// DirectoryPresenter on Windows abgeleitet, um Version, Erweiterung und Namen hinzuzufügen
-// DirectoryPresenter on Windows abgeleitet, Sortierung berücksichtigen 
+// DirectoryPresenter on Windows abgeleitet, um Version hinzuzufügen, Sortierung berücksichtigen
 // Css-Definitions, Theme
 // Selektion
 // Sortierung: Selection erhalten lassen
@@ -52,13 +52,13 @@ class Commander {
         this.rightView.setOnFocus(() =>this.focusedView = this.rightView)
         this.leftView.focus()
 
-        const gridElement = <HTMLDivElement>document.getElementById("grid")
+        const gridElement = document.getElementById("grid") as HTMLDivElement
         const viewerElement = document.getElementById("viewer")!
         new Grid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
-             <HTMLDivElement>document.getElementById("grip"), () => this.focusedView.focus())
+             document.getElementById("grip") as HTMLDivElement, () => this.focusedView.focus())
             
-        const vgrid = new VerticalGrid(<HTMLDivElement>document.getElementById("vgrid"), gridElement, viewerElement!,
-             <HTMLDivElement>document.getElementById("vgrip"), () => this.focusedView.focus())
+        const vgrid = new VerticalGrid(document.getElementById("vgrid") as HTMLDivElement, gridElement, viewerElement!,
+             document.getElementById("vgrip") as HTMLDivElement, () => this.focusedView.focus())
 
         viewerElement.onclick = () =>this.focusedView.focus()
 

@@ -30,13 +30,15 @@ export class DirectoryPresenter extends PresenterBase {
         switch (columnIndex) {
             case 0:
                 this.sortItem = (a: DirectoryItem, b: DirectoryItem) => a.displayName.localeCompare(b.displayName)                
-            break
+                break
             case 1:
-            this.sortItem = (a: DirectoryItem, b: DirectoryItem )=> a.date.getTime() - b.date.getTime()
-            break
+                return false
             case 2:
+                this.sortItem = (a: DirectoryItem, b: DirectoryItem )=> a.date.getTime() - b.date.getTime()
+                break
+            case 3:
                 this.sortItem = (a: DirectoryItem, b: DirectoryItem )=> a.size - b.size                
-            break
+                break
         }
 
         this.items = this.getFolderItems(this.items as DirectoryItem[]).concat(this.getFileItems(this.items as DirectoryItem[]))
@@ -88,6 +90,11 @@ export class DirectoryPresenter extends PresenterBase {
         
         td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
         span = td.querySelector('span') as HTMLSpanElement
+        span.innerText = item ? "" : 'W'
+        tr.appendChild(td)
+
+        td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
+        span = td.querySelector('span') as HTMLSpanElement
         span.innerText = item ? FileHelper.formatDate(item.date) : 'W'
         tr.appendChild(td)
 
@@ -102,25 +109,7 @@ export class DirectoryPresenter extends PresenterBase {
     }
 
     protected setColumns(): void {
-        this.view.setColumns(new ColumnsControl([
-            {
-                item: "Name",
-                class: "nein"
-            },
-            {
-                item: "Datum",
-                class: "nein"
-            },
-            {
-                item: "Größe",
-                class: "nein"
-            },
-            {
-                item: "",
-                class: "nein"
-            },
-            
-        ], "6"))
+        this.view.setColumns(new ColumnsControl(["Name", "Erw.", "Datum", "Größe", ""], "6"))
     }
 
     private getFolderItems(items: DirectoryItem[]) {
