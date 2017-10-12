@@ -122,6 +122,10 @@ export class DirectoryPresenter extends PresenterBase {
         this.view.setColumns(new ColumnsControl(["Name", "Erw.", "Datum", "Größe", ""], "6"))
     }
 
+    protected canBeSelected(itemIndex: number) {
+        return itemIndex != 0
+    }
+
     private getFolderItems(items: DirectoryItem[]) {
         return items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
     }

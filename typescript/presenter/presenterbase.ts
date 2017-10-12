@@ -27,8 +27,11 @@ export abstract class PresenterBase implements Presenter
         return this.createItem(undefined)
     }
     
-    updateItem(): void {
-        throw new Error("Method not implemented.");
+    updateItem(itemElement: HTMLTableRowElement, index: number): void {
+        if (this.items[index].isSelected)
+            itemElement.classList.add("selected")
+        else
+            itemElement.classList.remove("selected")
     }
 
     fill(path: string, selectPath?: string): Promise<void> {
@@ -89,6 +92,31 @@ export abstract class PresenterBase implements Presenter
         return false
     }
 
+    toggleSelection(itemIndex: number) {
+        if (!this.canBeSelected(itemIndex))
+            return
+
+        this.items[itemIndex].isSelected = !this.items[itemIndex].isSelected
+
+        this.view.updateItem(itemIndex)
+        // if (this.selectionChanged)
+        //     this.selectionChanged.selectionChanged()
+    }        
+
+    selectAll(select: boolean, startIndex?: number) {
+        this.items.forEach((item, index) => {
+            if (this.canBeSelected(index)) 
+                item.isSelected = (!startIndex || index >= startIndex) ? select : !select
+        })
+        this.view.updateItems()
+        // if (this.selectionChanged)
+        //     this.selectionChanged.selectionChanged()
+    }
+   
+    protected canBeSelected(_: number) {
+        return false
+    }
+    
     protected abstract processFill(selectPath?: string): Promise<void>
 
     protected static readonly itemIconNameTemplate: HTMLTableDataCellElement = 

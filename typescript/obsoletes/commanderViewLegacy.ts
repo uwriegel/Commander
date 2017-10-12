@@ -48,10 +48,6 @@
 
 //          commanderTable.onkeydown = e => {
 //              switch (e.which) {
-// //                 case 32: // _
-// //                     if (this.restrictor == null)
-// //                         this.itemsSorter.toggleSelection(this.tableView.getCurrentItemIndex())
-// //                     break
 // //                 case 35: // End
 // //                     if (e.shiftKey)
 // //                     {
@@ -80,12 +76,6 @@
 // //                         e.preventDefault()
 // //                         Connection.startExplorer(this.currentDirectory)
 // //                     }
-// //                     break
-// //                 case 107: // NUM +
-// //                     this.selectAll()
-// //                     break
-// //                 case 109: // NUM -
-// //                     this.selectNone()
 // //                     break
 // //                 case 112: // F1
 // //                     if (!e.ctrlKey)

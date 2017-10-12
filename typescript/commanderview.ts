@@ -18,27 +18,22 @@ class CommanderView
     constructor(public id: string) {
         this.parent = document.getElementById(id)!
 
-        this.restrictor = document.createElement('input')
-        this.restrictor.classList.add('restrictor')
-        this.restrictor.classList.add('restrictorHide')
-        this.parent.appendChild(this.restrictor)
-        
         this.commanderDirectory = document.createElement("input")
         this.commanderDirectory.classList.add('directory')
         this.parent.appendChild(this.commanderDirectory)
 
         const commanderTable = document.createElement('div')
         commanderTable.classList.add('commanderTable')
-
         this.parent.appendChild(commanderTable)
-        const restrictor = document.createElement('input')
-        restrictor.classList.add('restrictor')
-        restrictor.classList.add('restrictorHide')
-        this.parent.appendChild(restrictor)
 
         this.tableView = new TableView(commanderTable)
         this.tableView.Presenter = this.presenter
         
+        this.restrictor = document.createElement('input')
+        this.restrictor.classList.add('restrictor')
+        this.restrictor.classList.add('restrictorHide')
+        this.parent.appendChild(this.restrictor)
+
         this.tableView.setOnSelectedCallback((i, o, sp) => this.processItem(i, o, sp))
         this.commanderDirectory.onfocus = () => this.commanderDirectory.select
 
@@ -60,16 +55,26 @@ class CommanderView
                     e.preventDefault()
                     break
                 case 27: // ESC
-                    if (this.restrictor)
+                    if (this.restrictor.value)
                         this.closeRestrict()
                     // else
                     //     this.itemsSorter.selectAll(false)
+                    break
+                case 32: // _
+                    if (this.restrictor.value == "")
+                        this.presenter.toggleSelection(this.tableView.getCurrentItemIndex())
                     break
                 case 82: // r
                     if (e.ctrlKey) {
                         this.refresh()
                         e.preventDefault()
                     }
+                    break
+                case 107: // NUM +
+                    this.presenter.selectAll(true)
+                    break
+                case 109: // NUM -
+                this.presenter.selectAll(false)
                     break
                 case 120: // F9
                     this.otherView.changePath(this.presenter.getPath())

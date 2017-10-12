@@ -34,6 +34,10 @@ interface Presenter {
     readonly isDefault: boolean
 
     sort(columnIndex: number, ascending: boolean): boolean
+
+    toggleSelection(itemIndex: number): void
+
+    selectAll(select: boolean, startIndex?: number): void
 }
 
 export { Presenter }

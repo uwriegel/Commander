@@ -139,27 +139,20 @@ class TableView implements View
 
     updateItems() {
         var trs = this.tbody.querySelectorAll('tr')
-        for (var i = 0; i < trs.length; i++) {
+        for (var i = 0; i < trs.length; i++) 
             this.presenter.updateItem(trs[i], i + this.startPosition)
-        }
     }
 
-    refreshSelection(itemIndex: number, isSelected: boolean)
-    {
-        var item = this.tbody.querySelectorAll('tr')[itemIndex - this.startPosition]
-        if (isSelected)
-            item.classList.add("selected")
-        else
-            item.classList.remove("selected")
+    updateItem(itemIndex: number) {
+        const item = this.tbody.querySelectorAll('tr')[itemIndex - this.startPosition]
+        this.presenter.updateItem(item, itemIndex)
     }
     
-    setOnSelectedCallback(callback: (itemIndex: number, openWith: boolean, showProperties: boolean) => void)
-    {
+    setOnSelectedCallback(callback: (itemIndex: number, openWith: boolean, showProperties: boolean) => void) {
         this.onSelectedCallback = callback
     }
 
-    setOnCurrentItemChanged(callback: (itemIndex: number) => void)
-    {
+    setOnCurrentItemChanged(callback: (itemIndex: number) => void) {
         this.onCurrentItemChanged = callback
     }
 
