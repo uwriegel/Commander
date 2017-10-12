@@ -2,8 +2,6 @@
 
 // DirectoryPresenter on Windows abgeleitet, um Version hinzuzufügen, Sortierung berücksichtigen
 // Css-Definitions, Theme
-// Selektion
-// Sortierung: Selection erhalten lassen
 // Icon 
 // mount not mounted devices
 //

@@ -64,6 +64,22 @@ class CommanderView
                     if (this.restrictor.value == "")
                         this.presenter.toggleSelection(this.tableView.getCurrentItemIndex())
                     break
+                case 35: // End
+                    if (e.shiftKey) {
+                        this.presenter.selectAll(true, this.tableView.getCurrentItemIndex())
+                        e.preventDefault()
+                    }
+                    break
+                case 36: // Pos1
+                    if (e.shiftKey) {
+                        this.presenter.selectAll(false, this.tableView.getCurrentItemIndex() + 1)
+                        e.preventDefault();
+                    }
+                    break;
+                case 45: // Einfg
+                    this.presenter.toggleSelection(this.tableView.getCurrentItemIndex())
+                    this.tableView.downOne()
+                    break
                 case 82: // r
                     if (e.ctrlKey) {
                         this.refresh()

@@ -115,6 +115,10 @@ export class DirectoryPresenter extends PresenterBase {
         
         tr.appendChild(td)
         tr.tabIndex = 1
+        if (item && item.isSelected)
+            tr.classList.add("selected")
+        else
+            tr.classList.remove("selected")
         return tr
     }
 

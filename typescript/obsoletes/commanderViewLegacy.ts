@@ -48,25 +48,6 @@
 
 //          commanderTable.onkeydown = e => {
 //              switch (e.which) {
-// //                 case 35: // End
-// //                     if (e.shiftKey)
-// //                     {
-// //                         this.itemsSorter.selectAll(true, this.tableView.getCurrentItemIndex())
-// //                         e.preventDefault()
-// //                     }
-// //                     break
-// //                 case 36: // Pos1
-// //                     if (e.shiftKey)
-// //                     {
-// //                         this.itemsSorter.selectAll(false, this.tableView.getCurrentItemIndex() + 1)
-// //                         e.preventDefault();
-// //                     }
-// //                     break;
-// //                 case 45: // Einfg
-// //                     var itemIndex = this.tableView.getCurrentItemIndex()
-// //                     this.itemsSorter.toggleSelection(this.tableView.getCurrentItemIndex())
-// //                     this.tableView.downOne()
-// //                     break
 // //                 case 46: // DEL
 // //                     this.executeDelete()
 // //                     break
