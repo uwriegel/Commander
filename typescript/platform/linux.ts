@@ -25,16 +25,15 @@ export class Linux extends Platform
     }
 
     sendIconResponse(request: string, response: Response) {
-        
-                const process = spawn('python',["./assets/python/icons.py", request])
-                process.stdout.on('data', (data: Buffer) => {
-                    const icon = data.toString('utf8').trim()
-                    if (icon != "None") 
-                        response.sendFile(icon)
-                    else
-                    response.sendFile(Path.join(__dirname, "../../images/fault.png"))
-                })
-            }
+        const process = spawn('python',["./assets/python/icons.py", request])
+        process.stdout.on('data', (data: Buffer) => {
+            const icon = data.toString('utf8').trim()
+            if (icon != "None") 
+                response.sendFile(icon)
+            else
+            response.sendFile(Path.join(__dirname, "../../images/fault.png"))
+        })
+    }
 
     async getFileInfos(path: string, fileName: string)
     {
