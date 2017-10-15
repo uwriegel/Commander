@@ -2,56 +2,6 @@
 // {
 //     constructor(public id: string)
 //     {
-//         const restrictor = document.createElement('input')
-//         restrictor.classList.add('restrictor')
-//         restrictor.classList.add('restrictorHide')
-//         this.parent.appendChild(restrictor)
-
-// //        this.itemsModel = new ItemsModel(id)
-// //         this.itemsSorter = new ItemsSorter(this.itemsModel)
-
-// //         this.columnsControl = new ColumnsControl([
-// //             {
-// //                 item: "Name",
-// //                 class: "",
-// //                 itemSortKind: ItemSortKind.Name
-// //             },
-// //             {
-// //                 item: "Erw.",
-// //                 class: "it-extension",
-// //                 itemSortKind: ItemSortKind.Extension
-// //             },
-// //             {
-// //                 item: "Größe",
-// //                 class: "it-size",
-// //                 itemSortKind: ItemSortKind.Size
-// //             },
-// //             {
-// //                 item: "Datum",
-// //                 class: "it-time",
-// //                 itemSortKind: ItemSortKind.Date
-// //             },
-// //             {
-// //                 item: "Version",
-// //                 class: "it-version",
-// //                 itemSortKind: ItemSortKind.Version
-// //             }], id + '-columns', this.itemsSorter)
-// //         this.drivesColumnControl = new ColumnsControl([
-// //             {
-// //                 item: "Name",
-// //                 class: "",
-// //                 itemSortKind: ItemSortKind.Name
-// //             },
-// //             {
-// //                 item: "Beschreibung",
-// //                 class: "it-description",
-// //                 itemSortKind: ItemSortKind.Description
-// //             },
-// //             {
-// //                 item: "Größe",
-// //                 class: "it-size",
-// //                 itemSortKind: ItemSortKind.Size
-// //             }], id + '-drivesColumns', this.itemsSorter)
 // //         this.favoritesColumnControl = new ColumnsControl([
 // //             {
 // //                 item: "Name",
@@ -95,51 +45,9 @@
 // // //         })
 
 
-// //         commanderTable.onkeypress = e => {
-// //             this.keysRestrict(e)
-// //         }
 
 //          commanderTable.onkeydown = e => {
 //              switch (e.which) {
-// //                 case 8: // BACKSPACE
-// //                     if (this.restrictor != null)
-// //                     {
-// //                         this.restrictBack()
-// //                         e.preventDefault()
-// //                         return
-// //                     }
-// //                     this.changeDirectory("History")
-// //                     e.preventDefault()
-// //                     break
-// //                 case 27: // ESC
-// //                     if (this.restrictor)
-// //                         this.closeRestrict()
-// //                     else
-// //                         this.itemsSorter.selectAll(false)
-// //                     break
-// //                 case 32: // _
-// //                     if (this.restrictor == null)
-// //                         this.itemsSorter.toggleSelection(this.tableView.getCurrentItemIndex())
-// //                     break
-// //                 case 35: // End
-// //                     if (e.shiftKey)
-// //                     {
-// //                         this.itemsSorter.selectAll(true, this.tableView.getCurrentItemIndex())
-// //                         e.preventDefault()
-// //                     }
-// //                     break
-// //                 case 36: // Pos1
-// //                     if (e.shiftKey)
-// //                     {
-// //                         this.itemsSorter.selectAll(false, this.tableView.getCurrentItemIndex() + 1)
-// //                         e.preventDefault();
-// //                     }
-// //                     break;
-// //                 case 45: // Einfg
-// //                     var itemIndex = this.tableView.getCurrentItemIndex()
-// //                     this.itemsSorter.toggleSelection(this.tableView.getCurrentItemIndex())
-// //                     this.tableView.downOne()
-// //                     break
 // //                 case 46: // DEL
 // //                     this.executeDelete()
 // //                     break
@@ -149,12 +57,6 @@
 // //                         e.preventDefault()
 // //                         Connection.startExplorer(this.currentDirectory)
 // //                     }
-// //                     break
-// //                 case 107: // NUM +
-// //                     this.selectAll()
-// //                     break
-// //                 case 109: // NUM -
-// //                     this.selectNone()
 // //                     break
 // //                 case 112: // F1
 // //                     if (!e.ctrlKey)
@@ -193,8 +95,6 @@
 //         //      clearTimeout(this.historyWriterTimeouter)
 //         //      this.historyWriterTimeouter = null
 //         //  }
-
-// //         this.closeRestrict(true)
 
 // //         var historyDirectory
 // //          switch (directory) {
@@ -524,54 +424,6 @@
 //          this.tableView.focus()
 //      }
 
-// //     private keysRestrict(e)
-// //     {
-// //         var restrict = String.fromCharCode(e.charCode).toLowerCase()
-// //         if (this.restrictor != null)
-// //             restrict = this.restrictor.value + restrict
-
-// //         if (this.itemsSorter.restrict(restrict))
-// //             this.checkRestrict(restrict)
-// //         if (!this.tableView.focus())
-// //             this.tableView.pos1()
-
-// //     }
-
-// //     private checkRestrict(restrict)
-// //     {
-// //         if (this.restrictor == null)
-// //         {
-// //             this.restrictor = <HTMLInputElement>this.parent.getElementsByClassName("restrictor")[0]
-// //             this.restrictor.classList.remove('restrictorHide')
-// //         }
-// //         this.restrictor.value = restrict
-// //     }
-
-// //     private closeRestrict(noRefresh?: boolean)
-// //     {
-// //         if (this.restrictor)
-// //         {
-// //             this.restrictor.classList.add('restrictorHide')
-// //             this.restrictor = null
-// //             this.itemsSorter.closeRestrict(noRefresh)
-// //             this.tableView.focus()
-// //         }
-// //     }
-
-// //     private restrictBack()
-// //     {
-// //         var restrict = this.restrictor.value
-// //         restrict = restrict.substring(0, restrict.length - 1)
-// //         if (restrict.length == 0)
-// //             this.closeRestrict()
-// //         else
-// //         {
-// //             if (this.itemsSorter.restrict(restrict, true))
-// //                 this.checkRestrict(restrict)
-// //             this.tableView.focus()
-// //         }
-// //     }
-
 // //     private async processOperation(dropSelection: Item[], getOperationData: (items: Item[]) => IOperationData, operate: (result: OperationCheckResult) => void)
 // //     {
 // //         var selection = dropSelection ? dropSelection : this.getSelectedItems()
@@ -848,7 +700,6 @@
 // //     /**
 // //     * Das input-Element, welches die Beschränkungszeichen darstellt</var>
 // //     */
-// //     private restrictor: HTMLInputElement
 // //     private recentDirectories: string[] = []
 // //     private historyWriterTimeouter: NodeJS.Timer
 // // //    private extendedRename: ExtendedRename

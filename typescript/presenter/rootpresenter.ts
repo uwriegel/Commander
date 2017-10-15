@@ -1,4 +1,3 @@
-import { DirectoryPresenter } from './directory-presenter';
 import { PresenterChooser } from './presenter-chooser'
 import { PresenterBase }  from './presenterbase'
 import { ColumnsControl }  from '../columnscontrol'
@@ -6,8 +5,6 @@ import * as driveList from 'drivelist'
 import { FileHelper } from '../filehelper' 
 import { RootItem } from '../model/root-item'
 
-// TODO: Sortierung
-// TODO: Statuszeile 
 // TODO: Favoriten, Historie, Windows-spezifische Anpassungen, DVD-Laufwerke
 class RootPresenter extends PresenterBase
 {
@@ -36,21 +33,7 @@ class RootPresenter extends PresenterBase
     }
 
     protected setColumns() {
-        this.view.setColumns(new ColumnsControl([
-            {
-                item: "Name",
-                class: "nein"
-            },
-            {
-                item: "Beschreibung",
-                class: "nein"
-            },
-            {
-                item: "Größe",
-                class: "nein"
-            },
-            
-        ], "4"))
+        this.view.setColumns(new ColumnsControl(["Name", "Beschreibung", "Größe"], "4"))
     }
 
     protected createItem(item?: RootItem) : HTMLTableRowElement

@@ -13,7 +13,7 @@ export class Linux extends Platform
                 displayName: 'Home',
                 description: "Persönlicher Ordner",
                 size: -1,
-                path: '~',
+                path: process.env.HOME!,
                 isDirectory: true
             }
         ]))

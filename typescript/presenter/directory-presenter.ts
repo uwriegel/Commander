@@ -24,13 +24,41 @@ export class DirectoryPresenter extends PresenterBase {
 
     isDefault = true
 
+
+    sort(columnIndex: number, ascending: boolean) {
+        this.sortAscending = ascending
+        switch (columnIndex) {
+            case 0:
+                this.sortItem = (a: DirectoryItem, b: DirectoryItem) => a.displayName.localeCompare(b.displayName)                
+                break
+            case 1:
+                this.sortItem = (a: DirectoryItem, b: DirectoryItem) => Path.extname(a.displayName).localeCompare(Path.extname(b.displayName))
+                break;
+            case 2:
+                this.sortItem = (a: DirectoryItem, b: DirectoryItem )=> a.date.getTime() - b.date.getTime()
+                break
+            case 3:
+                this.sortItem = (a: DirectoryItem, b: DirectoryItem )=> a.size - b.size                
+                break
+        }
+
+        const currentIndex = this.view.getCurrentItemIndex()
+        const currentItem = this.items[currentIndex]
+        this.items = this.getFolderItems(this.items as DirectoryItem[]).concat(this.getFileItems(this.items as DirectoryItem[]))
+
+        const newCurrentIndex = currentIndex ? 
+            (this.items).findIndex((i: DirectoryItem) => i.displayName.localeCompare(currentItem.displayName) == 0)
+            : 0
+        
+        this.view.itemsChanged(newCurrentIndex)
+        return true
+    }
+
     protected processFill(selectPath?: string) {
         return new Promise<void>(async (resolve) => {
             const items = await this.platform.getFiles(this.path)
-            //const result = (await this.readDir(this.path))
-            //const items = await Promise.all(result.map(async file => await this.platform.getFileInfos(this.path, file)))
-            const folderItems = items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
-            const fileItems = items.filter(a => !a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
+            const folderItems = this.getFolderItems(items)
+            const fileItems = this.getFileItems(items)
             this.items = [{
                     displayName: "..",
                     size: -1,
@@ -61,13 +89,20 @@ export class DirectoryPresenter extends PresenterBase {
         if (item && item.isHidden)
             tr.classList.add("hidden")
 
+        const ext = item ? Path.extname(item.displayName) : ""
+
         let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
         let img = td.querySelector('img') as HTMLImageElement
         img.src = this.platform.getIconUrl(item!)
         let span = td.querySelector('span') as HTMLSpanElement
-        span.innerText = item ? item.displayName : 'W'
+        span.innerText = item ? Path.basename(item.displayName, ext) : 'W'
         tr.appendChild(td)
         
+        td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
+        span = td.querySelector('span') as HTMLSpanElement
+        span.innerText = item ? ext : 'W'
+        tr.appendChild(td)
+
         td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
         span = td.querySelector('span') as HTMLSpanElement
         span.innerText = item ? FileHelper.formatDate(item.date) : 'W'
@@ -80,28 +115,31 @@ export class DirectoryPresenter extends PresenterBase {
         
         tr.appendChild(td)
         tr.tabIndex = 1
+        if (item && item.isSelected)
+            tr.classList.add("selected")
+        else
+            tr.classList.remove("selected")
         return tr
     }
 
     protected setColumns(): void {
-        this.view.setColumns(new ColumnsControl([
-            {
-                item: "Name",
-                class: "nein"
-            },
-            {
-                item: "Datum",
-                class: "nein"
-            },
-            {
-                item: "Größe",
-                class: "nein"
-            },
-            {
-                item: "",
-                class: "nein"
-            },
-            
-        ], "6"))
+        this.view.setColumns(new ColumnsControl(["Name", "Erw.", "Datum", "Größe", ""], "6"))
     }
+
+    protected canBeSelected(itemIndex: number) {
+        return itemIndex != 0
+    }
+
+    private getFolderItems(items: DirectoryItem[]) {
+        return items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
+    }
+
+    private getFileItems(items: DirectoryItem[]) {
+        return items.filter(a => !a.isDirectory).sort((a, b) => {
+            const sort = this.sortItem(a, b)
+            return this.sortAscending ? sort : -sort
+        })
+    }
+
+    private sortItem = (a: DirectoryItem, b: DirectoryItem)=>a.displayName.localeCompare(b.displayName)
 }

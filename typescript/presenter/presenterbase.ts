@@ -27,8 +27,11 @@ export abstract class PresenterBase implements Presenter
         return this.createItem(undefined)
     }
     
-    updateItem(): void {
-        throw new Error("Method not implemented.");
+    updateItem(itemElement: HTMLTableRowElement, index: number): void {
+        if (this.items[index].isSelected)
+            itemElement.classList.add("selected")
+        else
+            itemElement.classList.remove("selected")
     }
 
     fill(path: string, selectPath?: string): Promise<void> {
@@ -40,12 +43,80 @@ export abstract class PresenterBase implements Presenter
         return this.items[index]
     }
 
+    /**
+     * Einschränken der Anzeige der Einträge auf die Beschränkten.
+     * @param prefix Der eingegebene Prefix zur Beschänkung
+     * @param back Im Prefix um einen Buchstaben zurückgehen
+     * @returns true: Es wird restriktiert
+     */
+    restrict(prefix: string, back?: boolean): boolean {
+
+        if (this.originalItems.length == 0) 
+            this.originalItems = this.items
+
+        var restrictedItems: Item[] = []
+        if (back)
+            this.items = this.originalItems
+        this.items.forEach((item) => {
+            if (item.displayName.toLowerCase().indexOf(prefix) == 0)
+                restrictedItems.push(item)
+        })
+
+        if (restrictedItems.length > 0) {
+            this.items = restrictedItems
+
+            this.view.itemsChanged(0)
+            return true
+        }
+        return false
+    }
+
+    /**
+     * Die Beschränkung aufheben
+     * @param noRefresh
+     */
+    closeRestrict(noRefresh: boolean) {
+        this.items = this.originalItems
+        this.originalItems = []
+        if (!noRefresh)
+            this.view.itemsChanged(0)
+    }
+
     abstract getSelectedPath(index: number): { selectedPath: string, currentPath: string }
 
     abstract checkPath(path: string): boolean
 
     isDefault = false
 
+    sort(_: number, __: boolean) {
+        return false
+    }
+
+    toggleSelection(itemIndex: number) {
+        if (!this.canBeSelected(itemIndex))
+            return
+
+        this.items[itemIndex].isSelected = !this.items[itemIndex].isSelected
+
+        this.view.updateItem(itemIndex)
+        // if (this.selectionChanged)
+        //     this.selectionChanged.selectionChanged()
+    }        
+
+    selectAll(select: boolean, startIndex?: number) {
+        this.items.forEach((item, index) => {
+            if (this.canBeSelected(index)) 
+                item.isSelected = (!startIndex || index >= startIndex) ? select : !select
+        })
+        this.view.updateItems()
+        // if (this.selectionChanged)
+        //     this.selectionChanged.selectionChanged()
+    }
+   
+    protected canBeSelected(_: number) {
+        return false
+    }
+    
     protected abstract processFill(selectPath?: string): Promise<void>
 
     protected static readonly itemIconNameTemplate: HTMLTableDataCellElement = 
@@ -62,5 +133,7 @@ export abstract class PresenterBase implements Presenter
     protected view: View
     protected path: string
     protected readonly platform = getPlatform()
+    protected sortAscending = true
+    private originalItems: Item[] = []        
 }
 

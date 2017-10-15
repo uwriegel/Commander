@@ -107,11 +107,15 @@ class TableView implements View
         window.addEventListener('resize', () => this.resizeChecking())        
     }
 
-    setPresenter(presenter: Presenter) {
+    set Presenter(presenter: Presenter) {
         this.presenter = presenter
         this.presenter.registerView(this)
     }
 
+    get Presenter() {
+        return this.presenter
+    }
+    
     getCurrentItemIndex() {
         return this.currentItemIndex
     }
@@ -133,31 +137,22 @@ class TableView implements View
             this.onCurrentItemChanged(this.currentItemIndex)
     }
 
-    updateItems()
-    {
+    updateItems() {
         var trs = this.tbody.querySelectorAll('tr')
-        for (var i = 0; i < trs.length; i++)
-        {
+        for (var i = 0; i < trs.length; i++) 
             this.presenter.updateItem(trs[i], i + this.startPosition)
-        }
     }
 
-    refreshSelection(itemIndex: number, isSelected: boolean)
-    {
-        var item = this.tbody.querySelectorAll('tr')[itemIndex - this.startPosition]
-        if (isSelected)
-            item.classList.add("selected")
-        else
-            item.classList.remove("selected")
+    updateItem(itemIndex: number) {
+        const item = this.tbody.querySelectorAll('tr')[itemIndex - this.startPosition]
+        this.presenter.updateItem(item, itemIndex)
     }
     
-    setOnSelectedCallback(callback: (itemIndex: number, openWith: boolean, showProperties: boolean) => void)
-    {
+    setOnSelectedCallback(callback: (itemIndex: number, openWith: boolean, showProperties: boolean) => void) {
         this.onSelectedCallback = callback
     }
 
-    setOnCurrentItemChanged(callback: (itemIndex: number) => void)
-    {
+    setOnCurrentItemChanged(callback: (itemIndex: number) => void) {
         this.onCurrentItemChanged = callback
     }
 
@@ -266,14 +261,11 @@ class TableView implements View
         this.columnsControl.initializeEachColumn(item =>
         {
             var th = document.createElement("th")
-            th.innerHTML = item.item
-            if (item.class)
-                th.classList.add(item.class)
+            th.innerHTML = item
             theadrow.appendChild(th)
         })
 
-        //this.itemsViewModel.setColumns(value)
-        this.columnsControl.initialize(this.tableView)
+        this.columnsControl.initialize(this.tableView, this)
     }
 
     private initializeRowHeight()
@@ -322,15 +314,13 @@ class TableView implements View
         this.startPosition = start
         this.itemsCount = this.presenter.getItemsCount()
 
-        if (this.tableCapacity == -1)
-        {
+        if (this.tableCapacity == -1) {
             this.initializeRowHeight()
             this.calculateTableHeight()
         }
 
         const end = Math.min(this.tableCapacity + 1 + this.startPosition, this.itemsCount)
-        for (let i = this.startPosition; i < end; i++)
-        {
+        for (let i = this.startPosition; i < end; i++) {
             var node = this.insertItem(i)
             this.tbody.appendChild(node)
         }

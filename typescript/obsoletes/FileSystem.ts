@@ -1,25 +1,4 @@
 
-// class FileSystem
-// {
-//     constructor()
-//     {
-// //        this.access = fs.createAccess()
-        
-//     }
-
-//     static set showHidden(value: boolean)
-//     {
-// //        fs.showHidden(value)
-//     }
-
-//     getFiles(directory: string)
-//     {
-//         return null
-//         // return new Promise<GetItemsOutput>((resolve, reject) => {
-//         //     this.access.listFiles(directory, items => resolve(items))
-//         // })
-//     }
-
 //     getRootItems()
 //     {
 //         return null

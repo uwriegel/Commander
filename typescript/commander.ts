@@ -1,14 +1,7 @@
 ﻿// TODO: Weiterentwicklung
 
-// stat bei Windows
-// Root-Items -> DirItems (Windows)
-// ShowHidden (Windows)
-// restrictor
+// DirectoryPresenter on Windows abgeleitet, um Version hinzuzufügen, Sortierung berücksichtigen
 // Css-Definitions, Theme
-// Sortierung
-// ~ bei Linux zu /home umwandeln
-// Icons (on windows)
-// Version (on windows)
 // Icon 
 // mount not mounted devices
 //
@@ -55,13 +48,13 @@ class Commander {
         this.rightView.setOnFocus(() =>this.focusedView = this.rightView)
         this.leftView.focus()
 
-        const gridElement = <HTMLDivElement>document.getElementById("grid")
+        const gridElement = document.getElementById("grid") as HTMLDivElement
         const viewerElement = document.getElementById("viewer")!
         new Grid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
-             <HTMLDivElement>document.getElementById("grip"), () => this.focusedView.focus())
+             document.getElementById("grip") as HTMLDivElement, () => this.focusedView.focus())
             
-        const vgrid = new VerticalGrid(<HTMLDivElement>document.getElementById("vgrid"), gridElement, viewerElement!,
-             <HTMLDivElement>document.getElementById("vgrip"), () => this.focusedView.focus())
+        const vgrid = new VerticalGrid(document.getElementById("vgrid") as HTMLDivElement, gridElement, viewerElement!,
+             document.getElementById("vgrip") as HTMLDivElement, () => this.focusedView.focus())
 
         viewerElement.onclick = () =>this.focusedView.focus()
 
