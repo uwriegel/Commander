@@ -61,4 +61,8 @@ export class Linux extends Platform
             })
         })
     }
+
+    getAdditionalDirectoryColumns() {
+        return [""]
+    }
 }

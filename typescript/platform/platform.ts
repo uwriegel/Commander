@@ -35,6 +35,8 @@ export abstract class Platform
 
     abstract sendIconResponse(request: string, response: Response) : void
 
+    abstract getAdditionalDirectoryColumns(): string[] 
+
     async getFiles(path: string) {
         const result = (await this.readDir(path))
         return await Promise.all(result.map(async file => await this.getFileInfos(path, file)))

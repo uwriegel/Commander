@@ -50,6 +50,10 @@ export class Windows extends Platform {
         })
     }
 
+    getAdditionalDirectoryColumns() {
+        return ["Version"]
+    }
+
     protected internalGetIconUrl(item: DirectoryItem) {
         const ext = Path.extname(item.displayName)    
         return ext ? `http://localhost:20001/icon?ext=.${ext}` : "images/fault.png"

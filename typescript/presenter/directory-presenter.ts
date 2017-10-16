@@ -80,9 +80,9 @@ export class DirectoryPresenter extends PresenterBase {
 
             this.view.itemsChanged(lastIndex)
 
-            this.getExtendedInfos()
-
             resolve()
+
+            this.getExtendedInfos()
         })
     }
 
@@ -126,7 +126,7 @@ export class DirectoryPresenter extends PresenterBase {
     }
 
     protected setColumns(): void {
-        this.view.setColumns(new ColumnsControl(["Name", "Erw.", "Datum", "Größe", ""], "6"))
+        this.view.setColumns(new ColumnsControl(["Name", "Erw.", "Datum", "Größe"].concat(this.platform.getAdditionalDirectoryColumns()), "6"))
     }
 
     protected canBeSelected(itemIndex: number) {
