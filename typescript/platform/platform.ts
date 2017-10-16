@@ -2,7 +2,13 @@ import * as Path from 'path'
 import * as fs from 'fs'
 import { Response } from "express"
 import { DirectoryItem } from '../model/directory-item'
+import { Item } from './../model/item'
 import { RootItem } from '../model/root-item'
+
+export interface VersionInfo {
+    file: string
+    version: string
+}
 
 export abstract class Platform
 {
@@ -21,6 +27,10 @@ export abstract class Platform
             return "images/fault.png"
         else
             return this.internalGetIconUrl(item)
+    }
+
+    async getVersions(_: string, __: Item[]) {
+        return new Promise<VersionInfo[]>(resolve => resolve())
     }
 
     abstract sendIconResponse(request: string, response: Response) : void

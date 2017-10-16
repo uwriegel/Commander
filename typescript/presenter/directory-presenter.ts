@@ -79,6 +79,9 @@ export class DirectoryPresenter extends PresenterBase {
             }
 
             this.view.itemsChanged(lastIndex)
+
+            this.getExtendedInfos()
+
             resolve()
         })
     }
@@ -142,4 +145,11 @@ export class DirectoryPresenter extends PresenterBase {
     }
 
     private sortItem = (a: DirectoryItem, b: DirectoryItem)=>a.displayName.localeCompare(b.displayName)
+
+    private async getExtendedInfos() {
+        const result = await this.platform.getVersions(this.path, this.items)
+        result.forEach(_ => {
+            // TODO: Version    
+        })
+    }
 }
