@@ -1,5 +1,6 @@
 ﻿// TODO: Weiterentwicklung
 
+// On WIndows additional column version
 // DirectoryPresenter on Windows abgeleitet, um Version hinzuzufügen, Sortierung berücksichtigen
 // Css-Definitions, Theme
 // Icon 
