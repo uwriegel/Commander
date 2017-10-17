@@ -3,6 +3,7 @@ import { GlobalSettings } from '../global-settings'
 import { PresenterBase }  from './presenterbase'
 import { PresenterChooser } from './presenter-chooser'
 import { ColumnsControl }  from '../columnscontrol'
+import { Item } from '../model/item'
 import { FileHelper } from '../filehelper' 
 import { DirectoryItem } from '../model/directory-item'
 
@@ -23,7 +24,6 @@ export class DirectoryPresenter extends PresenterBase {
     }
 
     isDefault = true
-
 
     sort(columnIndex: number, ascending: boolean) {
         this.sortAscending = ascending
@@ -82,7 +82,7 @@ export class DirectoryPresenter extends PresenterBase {
 
             resolve()
 
-            this.getExtendedInfos()
+            this.insertExtendedInfos()
         })
     }
 
@@ -116,13 +116,21 @@ export class DirectoryPresenter extends PresenterBase {
         span.innerText = item ? FileHelper.formatFileSize(item.size) : 'W'
         tr.appendChild(td)
         
-        tr.appendChild(td)
+        if (item)
+            this.extendedUpdateItem(tr, item)
+
         tr.tabIndex = 1
         if (item && item.isSelected)
             tr.classList.add("selected")
         else
             tr.classList.remove("selected")
+
         return tr
+    }
+
+    updateItem(itemElement: HTMLTableRowElement, index: number) {
+        const item = this.items[index]
+        this.extendedUpdateItem(itemElement, item)
     }
 
     protected setColumns(): void {
@@ -146,10 +154,12 @@ export class DirectoryPresenter extends PresenterBase {
 
     private sortItem = (a: DirectoryItem, b: DirectoryItem)=>a.displayName.localeCompare(b.displayName)
 
-    private async getExtendedInfos() {
-        const result = await this.platform.getVersions(this.path, this.items)
-        result.forEach(_ => {
-            // TODO: Version    
-        })
+    private async insertExtendedInfos() {
+        await this.platform.insertExtendedInfos(this.path, this.items)
+        this.view.updateItems()            
+    }
+
+    private extendedUpdateItem(itemElement: HTMLTableRowElement, item: Item) {
+        this.platform.extendedUpdateItem(PresenterBase.itemIconNameTemplate, itemElement, item)        
     }
 }

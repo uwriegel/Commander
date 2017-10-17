@@ -5,11 +5,6 @@ import { DirectoryItem } from '../model/directory-item'
 import { Item } from './../model/item'
 import { RootItem } from '../model/root-item'
 
-export interface VersionInfo {
-    file: string
-    version: string
-}
-
 export abstract class Platform
 {
     getInitialRootItems() {
@@ -29,8 +24,11 @@ export abstract class Platform
             return this.internalGetIconUrl(item)
     }
 
-    async getVersions(_: string, __: Item[]) {
-        return new Promise<VersionInfo[]>(resolve => resolve())
+    extendedUpdateItem(_: HTMLTableDataCellElement, __: HTMLTableRowElement, ___: Item) : void {
+    }
+
+    async insertExtendedInfos(_: string, __: Item[]) {
+        return new Promise<void>(resolve => resolve())
     }
 
     abstract sendIconResponse(request: string, response: Response) : void

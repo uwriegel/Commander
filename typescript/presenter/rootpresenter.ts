@@ -29,8 +29,6 @@ class RootPresenter extends PresenterBase
             this.items = initialItems.concat(rootItems)
             this.view.itemsChanged(0)
 
-            this.getVersions()
-
             resolve()
         })
     }
@@ -85,10 +83,6 @@ class RootPresenter extends PresenterBase
                 resolve(rootItems)
             })
         )
-    }
-
-    private async getVersions() {
-        await this.platform.getVersions(this.path, this.items)
     }
 }
 

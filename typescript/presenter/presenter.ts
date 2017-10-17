@@ -12,11 +12,9 @@ interface Presenter {
     * Einfügen eines Testeintrages, um die Ausmaße im DOM zu bestimmen
     */
     insertMeasureItem(): HTMLElement
-    /**
-     * Einfügen der Daten in die TableRow
-    * @param itemElement
-    * @param index Index des Eintrages, mit dem die TableRow gefüllt werden soll
-    */
+
+    updateSelection(itemElement: HTMLTableRowElement, index: number): void
+    
     updateItem(itemElement: HTMLTableRowElement, index: number): void
 
     fill(path: string, selectPath?: string): Promise<void>

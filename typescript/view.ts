@@ -7,7 +7,8 @@ interface View
     ItemsCleared(): void 
     itemsChanged(lastCurrentIndex: number): void
     updateItems(): void
-    updateItem(itemIndex: number): void
+    updateSelections(): void
+    updateSelection(itemIndex: number): void
     getCurrentItemIndex(): number
     setColumns(value: ColumnsControl): void
 }

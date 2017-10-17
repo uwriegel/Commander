@@ -7,6 +7,10 @@ export { Platform } from './platform'
 
 import * as addon from 'commander_native';
 
+interface VersionItem extends Item {
+    version: string
+}
+
 export class Windows extends Platform {
     
     async getFiles(path: string) {
@@ -39,19 +43,35 @@ export class Windows extends Platform {
         })
     }        
 
-    async getVersions(path: string, items: Item[]) {
-        const versionItems = items.filter(item => item.displayName.endsWith(".exe") || item.displayName.endsWith(".dll")).map(n => n.displayName)
-        const result = await this.getVersionInfos(path, versionItems)
-        return result.map((version, i) => {
-            return {
-                file: versionItems[i],
-                version: version
-            }
+    async insertExtendedInfos(path: string, items: Item[]) {
+        const versionItems = items.filter(item => item.displayName.endsWith(".exe") || item.displayName.endsWith(".dll"))
+        const versions = versionItems.map(n => n.displayName)
+        const result = await this.getVersionInfos(path, versions)
+        result.forEach((version, i) => {
+            if (version)
+                (versionItems[i] as VersionItem).version = version
         })
     }
 
     getAdditionalDirectoryColumns() {
         return ["Version"]
+    }
+
+    extendedUpdateItem(tableDataFactory: HTMLTableDataCellElement, itemElement: HTMLTableRowElement, item: Item) : void {
+        if ((item as any).version) {
+            const tdv = itemElement.querySelector(".platform-version")
+            if (tdv) {
+                const span = tdv.querySelector("span")!
+                span.innerText = (item as any).version
+            }
+            else {
+                const td = tableDataFactory.cloneNode(true) as HTMLTableDataCellElement
+                const span = td.querySelector('span') as HTMLSpanElement
+                span.innerText = (item as any).version
+                td.classList.add("platform-version")
+                itemElement.appendChild(td)
+            }
+        }
     }
 
     protected internalGetIconUrl(item: DirectoryItem) {

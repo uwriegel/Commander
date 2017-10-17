@@ -27,11 +27,15 @@ export abstract class PresenterBase implements Presenter
         return this.createItem(undefined)
     }
     
-    updateItem(itemElement: HTMLTableRowElement, index: number): void {
-        if (this.items[index].isSelected)
+    updateSelection(itemElement: HTMLTableRowElement, index: number) {
+        const item = this.items[index]
+        if (item.isSelected)
             itemElement.classList.add("selected")
         else
             itemElement.classList.remove("selected")
+    }
+
+    updateItem(_: HTMLTableRowElement, __: number) {
     }
 
     fill(path: string, selectPath?: string): Promise<void> {
@@ -98,9 +102,7 @@ export abstract class PresenterBase implements Presenter
 
         this.items[itemIndex].isSelected = !this.items[itemIndex].isSelected
 
-        this.view.updateItem(itemIndex)
-        // if (this.selectionChanged)
-        //     this.selectionChanged.selectionChanged()
+        this.view.updateSelection(itemIndex)
     }        
 
     selectAll(select: boolean, startIndex?: number) {
@@ -108,9 +110,7 @@ export abstract class PresenterBase implements Presenter
             if (this.canBeSelected(index)) 
                 item.isSelected = (!startIndex || index >= startIndex) ? select : !select
         })
-        this.view.updateItems()
-        // if (this.selectionChanged)
-        //     this.selectionChanged.selectionChanged()
+        this.view.updateSelections()
     }
    
     protected canBeSelected(_: number) {

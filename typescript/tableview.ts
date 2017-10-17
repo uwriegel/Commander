@@ -143,9 +143,15 @@ class TableView implements View
             this.presenter.updateItem(trs[i], i + this.startPosition)
     }
 
-    updateItem(itemIndex: number) {
+    updateSelections() {
+        var trs = this.tbody.querySelectorAll('tr')
+        for (var i = 0; i < trs.length; i++) 
+            this.presenter.updateSelection(trs[i], i + this.startPosition)
+    }
+
+    updateSelection(itemIndex: number) {
         const item = this.tbody.querySelectorAll('tr')[itemIndex - this.startPosition]
-        this.presenter.updateItem(item, itemIndex)
+        this.presenter.updateSelection(item, itemIndex)
     }
     
     setOnSelectedCallback(callback: (itemIndex: number, openWith: boolean, showProperties: boolean) => void) {
