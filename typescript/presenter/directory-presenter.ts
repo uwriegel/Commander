@@ -160,6 +160,6 @@ export class DirectoryPresenter extends PresenterBase {
     }
 
     private extendedUpdateItem(itemElement: HTMLTableRowElement, item: Item) {
-        this.platform.extendedUpdateItem(PresenterBase.itemIconNameTemplate, itemElement, item)        
+        this.platform.extendedUpdateItem(PresenterBase.itemTemplate, itemElement, item)        
     }
 }
