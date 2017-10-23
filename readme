@@ -1,13 +1,3 @@
-npm init
-npm install electron --save
-npm install @types/node --save
-npm install --save electron-settings
-npm install --save @types/electron-settings
-npm install --save express
-npm install --save @types/express
-npm install --save drivelist
-npm install --save commander_native
-npm install --save-dev electron-rebuild
-./node_modules/.bin/electron-rebuild
-
-npm update
+npm i @types/node
+npm i express
+npm i compression

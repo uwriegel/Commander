@@ -1,4 +1,4 @@
-﻿import { TableView }  from './tableview'
+﻿//import { TableView }  from './tableview'
 
 class Scrollbar
 {
@@ -135,10 +135,10 @@ class Scrollbar
         }
     }
 
-    initialize(tableView: TableView)
-    {
-        this.tableView = tableView
-    }
+    // initialize(tableView: TableView)
+    // {
+    //     this.tableView = tableView
+    // }
 
     itemsChanged(itemsCount: number, tableCapacity: number, newPosition?: number)
     {
@@ -208,7 +208,17 @@ class Scrollbar
         clearTimeout(this.timer)
         clearInterval(this.interval)
         this.gripping = false
-        this.tableView.focus()
+
+
+
+
+
+
+
+//TODO:
+
+
+        //this.tableView.focus()
     }
 
     private mouseUp()
@@ -300,7 +310,7 @@ class Scrollbar
     }
 
     private readonly parent: HTMLElement
-    private tableView: TableView
+    //private tableView: TableView
     /**
     * Das Div der Scrollbar
     */
