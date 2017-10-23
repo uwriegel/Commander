@@ -1,0 +1,106 @@
+.directory {
+    box-sizing: border-box; 
+    position: absolute;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-style: none;
+    width: calc(100% - 6px);
+    outline-width: 0px;
+}
+
+.commanderTable {
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    top: 18px;
+    height: calc(100% - 18px);
+    outline-width: 0px;
+}
+
+.restrictor {
+    margin-left: 3px;
+    border-width: 1px;
+    border-radius: 5px;
+    padding: 1px 3px;    
+    border-style: solid;
+    border-color: gray;
+    color: rgba(0, 0, 0, 0.75);
+    background-color: white;
+    bottom: 10px;
+    position: absolute;
+    width: 80%;
+    height: 15px;
+    box-shadow: 3px 5px 12px 3px rgba(136, 136, 136, 0.55);
+    transition: width 0.3s, height 0.3s, opacity 0.3s;
+}
+
+.restrictorHide {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.commanderTable th 
+{
+    padding-left:5px;
+    text-align: left;
+    font-weight: normal;
+    color: var(--selected-color);
+    background-color: var(--selected-bg-color);
+    border-left-color: white;
+    border-left-style: solid;
+    border-left-width: 1px;
+    transition: background-color 0.3s;
+}
+
+.commanderTable th:hover {
+    background-color: --var(selected-bg-hover-color);
+}
+
+.commanderTable td
+{
+    overflow: hidden;
+    height: 16px;
+    text-overflow: ellipsis;
+}
+
+.commanderTable th:first-child {
+    border-left-style: none;
+}
+
+.sortDescending:before { 
+    position: relative;
+    top: 8px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid white;
+    content: ''; 
+    margin-right: 5px;
+}
+
+.sortAscending:before { 
+    position: relative;
+    bottom: 12px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 6px solid white;
+    content: ''; 
+    margin-right: 5px;
+}
+
+.commanderTable tr {
+    /*background-color: white;*/
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+.commanderTable tr:hover {
+    background-color: #fffbdf;
+}
+
+.commanderTable tr:focus {
+    outline-color: red;
+    outline-width: 1px;
+    outline-style: solid;
+    outline-offset: -1px;
+}

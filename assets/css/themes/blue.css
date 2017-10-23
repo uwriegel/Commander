@@ -1,0 +1,6 @@
+:root {
+    --selected-bg-color: blue;
+    --selected-bg-hover-color: #0063ff;
+    --selected-color: white;
+    --separator-color: lightgray;
+}

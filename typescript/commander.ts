@@ -1,22 +1,27 @@
-﻿// // TODO: Weiterentwicklung
+﻿// TODO: Weiterentwicklung
 
-// // Sortierung bei Spalte Version berücksichtigen
-// // Css-Definitions, Theme
-// // Icon 
-// // mount not mounted devices
-// //
-// // Start as Admin im Hintergrund
-// // drives: Gespeicherte Ansichten
-// // RegistryItems anzeigen
-// // NachRefresh Selektion erhalten
-// // Conflicts: conflict liste in die Focusable anhängen
-// // Rename auch von mehreren Dateien
-// import * as Path from 'path'
-// import { ipcRenderer }  from 'electron'
-// import { GlobalSettings } from './global-settings'
-// import { Grid }  from './grid'
-// import { VerticalGrid }  from './vgrid'
-// import { CommanderView }  from './commanderview'
+//TODO getPlatform() in PresenterBase, irgendwie platform bestimmen, session storage
+// Entweder im DirectoryPresenter
+// getIconURl als c++/gtk-Dll über Webserver/c# abrufbar
+// oder 
+// GetDriveItems as c++
+
+
+
+// Sortierung bei Spalte Version berücksichtigen
+// Css-Definitions, Theme
+// Icon 
+// mount not mounted devices
+//
+// Start as Admin im Hintergrund
+// drives: Gespeicherte Ansichten
+// RegistryItems anzeigen
+// NachRefresh Selektion erhalten
+// Conflicts: conflict liste in die Focusable anhängen
+// Rename auch von mehreren Dateien
+//import { Grid }  from './grid'
+//import { VerticalGrid }  from './vgrid'
+import { CommanderView }  from './commanderview.js'
 // import { Viewer }  from './viewer'
 // import { Item } from './model/item'
 // /*
@@ -31,24 +36,19 @@
 
 //         Presenter 
 // */
-import { Affe } from "./tableview.js"
 
 export class Commander {
-    constructor() {
-        new Affe()
-//        aff.test("Das wird vom Kommandanten übergeben")
-    }
-}
 
 //     get focused() {
 //         return this.focusedView
 //     }
 
-//     constructor() {
+     constructor() {
 //         this.leftView.otherView = this.rightView
 //         this.rightView.otherView = this.leftView
 //         this.leftView.setOnCurrentItemChanged((item: Item, path: string) => this.currentItemChanged(item, path))
 //         this.rightView.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
+//this.testview.setOnCurrentItemChanged(this.currentItemChanged.bind(this))
 
 //         this.focusedView = this.leftView
 //         this.leftView.setOnFocus(() => this.focusedView = this.leftView)
@@ -70,7 +70,7 @@ export class Commander {
 //         ipcRenderer.on("showHidden", (_: any, showHidden: boolean) => this.showHidden(showHidden))
 //         ipcRenderer.on("darkTheme", (_: any, dark: boolean) => this.setDarkTheme(dark))
 //         ipcRenderer.on("preview", (_: any, preview: boolean) => vgrid.switchBottom(preview))
-//     }
+     }
 
 //     getCommanderView(id: string) {
 //         switch (id)
@@ -142,11 +142,12 @@ export class Commander {
 
 //     private readonly leftView = new CommanderView("leftView")
 //     private readonly rightView = new CommanderView("rightView")
-//     private readonly footer = document.getElementById("footer")
+    private readonly testview = new CommanderView("testview")
+     private readonly footer = document.getElementById("footer")
 //     private readonly viewer = new Viewer()
     
 //     private focusedView: CommanderView
-// }
+}
 
 new Commander()
 

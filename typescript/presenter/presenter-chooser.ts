@@ -1,8 +1,8 @@
-import { Presenter }  from './presenter'
-import { RootPresenter }  from './rootpresenter'
-import { DirectoryPresenter }  from './directory-presenter'
-export { Presenter }  from './presenter'
-import { View }  from '../view'
+// import { Presenter }  from './presenter.js'
+import { RootPresenter }  from './rootpresenter.js'
+import { DirectoryPresenter }  from './directory-presenter.js'
+// export { Presenter }  from './presenter.js'
+// import { View }  from '../view.js'
 
 export class PresenterChooser
 {

@@ -1,8 +1,8 @@
-import { Presenter }  from './presenter'
-import { View }  from '../view'
-import { Item } from '../model/item'
-//import { getPlatform }from '../platform/platform-creator' 
-export { Presenter }  from './presenter'
+// import { Presenter }  from './presenter.js'
+// import { View }  from '../view.js'
+// import { Item } from '../model/item.js'
+// //import { getPlatform }from '../platform/platform-creator' 
+// export { Presenter }  from './presenter.js'
 
 export abstract class PresenterBase implements Presenter
 {
@@ -132,7 +132,7 @@ export abstract class PresenterBase implements Presenter
     protected items: Item[] = []
     protected view: View
     protected path: string
-    protected readonly platform: any = 3
+    protected readonly platform: any = 3 // TODO getPlatform()
     protected sortAscending = true
     private originalItems: Item[] = []        
 }

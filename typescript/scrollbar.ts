@@ -1,4 +1,4 @@
-﻿//import { TableView }  from './tableview'
+﻿import { TableView }  from './tableview.js'
 
 class Scrollbar
 {
@@ -135,10 +135,10 @@ class Scrollbar
         }
     }
 
-    // initialize(tableView: TableView)
-    // {
-    //     this.tableView = tableView
-    // }
+    initialize(tableView: TableView)
+    {
+        this.tableView = tableView
+    }
 
     itemsChanged(itemsCount: number, tableCapacity: number, newPosition?: number)
     {
@@ -310,7 +310,7 @@ class Scrollbar
     }
 
     private readonly parent: HTMLElement
-    //private tableView: TableView
+    private tableView: TableView
     /**
     * Das Div der Scrollbar
     */

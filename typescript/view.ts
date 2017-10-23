@@ -1,5 +1,5 @@
-import { ColumnsControl }  from './columnscontrol'
-import { Presenter }  from './presenter/presenter'
+import { ColumnsControl }  from './columnscontrol.js'
+import { Presenter }  from './presenter/presenter.js'
 
 interface View
 {

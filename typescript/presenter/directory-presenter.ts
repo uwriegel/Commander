@@ -1,11 +1,9 @@
-import * as Path from 'path'
-import { GlobalSettings } from '../global-settings'
-import { PresenterBase }  from './presenterbase'
-import { PresenterChooser } from './presenter-chooser'
-import { ColumnsControl }  from '../columnscontrol'
-import { Item } from '../model/item'
-import { FileHelper } from '../filehelper' 
-import { DirectoryItem } from '../model/directory-item'
+import { PresenterBase }  from './presenterbase.js'
+import { PresenterChooser } from './presenter-chooser.js'
+import { ColumnsControl }  from '../columnscontrol.js'
+import { Item } from '../model/item.js'
+import { FileHelper } from '../filehelper.js' 
+import { DirectoryItem } from '../model/directory-item.js'
 
 export class DirectoryPresenter extends PresenterBase {
     

@@ -1,9 +1,8 @@
-import { PresenterChooser } from './presenter-chooser'
-import { PresenterBase }  from './presenterbase'
-import { ColumnsControl }  from '../columnscontrol'
-import * as driveList from 'drivelist'
-import { FileHelper } from '../filehelper' 
-import { RootItem } from '../model/root-item'
+import { PresenterChooser } from './presenter-chooser.js'
+import { PresenterBase }  from './presenterbase.js'
+import { ColumnsControl }  from '../columnscontrol.js'
+import { FileHelper } from '../filehelper.js' 
+import { RootItem } from '../model/root-item.js'
 
 // TODO: Favoriten, Historie, Windows-spezifische Anpassungen, DVD-Laufwerke
 class RootPresenter extends PresenterBase

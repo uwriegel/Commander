@@ -1,4 +1,4 @@
-import { PresenterBase }  from './presenterbase'
+import { PresenterBase }  from './presenterbase.js'
 
 export class EmptyPresenter extends PresenterBase
 {

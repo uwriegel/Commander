@@ -1,6 +1,6 @@
-﻿import { View } from './view'
+﻿import { View } from './view.js'
 
-declare class IColumn {
+interface IColumn {
     item: string
     class: string
 }

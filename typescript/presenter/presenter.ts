@@ -1,5 +1,5 @@
-import { View }  from '../view'
-import { Item } from '../model/item'
+import { View }  from '../view.js'
+import { Item } from '../model/item.js'
 
 interface Presenter {
     registerView(view: View): void
