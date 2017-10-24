@@ -22,6 +22,7 @@
 //import { Grid }  from './grid'
 //import { VerticalGrid }  from './vgrid'
 import { CommanderView }  from './commanderview.js'
+import { Menubar }  from './menubar/menubar.js'
 // import { Viewer }  from './viewer'
 // import { Item } from './model/item'
 // /*
@@ -44,6 +45,7 @@ export class Commander {
 //     }
 
      constructor() {
+        this.initializeMenubar()
 //         this.leftView.otherView = this.rightView
 //         this.rightView.otherView = this.leftView
 //         this.leftView.setOnCurrentItemChanged((item: Item, path: string) => this.currentItemChanged(item, path))
@@ -83,6 +85,13 @@ export class Commander {
 //                 return undefined
 //         }
 //     }
+
+    private initializeMenubar() {
+        this.menubar.insertItem("_Datei")
+        this.menubar.insertItem("_Navigation")
+        this.menubar.insertItem("_Selektion")
+        this.menubar.insertItem("_Ansicht")
+    }
 
 //     private initializeOnKeyDownHandler() {
 //         document.onkeydown = evt => {
@@ -142,8 +151,9 @@ export class Commander {
 
 //     private readonly leftView = new CommanderView("leftView")
 //     private readonly rightView = new CommanderView("rightView")
+    private readonly menubar = new Menubar("header")
     private readonly testview = new CommanderView("testview")
-     private readonly footer = document.getElementById("footer")
+    private readonly footer = document.getElementById("footer")
 //     private readonly viewer = new Viewer()
     
 //     private focusedView: CommanderView

@@ -1,14 +1,12 @@
+
 :root {
-    --background-color: white;
-    --color: black;
-    
+    --background-color: rgb(37,37,38);
+    --color: rgba(255, 255, 255, 0.85);
     --selected-bg-color: blue;
     --selected-bg-hover-color: #0063ff;
     --selected-color: white;
-    
     --separator-color: lightgray;
-    
-    --menu-background-color: rgb(238, 236, 236);
+    --menu-background-color: rgb(67,67,68);
     --menu-hover-color: rgba(0, 0, 255, 0.1);
     --menu-selected-background-color: blue;
     --menu-selected-color: white;

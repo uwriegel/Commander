@@ -1,17 +1,7 @@
-﻿body
-{
-    background-color: rgb(37,37,38);
-    color: rgba(255, 255, 255, 0.85);
-}
+﻿
 
 .tableView {
     color: rgba(255, 255, 255, 0.75);
-}
-
-input
-{
-    background-color: rgb(37,37,38);
-    color: rgba(255, 255, 255, 0.85);
 }
 
 #menubar li, .submenu tr
