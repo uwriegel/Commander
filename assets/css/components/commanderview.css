@@ -104,3 +104,7 @@
     outline-style: solid;
     outline-offset: -1px;
 }
+
+.tableView {
+    transition: background-color 0.5s;
+}

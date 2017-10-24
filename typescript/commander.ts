@@ -22,7 +22,7 @@
 //import { Grid }  from './grid'
 //import { VerticalGrid }  from './vgrid'
 import { CommanderView }  from './commanderview.js'
-import { Menubar }  from './menubar/menubar.js'
+import { Menubar, MenuItemType }  from './menubar/menubar.js'
 // import { Viewer }  from './viewer'
 // import { Item } from './model/item'
 // /*
@@ -87,10 +87,128 @@ export class Commander {
 //     }
 
     private initializeMenubar() {
-        this.menubar.insertItem("_Datei")
-        this.menubar.insertItem("_Navigation")
-        this.menubar.insertItem("_Selektion")
-        this.menubar.insertItem("_Ansicht")
+        const menuFile = this.menubar.insertItem("_Datei")
+        const menuNavigation = this.menubar.insertItem("_Navigation")
+        const menuSelection = this.menubar.insertItem("_Selektion")
+        const menuView = this.menubar.insertItem("_Ansicht")
+        menuFile.appendItem({
+            name: "_Umbenennen",
+            shortcut: {
+                display: "F2",
+                key: 113
+            }
+        })
+        menuFile.appendItem({
+            type: MenuItemType.Separator
+        })
+        menuFile.appendItem({
+            name: "_Kopieren",
+            shortcut: {
+                display: "F5",
+                key: 116
+            }
+        })
+        menuFile.appendItem({
+            name: "_Verschieben",
+            shortcut: {
+                display: "F6",
+                key: 117
+            }
+        })
+        menuFile.appendItem({
+            name: "_Löschen",
+            shortcut: {
+                display: "F8",
+                key: 119
+            }
+        })
+        menuFile.appendItem({
+            type: MenuItemType.Separator
+        })
+        menuFile.appendItem({
+            name: "_Eigenschaften",
+            shortcut: {
+                display: "Alt+Enter",
+                key: 13,
+                alt: true
+            }
+        })
+        menuFile.appendItem({
+            type: MenuItemType.Separator
+        })
+        menuFile.appendItem({
+            name: "_Beenden",
+            shortcut: {
+                display: "Alt+F4",
+                key: 115,
+                alt: true
+            }
+        })
+
+        menuNavigation.appendItem({
+            name: "_Erstes Element",
+            shortcut: {
+                display: "Pos1",
+                key: 36
+            }
+        })
+        menuNavigation.appendItem({
+            name: "_Favoriten",
+            shortcut: {
+                display: "F1",
+                key: 112
+            }
+        })
+
+        menuSelection.appendItem({
+            name: "_Alles",
+            shortcut: {
+                display: "Num+",
+                key: 107
+            }
+        })
+        menuSelection.appendItem({
+            name: "_Nichts",
+            shortcut: {
+                display: "Num-",
+                key: 109
+            }
+        })
+        menuView.appendItem({
+            name: "_Versteckte Dateien",
+            shortcut: {
+                display: "Strg+H",
+                key: 1,
+                ctrl: true
+            },
+            type: MenuItemType.Checkable
+        })
+        menuView.appendItem({
+            type: MenuItemType.Separator
+        })
+        menuView.appendItem({
+            name: "_Hellblaues Schema",
+            type: MenuItemType.Checkable
+        })
+        menuView.appendItem({
+            name: "_Blaues Schema",
+            type: MenuItemType.Checkable
+        })
+        menuView.appendItem({
+            name: "_Dunkles Schema",
+            type: MenuItemType.Checkable
+        })
+        menuView.appendItem({
+            type: MenuItemType.Separator
+        })
+        menuView.appendItem({
+            name: "_Vollbild",
+            shortcut: {
+                display: "F11",
+                key: 122
+            },
+            type: MenuItemType.Checkable
+        })
     }
 
 //     private initializeOnKeyDownHandler() {

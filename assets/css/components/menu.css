@@ -22,7 +22,7 @@
     transition: background-color 0.5s;
 }
 
-.menubar>li:focus {
+.menubar > li:focus {
     outline: none;
 }
 
@@ -33,4 +33,43 @@
 .menubar>li.selected {
     background-color: var(--menu-selected-background-color);
     color: var(--menu-selected-color);
+}
+
+.submenu {
+    position: absolute;
+    z-index: 3000;
+    cursor: default;
+    border-spacing: 0px;
+    background-color: white;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.21);
+}
+
+.submenu tr td:last-child {
+    text-align: right
+}
+
+.menubar tr:focus {
+    outline: none;
+}
+
+.submenu td {
+    padding: 6px 25px;
+}
+
+.separator > td {
+    padding: 3px;
+}
+
+.separator div {
+    border-color: lightgray;
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+
+.submenu tr:hover {
+    background-color: rgb(235,235,255);
+}
+
+.submenu tr.separator:hover {
+    background-color: white
 }
