@@ -9,7 +9,13 @@ export class Menubar {
         this.menubarContainer.classList.add("menubar")
         this.menuElement.appendChild(this.menubarContainer)
 
+        this.menuElement.addEventListener("focusout", evt => {
+            if (!(this.subMenuOpened && this.keyboardActivated) && !this.menuElement.contains((<any>evt).relatedTarget))
+                this.close()
+        })
+
         this.initializeMouseHandler()
+        this.initializeKeyHandler()
     }
 
     insertItem(item: string) {
@@ -67,6 +73,118 @@ export class Menubar {
         }
     }
 
+    private initializeKeyHandler() {
+        document.addEventListener("keydown", evt => {
+            if (!this.isActive && evt.which == 18) { // Alt
+                this.menuElement.classList.add("keyboardActivated")
+                this.keyboardActivated = true
+            }
+
+            if (this.keyboardActivated && evt.which != 18) { // Alt
+                const accs = <HTMLSpanElement[]>Array.from(this.menuElement.querySelectorAll(".keyboardActivated .accelerator"))
+                const acc = accs.find(n => n.innerText.toLowerCase() == evt.key)
+                if (acc) {
+                    if (!this.isActive)
+                        this.acceleratorInitiated = true
+                    let li = <HTMLLIElement>acc.parentElement
+                    this.setActive()
+                    this.setSubMenuOpened()
+                    this.clearSelection()
+                    this.focusLi(li)
+                    evt.stopPropagation()
+                    evt.preventDefault()
+                    return;
+                }
+                else if(!this.isActive)
+                    this.close()
+            }
+            
+            if (!this.isActive)
+                return
+
+            switch (evt.which) {
+                case 9: // TAB
+                    this.close()
+                    break
+                case 13: // Enter
+                    if (this.openedSubMenu)
+                        this.openedSubMenu.onEnter()
+                    break;
+                case 18:
+                    break
+                case 27: // ESC
+                    this.close()
+                    break
+                case 37: {// <-
+                        if (this.openedSubMenu) {
+                            this.openedSubMenu.close()
+                            this.openedSubMenu = null
+                        }
+                        let li = <HTMLLIElement>this.menuElement.querySelector(".menubar>li.selected")
+                        const lis = <HTMLLIElement[]>Array.from(this.menuElement.querySelectorAll(".menubar>li"))
+                        const i = (lis).findIndex(n => n == li)
+                        li = lis[i-1]
+                        if (!li)
+                            li = lis[lis.length - 1]
+                        this.clearSelection()
+                        this.focusLi(li)
+                    }
+                    break
+                case 38: //  |^
+                    if (this.openedSubMenu)
+                        this.openedSubMenu.onKeyUp()
+                    break;
+                case 39: { // ->
+                        if (this.openedSubMenu) {
+                            this.openedSubMenu.close()
+                            this.openedSubMenu = null
+                        }
+                        let li = <HTMLLIElement>this.menuElement.querySelector(".menubar>li.selected + li")
+                        if (!li)
+                            li = <HTMLLIElement>this.menuElement.querySelector(".menubar>li")
+                        this.clearSelection()
+                        this.focusLi(li)
+                    }
+                    break;
+                case 40: //  |d
+                    {
+                        if ((<HTMLElement>evt.target).nodeName == "LI") {
+                            this.keyboardActivated = true
+                            this.setSubMenuOpened()
+                            let li = <HTMLLIElement>this.menuElement.querySelector(".menubar>li.selected")
+                            this.focusLi(li)
+                        }
+                        else if (this.openedSubMenu)
+                            this.openedSubMenu.onKeyDown()
+                    }
+                    break;
+                default:
+                    if (this.openedSubMenu)
+                        this.openedSubMenu.onKey(evt.key)
+                    break;
+            }
+            evt.stopPropagation()
+            evt.preventDefault()
+        }, true)
+   
+        document.onkeyup = evt => {
+            switch (evt.which) {
+                case 18: // alt
+                    if (!this.hasFocus && this.keyboardActivated) {
+                        this.clearSelection()
+                        this.setActive()
+                        let li = <HTMLLIElement>this.menuElement.querySelector(".menubar>li:first-Child")
+                        this.focusLi(li)
+                    }
+                    else if (this.acceleratorInitiated)
+                        this.acceleratorInitiated = false
+                    else
+                        this.close()
+                    break
+            }
+        }        
+    }
+    
     private setActive() {
 //        this.focusedView = commanderInstance.getFocused()
         let lis = <HTMLLIElement[]>Array.from(this.menubarContainer.querySelectorAll(".menubar>li"))
@@ -118,14 +236,23 @@ export class Menubar {
         table.style.left = `${offsetLeft}px`
         table.style.top = `${offsetTop}px`
         table.classList.remove("hidden")
-        // if (this.subMenuOpened)
-        // {
-        //     if (this.openedSubMenu)
-        //         this.openedSubMenu.close()
-        //     this.openedSubMenu = new SubMenu(menuId, keyboardActivated, () => this.close())
-        // }
+        if (this.subMenuOpened) {
+            if (this.openedSubMenu)
+                this.openedSubMenu.close()
+//            this.openedSubMenu = new SubMenu(menuId, keyboardActivated, () => this.close())
+        }
     }
 
+    private setSubMenuOpened() {
+        this.menuElement.classList.add("subMenuOpened")
+        this.subMenuOpened = true
+    }
+
+    private setSubMenuClosed() {
+        this.menuElement.classList.remove("subMenuOpened")
+        this.subMenuOpened = false
+    }
+    
     private closeSubMenus()
     {
         let subs = Array.from(document.getElementsByClassName("submenu"))
@@ -162,6 +289,6 @@ export class Menubar {
     private hasFocus = false
     private keyboardActivated = false
     private acceleratorInitiated = false
-    //private openedSubMenu: SubMenu
+    private openedSubMenu: any // SubMenu
 }
  

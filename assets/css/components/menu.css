@@ -19,7 +19,6 @@
     padding-top: 2px;
     padding-right: 5px;
     padding-bottom: 2px;
-    transition: background-color 0.5s;
 }
 
 .menubar > li:focus {
@@ -46,10 +45,6 @@
 
 .submenu tr td:last-child {
     text-align: right
-}
-
-.menubar tr:focus {
-    outline: none;
 }
 
 .submenu td {
