@@ -8,15 +8,25 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
 .hidden {
     display: none !important;
+}
+
+#content {
+    flex-grow: 1;
+    position: relative;
 }
 
 
 
 #testview {
     position: absolute;
-    top: 20px;
     left: 0px;
     right: 0px;
     width: 100%;

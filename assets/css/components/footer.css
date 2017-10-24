@@ -1,8 +1,5 @@
 footer {
-    position:absolute;
-    width:100%;
     padding: 3px;
-    bottom: 0;    
     color: var(--selected-color);
     background-color: var(--selected-bg-color);
     border-top-color: var(--separator-color);
