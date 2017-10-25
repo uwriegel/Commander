@@ -1,6 +1,5 @@
 ﻿// TODO: Weiterentwicklung
 
-// Alt+F4
 // Checkable MenuItem
 // Theme-Umschaltung
 // getPlatform() in PresenterBase, irgendwie platform bestimmen, session storage
@@ -148,7 +147,11 @@ export class Commander {
                 key: 115,
                 alt: true
             },
-            action: () => alert("Ende!")
+            action: () => {
+                var gui = require("nw.gui")
+                const mainWindow = gui.Window.get()
+                mainWindow.close()
+            }
         })
 
         menuNavigation.appendItem({

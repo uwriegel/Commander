@@ -14,6 +14,10 @@ export interface Shortcut {
     ctrl?: boolean
 }
 
+export interface ShortCutAction {
+    action?: ()=>void
+}
+
 export interface MenuItem {
     name?: string
     type?: MenuItemType
@@ -67,6 +71,8 @@ export class Menu {
                 item.shortcut.alt = item.shortcut.alt ? true: false
                 item.shortcut.ctrl = item.shortcut.ctrl ? true: false
                 item.shortcut.shift = item.shortcut.shift ? true: false
+                const actionItem = item.shortcut as ShortCutAction
+                actionItem.action = item.action
                 this.shortcuts.push(item.shortcut)                
             }
         }

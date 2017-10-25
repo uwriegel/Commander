@@ -1,4 +1,4 @@
-import { Menu, Shortcut } from "./menu.js"
+import { Menu, Shortcut, ShortCutAction } from "./menu.js"
 import { SubMenuController } from "./submenucontroller.js"
 export { Menu, MenuItemType } from "./menu.js"
 
@@ -203,7 +203,8 @@ export class Menubar {
     private processShortcuts(evt: KeyboardEvent) {
         const shortcut = this.shortcuts.find(n => n.key == evt.which && n.alt == evt.altKey && n.ctrl == evt.ctrlKey && n.shift == evt.shiftKey)
         if (shortcut) {
-            alert("Alete")
+            const actionItem = shortcut as ShortCutAction
+            actionItem.action!()
             return true
         }
         return false
