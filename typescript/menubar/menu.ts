@@ -1,4 +1,5 @@
 import { Menubar } from "./menubar.js"
+import { MenuItemControl } from "./menuitemcontrol.js"
 
 export enum MenuItemType {
     MenuItem,
@@ -22,7 +23,7 @@ export interface MenuItem {
     name?: string
     type?: MenuItemType
     shortcut?: Shortcut
-    action?: (menu: Menu)=>void
+    action?: (menuItemControl: MenuItemControl)=>void
 }
 
 export class Menu {
@@ -34,17 +35,6 @@ export class Menu {
 
         const tableBody = document.createElement("tbody")
         this.table.appendChild(tableBody)
-    }
-
-    get isChecked() {
-        return !this.checker.classList.contains("hidden")
-    }
-
-    set isChecked(value: boolean) {
-        if (value)
-            this.checker.classList.remove("hidden")
-        else
-            this.checker.classList.add("hidden")
     }
 
     appendItem(item : MenuItem) {
@@ -66,8 +56,8 @@ export class Menu {
 
         tr.appendChild(td)
 
-        if (item.type == MenuItemType.Checkable)
-            this.checker = tr.querySelector(".checker") as HTMLSpanElement
+        const checker = item.type == MenuItemType.Checkable ? tr.querySelector(".checker") as HTMLSpanElement : undefined
+        const result = new MenuItemControl(checker)
 
         if (item.type != MenuItemType.Separator) {
             const td2 = document.createElement("td")
@@ -81,10 +71,10 @@ export class Menu {
             tr.dataset["id"] = id
 
             const action = item.type == MenuItemType.Checkable ? () => {
-                this.isChecked = !this.isChecked
-                item.action!(this)  
+                result.isChecked = !result.isChecked
+                item.action!(result)  
             } 
-            : () => item.action!(this)
+            : () => item.action!(result)
             
             this.actions.set(id, action)
 
@@ -99,10 +89,10 @@ export class Menu {
         }
 
         tableBody.appendChild(tr)
+        return result
     }
     
     private static latestItemIndex = 0
     private static latestTabIndex = 0
     private readonly table: HTMLTableElement
-    private checker: HTMLSpanElement
 }

@@ -25,6 +25,7 @@
 //import { VerticalGrid }  from './vgrid'
 import { CommanderView }  from './commanderview.js'
 import { Menubar, MenuItemType }  from './menubar/menubar.js'
+import { MenuItemControl } from './menubar/menuitemcontrol.js'
 // import { Viewer }  from './viewer'
 // import { Item } from './model/item'
 // /*
@@ -195,17 +196,28 @@ export class Commander {
         menuView.appendItem({
             type: MenuItemType.Separator
         })
-        menuView.appendItem({
+
+        const changeTheme = (menuItemControl: MenuItemControl) => {
+            menuLightBlue.isChecked = false
+            menuBlue.isChecked = false
+            menuDark.isChecked = false
+            menuItemControl.isChecked = true
+        }
+
+        var menuLightBlue = menuView.appendItem({
             name: "_Hellblaues Schema",
-            type: MenuItemType.Checkable
+            type: MenuItemType.Checkable,
+            action: m => changeTheme(m)
         })
-        menuView.appendItem({
+        var menuBlue = menuView.appendItem({
             name: "B_laues Schema",
-            type: MenuItemType.Checkable
+            type: MenuItemType.Checkable,
+            action: m => changeTheme(m)
         })
-        menuView.appendItem({
+        var menuDark = menuView.appendItem({
             name: "_Dunkles Schema",
-            type: MenuItemType.Checkable
+            type: MenuItemType.Checkable,
+            action: m => changeTheme(m)
         })
         menuView.appendItem({
             type: MenuItemType.Separator

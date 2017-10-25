@@ -4,7 +4,7 @@ export { Menu, MenuItemType } from "./menu.js"
 
 export class Menubar {
     constructor(parentId: string) {
-        this.menuElement  = document.getElementById(parentId)!
+        this.menuElement = document.getElementById(parentId)!
         this.menuElement.classList.add("menuParent")
         this.menubarContainer = document.createElement("ul")
         this.menubarContainer.classList.add("menubar")
@@ -89,25 +89,30 @@ export class Menubar {
             }
 
             if (this.keyboardActivated && evt.which != 18) { // Alt
-                const accs = <HTMLSpanElement[]>Array.from(this.menuElement.querySelectorAll(".keyboardActivated .accelerator"))
-                const acc = accs.find(n => n.innerText.toLowerCase() == evt.key)
-                if (acc) {
-                    if (!this.isActive)
-                        this.acceleratorInitiated = true
-                    const element = acc.parentElement
-                    if (element && element.nodeName == "LI") {
-                        let li = element as HTMLLIElement
-                        this.setActive()
-                        this.setSubMenuOpened()
-                        this.clearSelection()
-                        this.focusLi(li)
-                        evt.stopPropagation()
-                        evt.preventDefault()
-                        return
+
+                if (this.openedSubMenu)
+                    this.openedSubMenu.onKey(evt.key)
+                else {
+                    const accs = <HTMLSpanElement[]>Array.from(this.menuElement.querySelectorAll(".keyboardActivated .accelerator"))
+                    const acc = accs.find(n => n.innerText.toLowerCase() == evt.key)
+                    if (acc) {
+                        if (!this.isActive)
+                            this.acceleratorInitiated = true
+                        const element = acc.parentElement
+                        if (element && element.nodeName == "LI") {
+                            let li = element as HTMLLIElement
+                            this.setActive()
+                            this.setSubMenuOpened()
+                            this.clearSelection()
+                            this.focusLi(li)
+                            evt.stopPropagation()
+                            evt.preventDefault()
+                            return
+                        }
                     }
+                    else if(!this.isActive)
+                        this.close()
                 }
-                else if(!this.isActive)
-                    this.close()
             }
             
             if (!this.isActive) {
