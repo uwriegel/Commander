@@ -1,6 +1,5 @@
 ﻿// TODO: Weiterentwicklung
 
-// Theme-Umschaltung
 // getPlatform() in PresenterBase, irgendwie platform bestimmen
 // GetRootItems in den Platformen
 // Entweder im DirectoryPresenter
@@ -48,6 +47,7 @@ export class Commander {
 //     }
 
      constructor() {
+        this.setTheme("blue")
         this.initializeMenubar()
 //         this.leftView.otherView = this.rightView
 //         this.rightView.otherView = this.leftView
@@ -71,10 +71,6 @@ export class Commander {
 //         viewerElement.onclick = () =>this.focusedView.focus()
 
 //         this.initializeOnKeyDownHandler();
-
-//         ipcRenderer.on("showHidden", (_: any, showHidden: boolean) => this.showHidden(showHidden))
-//         ipcRenderer.on("darkTheme", (_: any, dark: boolean) => this.setDarkTheme(dark))
-//         ipcRenderer.on("preview", (_: any, preview: boolean) => vgrid.switchBottom(preview))
      }
 
 //     getCommanderView(id: string) {
@@ -88,6 +84,67 @@ export class Commander {
 //                 return undefined
 //         }
 //     }
+
+//     private initializeOnKeyDownHandler() {
+//         document.onkeydown = evt => {
+//             switch (evt.which) {
+//                 case 9: // TAB
+//                     if (!evt.shiftKey) {
+//                         if (this.focusedView.isDirectoryInputFocused())
+//                            this.focusedView.focus()
+//                         else {
+//                             const toFocus = this.focusedView == this.leftView ? this.rightView : this.leftView
+//                             toFocus.focus()
+//                         }
+//                     }
+//                     else
+//                         this.focusedView.focusDirectoryInput()
+//                     break
+//                 default:
+//                     return
+//             }
+//             evt.preventDefault()
+//         }
+//     }
+
+//     showHidden(show: boolean) {
+//         GlobalSettings.showHidden = show
+//         this.leftView.refresh()
+//         this.rightView.refresh()
+//     }
+
+//     private currentItemChanged(item: Item, path: string) {
+//         if (item) {
+//             const text = Path.join(path, item.displayName)
+//             this.footer!.textContent = text
+//             this.viewer.selectionChanged(text)
+//         }
+//         else {
+//             this.footer!.textContent = "Nichts selektiert"
+//             this.viewer.selectionChanged("")
+//         }
+//     }
+
+     private setTheme(theme: string) {
+        let styleSheet = document.getElementById("dark")
+        if (styleSheet)
+            styleSheet.remove()
+        styleSheet = document.getElementById("blue")
+        if (styleSheet)
+            styleSheet.remove()
+        styleSheet = document.getElementById("lightblue")
+        if (styleSheet)
+            styleSheet.remove()
+
+        const head = document.getElementsByTagName('head')[0]
+        let link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.id = 'theme'
+        link.type = 'text/css'
+        link.href = `assets/css/themes/${theme}.css`
+        link.media = 'all'
+        head.appendChild(link)
+    }
 
     private initializeMenubar() {
         const menuFile = this.menubar.insertItem("_Datei")
@@ -202,6 +259,12 @@ export class Commander {
             menuBlue.isChecked = false
             menuDark.isChecked = false
             menuItemControl.isChecked = true
+            if (menuItemControl == menuLightBlue)
+                this.setTheme("lightblue")
+            else if (menuItemControl == menuBlue)
+                this.setTheme("blue")
+            else if (menuItemControl == menuDark)
+                this.setTheme("dark")
         }
 
         var menuLightBlue = menuView.appendItem({
@@ -214,6 +277,7 @@ export class Commander {
             type: MenuItemType.Checkable,
             action: m => changeTheme(m)
         })
+        menuBlue.isChecked = true
         var menuDark = menuView.appendItem({
             name: "_Dunkles Schema",
             type: MenuItemType.Checkable,
@@ -236,62 +300,6 @@ export class Commander {
             }
         })
     }
-
-//     private initializeOnKeyDownHandler() {
-//         document.onkeydown = evt => {
-//             switch (evt.which) {
-//                 case 9: // TAB
-//                     if (!evt.shiftKey) {
-//                         if (this.focusedView.isDirectoryInputFocused())
-//                            this.focusedView.focus()
-//                         else {
-//                             const toFocus = this.focusedView == this.leftView ? this.rightView : this.leftView
-//                             toFocus.focus()
-//                         }
-//                     }
-//                     else
-//                         this.focusedView.focusDirectoryInput()
-//                     break
-//                 default:
-//                     return
-//             }
-//             evt.preventDefault()
-//         }
-//     }
-
-//     showHidden(show: boolean) {
-//         GlobalSettings.showHidden = show
-//         this.leftView.refresh()
-//         this.rightView.refresh()
-//     }
-
-//     setDarkTheme(activate: boolean) {
-//         if (activate) {
-//             const head = document.getElementsByTagName('head')[0]
-//             let link = document.createElement('link')
-//             link.rel = 'stylesheet'
-//             link.id = 'darkThemeStylesheet'
-//             link.type = 'text/css'
-//             link.href = 'styles/dark.css'
-//             link.media = 'all'
-//             head.appendChild(link)
-//         } else {
-//             const styleSheet = document.getElementById("darkThemeStylesheet")
-//             styleSheet!.remove()
-//         }
-//     }
-
-//     private currentItemChanged(item: Item, path: string) {
-//         if (item) {
-//             const text = Path.join(path, item.displayName)
-//             this.footer!.textContent = text
-//             this.viewer.selectionChanged(text)
-//         }
-//         else {
-//             this.footer!.textContent = "Nichts selektiert"
-//             this.viewer.selectionChanged("")
-//         }
-//     }
 
 //     private readonly leftView = new CommanderView("leftView")
 //     private readonly rightView = new CommanderView("rightView")
