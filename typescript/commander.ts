@@ -1,6 +1,9 @@
 ﻿// TODO: Weiterentwicklung
 
-//TODO getPlatform() in PresenterBase, irgendwie platform bestimmen, session storage
+// Alt+F4
+// Checkable MenuItem
+// Theme-Umschaltung
+// getPlatform() in PresenterBase, irgendwie platform bestimmen, session storage
 // Entweder im DirectoryPresenter
 // getIconURl als c++/gtk-Dll über Webserver/c# abrufbar
 // oder 
