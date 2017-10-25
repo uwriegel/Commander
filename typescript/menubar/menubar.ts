@@ -1,4 +1,4 @@
-import { Menu } from "./menu.js"
+import { Menu, Shortcut } from "./menu.js"
 import { SubMenuController } from "./submenucontroller.js"
 export { Menu, MenuItemType } from "./menu.js"
 
@@ -25,7 +25,7 @@ export class Menubar {
         li.dataset["id"] = this.menubarContainer.childElementCount.toString()
         this.menubarContainer.appendChild(li)
         Menubar.insertAcceleratableItem(li, item)
-        return new Menu(this.menuElement, this.actions)
+        return new Menu(this.menuElement, this.actions, this.shortcuts)
     }
 
     static insertAcceleratableItem(element: HTMLElement, item: string) {
@@ -103,8 +103,13 @@ export class Menubar {
                     this.close()
             }
             
-            if (!this.isActive)
+            if (!this.isActive) {
+                if (this.processShortcuts(evt)) {
+                    evt.stopPropagation()
+                    evt.preventDefault()
+                }
                 return
+            }
 
             switch (evt.which) {
                 case 9: // TAB
@@ -171,7 +176,7 @@ export class Menubar {
                 default:
                     if (this.openedSubMenu)
                         this.openedSubMenu.onKey(evt.key)
-                    break;
+                    break
             }
             evt.stopPropagation()
             evt.preventDefault()
@@ -193,6 +198,15 @@ export class Menubar {
                     break
             }
         }        
+    }
+
+    private processShortcuts(evt: KeyboardEvent) {
+        const shortcut = this.shortcuts.find(n => n.key == evt.which && n.alt == evt.altKey && n.ctrl == evt.ctrlKey && n.shift == evt.shiftKey)
+        if (shortcut) {
+            alert("Alete")
+            return true
+        }
+        return false
     }
     
     private setActive() {
@@ -299,5 +313,6 @@ export class Menubar {
     private acceleratorInitiated = false
     private openedSubMenu?: SubMenuController
     private actions = new Map<string, ()=>void>()
+    private shortcuts: Shortcut[] = []
 }
  

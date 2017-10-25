@@ -22,7 +22,7 @@ export interface MenuItem {
 }
 
 export class Menu {
-    constructor(private menubar: HTMLElement, private actions: Map<string, ()=>void>) {
+    constructor(private menubar: HTMLElement, private actions: Map<string, ()=>void>, private shortcuts: Shortcut[]) {
         this.table = document.createElement("table")
         this.table.classList.add("submenu")
         this.table.classList.add("hidden")
@@ -62,6 +62,13 @@ export class Menu {
             const id = (++Menu.latestItemIndex).toString()
             tr.dataset["id"] = id
             this.actions.set(id, item.action)
+
+            if (item.shortcut) {
+                item.shortcut.alt = item.shortcut.alt ? true: false
+                item.shortcut.ctrl = item.shortcut.ctrl ? true: false
+                item.shortcut.shift = item.shortcut.shift ? true: false
+                this.shortcuts.push(item.shortcut)                
+            }
         }
 
         tableBody.appendChild(tr)
