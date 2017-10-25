@@ -9,7 +9,7 @@
     --separator-color: lightgray;
     
     --menu-background-color: rgb(238, 236, 236);
-    --menu-hover-color: rgba(0, 0, 255, 0.1);
+    --menu-hover-color: rgba(0, 0, 255, 0.2);
     --menu-selected-background-color: blue;
     --menu-selected-color: white;
 }

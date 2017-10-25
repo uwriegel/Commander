@@ -1,4 +1,5 @@
 import { Menu } from "./menu.js"
+import { SubMenuController } from "./submenucontroller.js"
 export { Menu, MenuItemType } from "./menu.js"
 
 export class Menubar {
@@ -37,6 +38,7 @@ export class Menubar {
             }
             const acceleratorSpan = document.createElement("span")        
             acceleratorSpan.innerText = item.substr(acceleratorPos + 1, 1)
+            acceleratorSpan.classList.add("accelerator")
             element.appendChild(acceleratorSpan)
             const span = document.createElement("span")        
             span.innerText = item.substring(acceleratorPos + 2)
@@ -49,8 +51,7 @@ export class Menubar {
         }
     }
 
-    private initializeMouseHandler()
-    {
+    private initializeMouseHandler() {
         this.menubarContainer.onmousedown = evt => {
             var li = <HTMLLIElement>(<HTMLElement>evt.target).closest("li")
             var selected = false
@@ -109,8 +110,14 @@ export class Menubar {
                 case 13: // Enter
                     if (this.openedSubMenu)
                         this.openedSubMenu.onEnter()
+                    else if ((<HTMLElement>evt.target).nodeName == "LI") {
+                        this.keyboardActivated = true
+                        this.setSubMenuOpened()
+                        let li = <HTMLLIElement>this.menuElement.querySelector(".menubar>li.selected")
+                        this.focusLi(li)
+                    }
                     break;
-                case 18:
+                case 18: // alt
                     break
                 case 27: // ESC
                     this.close()
@@ -118,7 +125,7 @@ export class Menubar {
                 case 37: {// <-
                         if (this.openedSubMenu) {
                             this.openedSubMenu.close()
-                            this.openedSubMenu = null
+                            this.openedSubMenu = undefined
                         }
                         let li = <HTMLLIElement>this.menuElement.querySelector(".menubar>li.selected")
                         const lis = <HTMLLIElement[]>Array.from(this.menuElement.querySelectorAll(".menubar>li"))
@@ -137,7 +144,7 @@ export class Menubar {
                 case 39: { // ->
                         if (this.openedSubMenu) {
                             this.openedSubMenu.close()
-                            this.openedSubMenu = null
+                            this.openedSubMenu = undefined
                         }
                         let li = <HTMLLIElement>this.menuElement.querySelector(".menubar>li.selected + li")
                         if (!li)
@@ -239,17 +246,17 @@ export class Menubar {
         if (this.subMenuOpened) {
             if (this.openedSubMenu)
                 this.openedSubMenu.close()
-//            this.openedSubMenu = new SubMenu(menuId, keyboardActivated, () => this.close())
+            this.openedSubMenu = new SubMenuController(table, keyboardActivated, () => this.close())
         }
     }
 
     private setSubMenuOpened() {
-        this.menuElement.classList.add("subMenuOpened")
+        this.menubarContainer.classList.add("subMenuOpened")
         this.subMenuOpened = true
     }
 
     private setSubMenuClosed() {
-        this.menuElement.classList.remove("subMenuOpened")
+        this.menubarContainer.classList.remove("subMenuOpened")
         this.subMenuOpened = false
     }
     
@@ -263,19 +270,18 @@ export class Menubar {
         Array.from(this.menubarContainer.querySelectorAll(".menubar>li")).forEach(n => n.classList.remove("selected"))
     }
 
-    private close()
-    {
+    private close() {
         this.closeSubMenus()
-        this.menubarContainer.classList.remove("keyboardActivated")
+        this.menuElement.classList.remove("keyboardActivated")
         this.keyboardActivated = false;
         this.clearSelection()
         this.hasFocus = false
         this.isActive = false
         this.acceleratorInitiated = false
-        // this.setSubMenuClosed()
-        // if (this.openedSubMenu)
-        //     this.openedSubMenu.close()
-        // this.openedSubMenu = null
+        this.setSubMenuClosed()
+        if (this.openedSubMenu)
+            this.openedSubMenu.close()
+        this.openedSubMenu = undefined
         let lis = <HTMLLIElement[]>Array.from(this.menubarContainer.querySelectorAll(".menubar>li"))
         lis.forEach(n => (n.onmouseover as any) = null)
         //setTimeout(() => this.focusedView.focus(), 100)
@@ -289,6 +295,6 @@ export class Menubar {
     private hasFocus = false
     private keyboardActivated = false
     private acceleratorInitiated = false
-    private openedSubMenu: any // SubMenu
+    private openedSubMenu?: SubMenuController
 }
  

@@ -5,7 +5,6 @@
 .menubar {
     user-select: none;
     cursor: default;
-    /* list-style: none; */
     padding: 0;
     margin: 0;
 }
@@ -29,9 +28,14 @@
     background-color: var(--menu-hover-color);
 }
 
-.menubar>li.selected {
+.menubar > li.selected {
     background-color: var(--menu-selected-background-color);
     color: var(--menu-selected-color);
+}
+
+.menubar.subMenuOpened > li.selected {
+    background-color: var(--menu-hover-color);
+    color: var(--color);
 }
 
 .submenu {
@@ -39,7 +43,7 @@
     z-index: 3000;
     cursor: default;
     border-spacing: 0px;
-    background-color: white;
+    background-color: var(--menu-background-color);
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.21);
 }
 
@@ -62,9 +66,19 @@
 }
 
 .submenu tr:hover {
-    background-color: rgb(235,235,255);
+    background-color: var(--menu-hover-color);
+}
+
+.submenu tr.selected {
+    background-color: var(--menu-selected-background-color);
+    color: var(--menu-selected-color);
+    outline: none;
 }
 
 .submenu tr.separator:hover {
     background-color: white
+}
+
+.keyboardActivated .accelerator {
+    text-decoration: underline;
 }
