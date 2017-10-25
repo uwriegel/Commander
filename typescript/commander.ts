@@ -106,14 +106,16 @@ export class Commander {
             shortcut: {
                 display: "F5",
                 key: 116
-            }
+            },
+            action: () => alert("Kopie")
         })
         menuFile.appendItem({
             name: "_Verschieben",
             shortcut: {
                 display: "F6",
                 key: 117
-            }
+            },
+            action: () => alert("Verschiebe")
         })
         menuFile.appendItem({
             name: "_Löschen",
@@ -142,7 +144,8 @@ export class Commander {
                 display: "Alt+F4",
                 key: 115,
                 alt: true
-            }
+            },
+            action: () => alert("Ende!")
         })
 
         menuNavigation.appendItem({

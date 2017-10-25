@@ -1,5 +1,5 @@
 export class SubMenuController {
-    constructor(private subMenu: HTMLTableElement, keyboardActivated: boolean, private closeMenu: () => void) {
+    constructor(private subMenu: HTMLTableElement, private actions: Map<string, ()=>void>, keyboardActivated: boolean, private closeMenu: () => void) {
         if (keyboardActivated) {
             this.subMenu.classList.add("keyboardActivated")
             let tr = this.subMenu.querySelector("tr")!
@@ -67,83 +67,20 @@ export class SubMenuController {
     }
 
     private initializeMouseHandler() {
-        this.subMenu.onmousedown = evt =>  {
+        this.subMenu.onmouseup = evt =>  {
             var tr = <HTMLTableRowElement>(<HTMLElement>evt.target).closest("tr")
             this.onExecute(tr)
         }
     }
 
     private onExecute(tr: HTMLTableRowElement) {
-    //     switch (tr.id)
-    //     {
-    //         case "menuRename":
-    //             var focused = commanderInstance.getFocused()
-    //             if (!focused)
-    //                 return
-    //             focused.executeRename(false)
-    //             break;
-    //         case "menuCopy":
-    //             var focused = commanderInstance.getFocused()
-    //             if (!focused)
-    //                 return
-    //             focused.executeCopy()
-    //             break;
-    //         case "menuMove":
-    //             var focused = commanderInstance.getFocused()
-    //             if (!focused)
-    //                 return
-    //             focused.executeMove()
-    //             break;
-    //         case "menuDelete":
-    //             var focused = commanderInstance.getFocused()
-    //             if (!focused)
-    //                 return
-    //             focused.executeDelete()
-    //             break;
-    //         case "menuProperties":
-    //             var focused = commanderInstance.getFocused()
-    //             if (!focused)
-    //                 return
-    //             focused.executeShowProperties()
-    //             break;
-    //         case "menuExit":
-    //             close()
-    //             break;
-    //         case "menuFirst":
-    //             var focused = commanderInstance.getFocused()
-    //             if (!focused)
-    //                 return
-    //             focused.gotoFirst()                    
-    //             break;
-    //         case "menuFavorites":
-    //             var focused = commanderInstance.getFocused()
-    //             if (!focused)
-    //                 return
-    //             focused.showFavorites()
-    //             break;
-    //         case "menuSelectAll":
-    //             var focused = commanderInstance.getFocused()
-    //             if (!focused)
-    //                 return
-    //             focused.selectAll()
-    //             break;
-    //         case "menuSelectNone":
-    //             var focused = commanderInstance.getFocused()
-    //             if (!focused)
-    //                 return
-    //             focused.selectNone()
-    //             break;
-    //         case "menuShowHidden":
-    //             commanderInstance.showHidden(localStorage["showHidden"] != "true")
-    //             break;
-    //         case "menuDarkTheme":
-    //             commanderInstance.darkTheme(localStorage["darkTheme"] != "true")
-    //             break;
-    //         default:
-    //             return;
-    //     }
-    //     this.close()
-    //     this.closeMenu()
+        const id = tr.dataset["id"]
+        this.close()
+        this.closeMenu()
+        setTimeout(() => {
+            if (id) 
+                this.actions.get(id)!()
+        }, 0)
     }
 
     private onFocusOut = (evt: Event) => {

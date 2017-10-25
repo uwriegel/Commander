@@ -18,10 +18,11 @@ export interface MenuItem {
     name?: string
     type?: MenuItemType
     shortcut?: Shortcut
+    action?: ()=>void
 }
 
 export class Menu {
-    constructor(private menubar: HTMLElement) {
+    constructor(private menubar: HTMLElement, private actions: Map<string, ()=>void>) {
         this.table = document.createElement("table")
         this.table.classList.add("submenu")
         this.table.classList.add("hidden")
@@ -57,9 +58,16 @@ export class Menu {
             tr.appendChild(td2)
         }
 
+        if (item.action) {
+            const id = (++Menu.latestItemIndex).toString()
+            tr.dataset["id"] = id
+            this.actions.set(id, item.action)
+        }
+
         tableBody.appendChild(tr)
     }
     
+    private static latestItemIndex = 0
     private static latestTabIndex = 0
     private readonly table: HTMLTableElement
 }

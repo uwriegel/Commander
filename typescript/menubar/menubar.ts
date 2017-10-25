@@ -25,7 +25,7 @@ export class Menubar {
         li.dataset["id"] = this.menubarContainer.childElementCount.toString()
         this.menubarContainer.appendChild(li)
         Menubar.insertAcceleratableItem(li, item)
-        return new Menu(this.menuElement)
+        return new Menu(this.menuElement, this.actions)
     }
 
     static insertAcceleratableItem(element: HTMLElement, item: string) {
@@ -87,14 +87,17 @@ export class Menubar {
                 if (acc) {
                     if (!this.isActive)
                         this.acceleratorInitiated = true
-                    let li = <HTMLLIElement>acc.parentElement
-                    this.setActive()
-                    this.setSubMenuOpened()
-                    this.clearSelection()
-                    this.focusLi(li)
-                    evt.stopPropagation()
-                    evt.preventDefault()
-                    return;
+                    const element = acc.parentElement
+                    if (element && element.nodeName == "LI") {
+                        let li = element as HTMLLIElement
+                        this.setActive()
+                        this.setSubMenuOpened()
+                        this.clearSelection()
+                        this.focusLi(li)
+                        evt.stopPropagation()
+                        evt.preventDefault()
+                        return
+                    }
                 }
                 else if(!this.isActive)
                     this.close()
@@ -246,7 +249,7 @@ export class Menubar {
         if (this.subMenuOpened) {
             if (this.openedSubMenu)
                 this.openedSubMenu.close()
-            this.openedSubMenu = new SubMenuController(table, keyboardActivated, () => this.close())
+            this.openedSubMenu = new SubMenuController(table, this.actions, keyboardActivated, () => this.close())
         }
     }
 
@@ -260,8 +263,7 @@ export class Menubar {
         this.subMenuOpened = false
     }
     
-    private closeSubMenus()
-    {
+    private closeSubMenus() {
         let subs = Array.from(document.getElementsByClassName("submenu"))
         subs.forEach(n => n.classList.add("hidden"))
     }
@@ -296,5 +298,6 @@ export class Menubar {
     private keyboardActivated = false
     private acceleratorInitiated = false
     private openedSubMenu?: SubMenuController
+    private actions = new Map<string, ()=>void>()
 }
  
