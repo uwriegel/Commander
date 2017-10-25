@@ -15,14 +15,14 @@ export interface Shortcut {
 }
 
 export interface ShortCutAction {
-    action?: ()=>void
+    callAction?: ()=>void
 }
 
 export interface MenuItem {
     name?: string
     type?: MenuItemType
     shortcut?: Shortcut
-    action?: ()=>void
+    action?: (menu: Menu)=>void
 }
 
 export class Menu {
@@ -36,6 +36,17 @@ export class Menu {
         this.table.appendChild(tableBody)
     }
 
+    get isChecked() {
+        return !this.checker.classList.contains("hidden")
+    }
+
+    set isChecked(value: boolean) {
+        if (value)
+            this.checker.classList.remove("hidden")
+        else
+            this.checker.classList.add("hidden")
+    }
+
     appendItem(item : MenuItem) {
         const tableBody = this.table.querySelector("tbody")!
         const tr = document.createElement("tr")
@@ -44,7 +55,7 @@ export class Menu {
         if (item.type != MenuItemType.Separator) {
             tr.tabIndex = ++Menu.latestTabIndex
             tr.classList.add("selectable")
-            Menubar.insertAcceleratableItem(td, item.name!)
+            Menubar.insertAcceleratableItem(td, item.name!, item.type == MenuItemType.Checkable)
         }
         else {
             tr.classList.add("separator")
@@ -54,6 +65,9 @@ export class Menu {
         }
 
         tr.appendChild(td)
+
+        if (item.type == MenuItemType.Checkable)
+            this.checker = tr.querySelector(".checker") as HTMLSpanElement
 
         if (item.type != MenuItemType.Separator) {
             const td2 = document.createElement("td")
@@ -65,14 +79,21 @@ export class Menu {
         if (item.action) {
             const id = (++Menu.latestItemIndex).toString()
             tr.dataset["id"] = id
-            this.actions.set(id, item.action)
+
+            const action = item.type == MenuItemType.Checkable ? () => {
+                this.isChecked = !this.isChecked
+                item.action!(this)  
+            } 
+            : () => item.action!(this)
+            
+            this.actions.set(id, action)
 
             if (item.shortcut) {
                 item.shortcut.alt = item.shortcut.alt ? true: false
                 item.shortcut.ctrl = item.shortcut.ctrl ? true: false
                 item.shortcut.shift = item.shortcut.shift ? true: false
                 const actionItem = item.shortcut as ShortCutAction
-                actionItem.action = item.action
+                actionItem.callAction = action
                 this.shortcuts.push(item.shortcut)                
             }
         }
@@ -83,4 +104,5 @@ export class Menu {
     private static latestItemIndex = 0
     private static latestTabIndex = 0
     private readonly table: HTMLTableElement
+    private checker: HTMLSpanElement
 }

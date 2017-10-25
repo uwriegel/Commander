@@ -82,3 +82,9 @@
 .keyboardActivated .accelerator {
     text-decoration: underline;
 }
+
+.checker {
+    position: absolute;
+    left: 10px;
+    margin-top: -2px;
+}

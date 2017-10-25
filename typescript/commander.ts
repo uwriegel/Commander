@@ -1,8 +1,8 @@
 ﻿// TODO: Weiterentwicklung
 
-// Checkable MenuItem
 // Theme-Umschaltung
-// getPlatform() in PresenterBase, irgendwie platform bestimmen, session storage
+// getPlatform() in PresenterBase, irgendwie platform bestimmen
+// GetRootItems in den Platformen
 // Entweder im DirectoryPresenter
 // getIconURl als c++/gtk-Dll über Webserver/c# abrufbar
 // oder 
@@ -200,7 +200,7 @@ export class Commander {
             type: MenuItemType.Checkable
         })
         menuView.appendItem({
-            name: "_Blaues Schema",
+            name: "B_laues Schema",
             type: MenuItemType.Checkable
         })
         menuView.appendItem({
@@ -211,12 +211,17 @@ export class Commander {
             type: MenuItemType.Separator
         })
         menuView.appendItem({
-            name: "_Vollbild",
+            name: "Voll_bild",
             shortcut: {
                 display: "F11",
                 key: 122
             },
-            type: MenuItemType.Checkable
+            type: MenuItemType.Checkable,
+            action: menu => {
+                var gui = require("nw.gui")
+                const mainWindow = gui.Window.get()
+                menu.isChecked ? mainWindow.enterFullscreen() : mainWindow.leaveFullscreen()
+            }
         })
     }
 

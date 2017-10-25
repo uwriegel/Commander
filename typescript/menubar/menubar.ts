@@ -24,11 +24,11 @@ export class Menubar {
         li.tabIndex = ++Menubar.latestTabIndex
         li.dataset["id"] = this.menubarContainer.childElementCount.toString()
         this.menubarContainer.appendChild(li)
-        Menubar.insertAcceleratableItem(li, item)
+        Menubar.insertAcceleratableItem(li, item, false)
         return new Menu(this.menuElement, this.actions, this.shortcuts)
     }
 
-    static insertAcceleratableItem(element: HTMLElement, item: string) {
+    static insertAcceleratableItem(element: HTMLElement, item: string, isCheckable: boolean) {
         const acceleratorPos = item.indexOf("_")
         if (acceleratorPos != -1) {
             if (acceleratorPos > 0) {
@@ -43,6 +43,13 @@ export class Menubar {
             const span = document.createElement("span")        
             span.innerText = item.substring(acceleratorPos + 2)
             element.appendChild(span)
+            if (isCheckable) {
+                const span = document.createElement("span")        
+                span.innerText = '✓'
+                span.classList.add("checker")
+                span.classList.add("hidden")
+                element.appendChild(span)
+            }
         }
         else {
             const span = document.createElement("span")        
@@ -204,7 +211,7 @@ export class Menubar {
         const shortcut = this.shortcuts.find(n => n.key == evt.which && n.alt == evt.altKey && n.ctrl == evt.ctrlKey && n.shift == evt.shiftKey)
         if (shortcut) {
             const actionItem = shortcut as ShortCutAction
-            actionItem.action!()
+            actionItem.callAction!()
             return true
         }
         return false
