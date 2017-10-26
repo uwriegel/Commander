@@ -2,7 +2,8 @@
   "name": "commander",
   "version": "0.0.1",
   "description": "",
-  "main": "loader.html",
+  "main": "http://localhost:20000/commander.html",
+  "node-main": "scripts/nwgui/loader.js",
   "license": "MIT",
   "node-remote": "http://localhost:20000",
   "window": {

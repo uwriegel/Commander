@@ -9,17 +9,7 @@ app.use(compression())
 
 app.use(express.static('./'))
 
-app.listen(20000, () => {
-    console.log('server listening')
-    ;(process as any).send("listening")
-})
-
-process.on("message", m => {
-    if (m == "kill") {
-        console.log("Stopping server process")
-        process.exit()
-    }
-})
+app.listen(20000, () => console.log('server listening'))
 
 app.get('/exit', (_:any, res: any) => {
     console.log("Stopping server process")
