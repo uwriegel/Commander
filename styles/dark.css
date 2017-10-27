@@ -13,19 +13,3 @@
 {
     background-color: rgb(67,67,68);
 }
-
-.scrollbar
-{
-    background-color: rgb(67,67,68);
-    border-color: rgb(127,127,132);
-}
-
-.scrollbarGrip
-{
-    background-color: rgb(127,127,132);
-}
-
-.scrollbarUp:hover, .scrollbarDown:hover
-{
-    background-color: rgb(127,127,132);
-}

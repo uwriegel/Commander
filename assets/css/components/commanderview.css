@@ -95,7 +95,7 @@
 
 
 .commanderTable tr:hover {
-    background-color: #fffbdf;
+    background-color: var(--commander-item-hover);
 }
 
 .commanderTable tr:focus {
@@ -136,3 +136,8 @@
     padding-right: 3px;
     height: 16px;
 }
+
+.it-hidden {
+    opacity: 0.45;
+}
+

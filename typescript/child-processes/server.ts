@@ -7,6 +7,8 @@ var app = express()
 const compression = require('compression')
 app.use(compression())
 
+app.use('/favicon.ico', express.static('./assets/images/kirk.png'));
+
 app.use(express.static('./'))
 
 app.listen(20000, () => console.log('server listening'))

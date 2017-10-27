@@ -38,32 +38,23 @@ class Scrollbar
 
         parent.appendChild(this.scrollbar)
 
-        up.onmousedown = () =>
-        {
+        up.onmousedown = () => {
             clearTimeout(this.timer)
             clearInterval(this.interval)
             this.mouseUp()
 
-            this.timer = setTimeout(() =>
-            {
-                this.interval = setInterval(this.mouseUp.bind(this), 20)
-            }, 600)
+            this.timer = setTimeout(() => this.interval = setInterval(this.mouseUp.bind(this), 20), 600)
         }
 
-        down.onmousedown = () =>
-        {
+        down.onmousedown = () => {
             clearTimeout(this.timer)
             clearInterval(this.interval)
             this.mouseDown()
 
-            this.timer = setTimeout(() =>
-            {
-                this.interval = setInterval(this.mouseDown.bind(this), 20)
-            }, 600)
+            this.timer = setTimeout(() => this.interval = setInterval(this.mouseDown.bind(this), 20), 600)
         }
 
-        this.scrollbar.onmousedown = evt =>
-        {
+        this.scrollbar.onmousedown = evt => {
             if (!(<HTMLElement>evt.target).classList.contains("scrollbar"))
                 return
 
@@ -77,10 +68,7 @@ class Scrollbar
             else
                 this.pageDown()
 
-            this.timer = setTimeout(() =>
-            {
-                this.interval = setInterval((isPageUp ? this.pageUp : this.pageDown).bind(this), 20)
-            }, 600)
+            this.timer = setTimeout(() => this.interval = setInterval((isPageUp ? this.pageUp : this.pageDown).bind(this), 20), 600)
         }
 
         this.grip.onmousedown = evt =>
@@ -92,10 +80,8 @@ class Scrollbar
 
             this.gripTopDelta = this.grip.offsetTop + this.scrollbar.offsetTop - evt.pageY
 
-            var gripperMove = (evt: MouseEvent) =>
-            {
-                if (!this.gripping || evt.which != 1)
-                {
+            var gripperMove = (evt: MouseEvent) => {
+                if (!this.gripping || evt.which != 1) {
                     window.removeEventListener('mousemove', gripperMove)
                     return
                 }
@@ -123,25 +109,19 @@ class Scrollbar
         this.grip.onmouseup = this.mouseup.bind(this)
         this.scrollbar.onmouseup = this.mouseup.bind(this)
 
-        this.scrollbar.onclick = evt =>
-        {
-            evt.stopPropagation()
-        }
+        this.scrollbar.onclick = evt => evt.stopPropagation()
 
-        this.scrollbar.onmouseleave = () =>
-        {
+        this.scrollbar.onmouseleave = () => {
             clearTimeout(this.timer)
             clearInterval(this.interval)
         }
     }
 
-    initialize(tableView: TableView)
-    {
+    initialize(tableView: TableView) {
         this.tableView = tableView
     }
 
-    itemsChanged(itemsCount: number, tableCapacity: number, newPosition?: number)
-    {
+    itemsChanged(itemsCount: number, tableCapacity: number, newPosition?: number) {
         this.parentHeight = this.parent.offsetHeight - this.offsetTop
         if (itemsCount)
             this.itemsCountAbsolute = itemsCount
@@ -178,29 +158,6 @@ class Scrollbar
         if (this.position < 0)
             this.position = 0
         this.positionGrip()
-    }
-
-    setOffsetTop(offsetTop: number)
-    {
-        this.offsetTop = offsetTop
-
-        var stylesheet = <CSSStyleSheet>Array.from(document.styleSheets).find(stylesheet =>
-        {
-            return stylesheet.href.indexOf("scrollbar.css") != -1
-        })
-        if (stylesheet)
-        {
-            var rule = <CSSStyleRule>Array.from(stylesheet.rules).find(rule =>
-            {
-                let styleRule = <CSSStyleRule>rule
-                return styleRule.selectorText == ".scrollbar"
-            })
-            if (rule)
-            {
-                rule.style.height = 'calc(100% - ' + offsetTop + 'px)'
-                rule.style.top = offsetTop + 'px'
-            }
-        }
     }
 
     private mouseup()

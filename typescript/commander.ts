@@ -1,9 +1,9 @@
 ﻿// TODO: Weiterentwicklung
 
-// GetRootItems in den Platformen
-// Themes in CommanderView
+// GetRootItems Windows
+// Meuu-Theme in Ubuntu
 // Zwei CommanderViews in Commander
-// Ubuntu-Menu
+// Menu mit Tasten: danach Focus im richtigen View
 
 // Entweder im DirectoryPresenter
 // getIconURl als c++/gtk-Dll über Webserver/c# abrufbar

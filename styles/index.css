@@ -99,10 +99,6 @@
 
 
 
-.hidden {
-    opacity: 0.45;
-}
-
 .selected.itemColorBlue{
     color: #fffbce;
     background-color: cornflowerblue;

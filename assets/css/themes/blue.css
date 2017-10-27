@@ -12,4 +12,14 @@
     --menu-hover-color: rgba(0, 0, 255, 0.2);
     --menu-selected-background-color: blue;
     --menu-selected-color: white;
+
+    --scrollbar-border-color: lightgray;
+    --scrollbar-grip-color: rgb(209, 209, 209);
+    --scrollbar-button-active-color: #aaa;
+    --scrollbar-border-color: #eee;
+    --scrollbar-image-color: #666;
+    --scrollbar-grip-hover-color: #bbb;
+    --scrollbar-grip-active-color: #999;
+
+    --commander-item-hover: #cfd7fa;
 }

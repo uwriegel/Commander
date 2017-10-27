@@ -283,11 +283,8 @@ class TableView implements View
         this.clearItems()
     }
 
-    private calculateTableHeight()
-    {
-        if (this.rowHeight)
-        {
-            this.scrollbar.setOffsetTop(this.thead.offsetHeight)
+    private calculateTableHeight() {
+        if (this.rowHeight) {
             this.tableCapacity = Math.floor((this.tableView.offsetHeight - this.thead.offsetHeight) / this.rowHeight)
             if (this.tableCapacity < 0)
                 this.tableCapacity = 0

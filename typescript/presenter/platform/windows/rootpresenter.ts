@@ -21,7 +21,7 @@ export class RootPresenter extends RootPresenterBase {
         const tr = document.createElement("tr")
         
         if (item && !item.path)
-            tr.classList.add("hidden")
+            tr.classList.add("it-hidden")
     
         let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
         let img = td.querySelector('img') as HTMLImageElement

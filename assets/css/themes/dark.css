@@ -1,13 +1,25 @@
-
 :root {
     --background-color: rgb(37,37,38);
     --color: rgba(255, 255, 255, 0.85);
+
     --selected-bg-color: blue;
     --selected-bg-hover-color: #0063ff;
     --selected-color: white;
+
     --separator-color: lightgray;
+
     --menu-background-color: rgb(67,67,68);
     --menu-hover-color: rgba(0, 0, 255, 0.3);
     --menu-selected-background-color: blue;
     --menu-selected-color: white;
+
+    --scrollbar-border-color: black;
+    --scrollbar-button-hover-color: rgb(65, 63, 63);
+    --scrollbar-button-active-color: rgb(90, 90, 90);
+    --scrollbar-border-color: #eee;
+    --scrollbar-image-color: #666;
+    --scrollbar-grip-hover-color: #bbb;
+    --scrollbar-grip-active-color: #999;
+
+    --commander-item-hover: rgb(44, 44, 44);
 }
