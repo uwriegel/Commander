@@ -24,9 +24,9 @@ class ColumnsControl {
         nameDiv.classList.add("it-iconName")
         const img = document.createElement("img")
         img.classList.add("it-image")
-        img.src = 'images/fault.png'
+        img.src = 'assets/images/fault.png'
         img.alt = ""
-        img.onerror = () => img.src = 'images/fault.png' 
+        img.onerror = () => img.src = 'assets/images/fault.png' 
         const span = document.createElement("span")
         span.classList.add("it-nameValue")
         nameDiv.appendChild(img)

@@ -1,13 +1,14 @@
 ﻿// TODO: Weiterentwicklung
 
-// getPlatform() in PresenterBase, irgendwie platform bestimmen
 // GetRootItems in den Platformen
+// Themes in CommanderView
+// Zwei CommanderViews in Commander
+// Ubuntu-Menu
+
 // Entweder im DirectoryPresenter
 // getIconURl als c++/gtk-Dll über Webserver/c# abrufbar
 // oder 
 // GetDriveItems as c++
-
-
 
 // Sortierung bei Spalte Version berücksichtigen
 // Css-Definitions, Theme
@@ -25,6 +26,7 @@
 import { CommanderView }  from './commanderview.js'
 import { Menubar, MenuItemType }  from './menubar/menubar.js'
 import { MenuItemControl } from './menubar/menuitemcontrol.js'
+
 // import { Viewer }  from './viewer'
 // import { Item } from './model/item'
 // /*
@@ -46,7 +48,35 @@ export class Commander {
 //         return this.focusedView
 //     }
 
-     constructor() {
+    constructor() {
+        const gui = require("nw.gui")
+        const mainWindow = gui.Window.get()
+        
+        const data = localStorage['position']
+        if (data) {
+            const position = JSON.parse(data)
+            mainWindow.x = position.x
+            mainWindow.y = position.y
+            mainWindow.width = position.width
+            mainWindow.height = position.height
+        }
+
+        setTimeout(() => mainWindow.show(), 0)
+
+        mainWindow.on("close", () => {
+            const xmlhttp = new XMLHttpRequest()
+            xmlhttp.onload = () => mainWindow.close(true)
+            xmlhttp.open('GET', 'http://localhost:20000/exit', true)
+            xmlhttp.send()
+
+            localStorage['position'] = JSON.stringify( {
+                x: mainWindow.x,
+                y: mainWindow.y,
+                width: mainWindow.width,
+                height: mainWindow.height
+            })
+        })
+
         this.setTheme("blue")
         this.initializeMenubar()
 //         this.leftView.otherView = this.rightView
@@ -305,7 +335,7 @@ export class Commander {
 //     private readonly rightView = new CommanderView("rightView")
     private readonly menubar = new Menubar("header")
     private readonly testview = new CommanderView("testview")
-    private readonly footer = document.getElementById("footer")
+    // private readonly footer = document.getElementById("footer")
 //     private readonly viewer = new Viewer()
     
 //     private focusedView: CommanderView

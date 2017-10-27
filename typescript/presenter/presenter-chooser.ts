@@ -1,8 +1,8 @@
-// import { Presenter }  from './presenter.js'
-import { RootPresenter }  from './rootpresenter.js'
+import { Presenter }  from './presenter.js'
+import { create as createRoot }  from './platform/rootcreator.js'
 import { DirectoryPresenter }  from './directory-presenter.js'
-// export { Presenter }  from './presenter.js'
-// import { View }  from '../view.js'
+export { Presenter }  from './presenter.js'
+import { View }  from '../view.js'
 
 export class PresenterChooser
 {
@@ -13,7 +13,7 @@ export class PresenterChooser
             if (currentPresenter.checkPath(path))
                 return currentPresenter
             else {
-                const presenter = new RootPresenter()
+                const presenter = createRoot()
                 view.Presenter =presenter
                 return presenter
             }

@@ -1,8 +1,7 @@
-// import { Presenter }  from './presenter.js'
-// import { View }  from '../view.js'
-// import { Item } from '../model/item.js'
-// //import { getPlatform }from '../platform/platform-creator' 
-// export { Presenter }  from './presenter.js'
+import { Presenter } from './presenter.js'
+import { View }  from '../view.js'
+import { Item } from '../model/item.js'
+export { Presenter }  from './presenter.js'
 
 export abstract class PresenterBase implements Presenter
 {

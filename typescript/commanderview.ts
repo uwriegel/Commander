@@ -1,8 +1,8 @@
 import { TableView }  from './tableview.js'
-// import { Presenter } from './presenter/presenterbase.js'
+import { Presenter } from './presenter/presenterbase.js'
 import { PresenterChooser } from './presenter/presenter-chooser.js'
 import { EmptyPresenter } from './presenter/emptypresenter.js'
-// import { Item } from './model/item.js'
+import { Item } from './model/item.js'
 
 /**
  * Ein Commanderview besteht aus einer Tableview mit den Einträgen des aktuellen Verzeichnisses und einem Verzeichnis-Textfeldes

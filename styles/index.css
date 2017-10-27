@@ -98,33 +98,6 @@
 
 
 
-.tdit-right {
-    text-align: right;
-    padding-right: 5px;
-}
-
-.exif {
-    color: rgb(0, 122, 204);
-}
-
-.selected .exif   {
-    color: darkorange;
-}
-
-.it-iconName > * {
-    vertical-align: middle;
-}
-
-.it-iconName {
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-}
-
-.it-image {
-    padding-right: 3px;
-    height: 16px;
-}
 
 .hidden {
     opacity: 0.45;

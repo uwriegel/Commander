@@ -1,11 +1,25 @@
+
+export enum Platform {
+    Linux,
+    Windows
+}
+
+export var platform = (function() {
+    const process = require("process")
+    return process.platform == "linux" ? Platform.Linux : Platform.Windows
+})()
+
 // import * as Path from 'path'
 // import * as fs from 'fs'
 // import { Response } from "express"
-import { DirectoryItem } from '../model/directory-item.js'
+///import { DirectoryItem } from '../model/directory-item.js'
 // import { Item } from './../model/item'
 // import { RootItem } from '../model/root-item'
 
-export abstract class Platform {
+
+
+
+//export abstract class Platform {
 //     getInitialRootItems() {
 //         return new Promise<RootItem[]>(res => res([]))
 //     }
@@ -14,14 +28,14 @@ export abstract class Platform {
 //         return new Promise<RootItem[]>(res => res([]))
 //     }
 
-    getIconUrl(item: DirectoryItem) : string {
-        if (item && item.isDirectory)
-            return "images/folder.png"
-        else if (!item)
-            return "images/fault.png"
-        else
-            return this.internalGetIconUrl(item)
-    }
+    // getIconUrl(item: DirectoryItem) : string {
+    //     if (item && item.isDirectory)
+    //         return "images/folder.png"
+    //     else if (!item)
+    //         return "images/fault.png"
+    //     else
+    //         return this.internalGetIconUrl(item)
+    // }
 
 //     extendedUpdateItem(_: HTMLTableDataCellElement, __: HTMLTableRowElement, ___: Item) : void {
 //     }
@@ -76,5 +90,5 @@ export abstract class Platform {
 //             })
 //         })
 //     }
-}
+//}
 

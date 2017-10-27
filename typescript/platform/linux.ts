@@ -8,16 +8,6 @@
 
 // export class Linux extends Platform
 // {
-//     getInitialRootItems() {
-//         return new Promise<RootItem[]>((res, _) => res([ {
-//                 displayName: 'Home',
-//                 description: "Persönlicher Ordner",
-//                 size: -1,
-//                 path: process.env.HOME!,
-//                 isDirectory: true
-//             }
-//         ]))
-//     }
 
 //     protected internalGetIconUrl(item: DirectoryItem) {
 //         const ext = Path.extname(item.displayName)    
