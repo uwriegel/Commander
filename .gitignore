@@ -5,3 +5,4 @@ node_modules
 package-lock.json
 build
 bin/win32-x64-54/Commander.node
+processes/dotnet/

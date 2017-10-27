@@ -1,5 +1,6 @@
 import { RootPresenter as RootPresenterBase, PresenterBase, RootItem } from '../../rootpresenter.js'
 import { ColumnsControl }  from '../../../columnscontrol.js'
+import { run } from '../../../child-processes/loader.js'
 
 export class RootPresenter extends RootPresenterBase {
 
@@ -13,6 +14,7 @@ export class RootPresenter extends RootPresenterBase {
 
     protected processFill() {
         return new Promise<void>(async resolve => {
+            run("getDrives")
             resolve()
         })
     }
