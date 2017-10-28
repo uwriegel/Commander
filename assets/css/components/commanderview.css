@@ -141,3 +141,15 @@
     opacity: 0.45;
 }
 
+.commanderTable tr.selected {
+    color: white;
+    background-color: var(--selected-bg-color);
+}
+
+tr.selected:focus {
+    outline-color: red;
+    outline-width: 1px;
+    outline-style: solid;
+    outline-offset: -1px;
+}
+

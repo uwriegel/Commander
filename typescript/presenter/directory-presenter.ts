@@ -134,8 +134,8 @@ export abstract class DirectoryPresenter extends PresenterBase {
     protected abstract async getFiles(path: string): Promise<DirectoryItem[]>
 
     updateItem(itemElement: HTMLTableRowElement, index: number) {
-        const item = this.items[index]
-        this.extendedUpdateItem(itemElement, item)
+//        const item = this.items[index]
+//        this.extendedUpdateItem(itemElement, item)
     }
 
     protected canBeSelected(itemIndex: number) {
@@ -156,7 +156,7 @@ export abstract class DirectoryPresenter extends PresenterBase {
     private sortItem = (a: DirectoryItem, b: DirectoryItem)=>a.displayName.localeCompare(b.displayName)
 
     private async insertExtendedInfos() {
-        await this.platform.insertExtendedInfos(this.path, this.items)
+        //await this.platform.insertExtendedInfos(this.path, this.items)
         this.view.updateItems()            
     }
 }

@@ -1,6 +1,5 @@
 ﻿// TODO: Weiterentwicklung
 
-// Selektierung CommanderView
 // Icons bei Linux
 // GetRootItems Windows
 // Menu-Theme in Ubuntu
@@ -98,7 +97,7 @@ export class Commander {
          const vgrid = new VerticalGrid(document.getElementById("vgrid") as HTMLDivElement, gridElement, viewerElement!,
               document.getElementById("vgrip") as HTMLDivElement, () => this.focusedView.focus())
 
-//         viewerElement.onclick = () =>this.focusedView.focus()
+        viewerElement.onclick = () =>this.focusedView.focus()
 
         this.initializeOnKeyDownHandler();
      }
