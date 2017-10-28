@@ -131,7 +131,6 @@ export abstract class PresenterBase implements Presenter
     protected items: Item[] = []
     protected view: View
     protected path: string
-    protected readonly platform: any = 3 // TODO getPlatform()
     protected sortAscending = true
     private originalItems: Item[] = []        
 }

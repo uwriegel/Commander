@@ -1,8 +1,9 @@
 import { Presenter }  from './presenter.js'
 import { create as createRoot }  from './platform/rootcreator.js'
-import { DirectoryPresenter }  from './directory-presenter.js'
+import { create as createDirectory } from './platform/directorycreator.js'
 export { Presenter }  from './presenter.js'
 import { View }  from '../view.js'
+
 
 export class PresenterChooser
 {
@@ -14,14 +15,14 @@ export class PresenterChooser
                 return currentPresenter
             else {
                 const presenter = createRoot()
-                view.Presenter =presenter
+                view.Presenter = presenter
                 return presenter
             }
         }
         else {
             if (currentPresenter.isDefault)
                 return currentPresenter
-            view.Presenter = new DirectoryPresenter() 
+            view.Presenter = createDirectory()
             return view.Presenter
         }
     }

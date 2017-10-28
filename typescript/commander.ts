@@ -1,7 +1,7 @@
 ﻿// TODO: Weiterentwicklung
 
 // GetRootItems Windows
-// Meuu-Theme in Ubuntu
+// Menu-Theme in Ubuntu
 // Zwei CommanderViews in Commander
 // Menu mit Tasten: danach Focus im richtigen View
 

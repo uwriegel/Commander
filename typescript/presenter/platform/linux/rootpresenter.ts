@@ -1,5 +1,6 @@
 import { RootPresenter as RootPresenterBase, PresenterBase, RootItem } from '../../rootpresenter.js'
-import { ColumnsControl }  from '../../../columnscontrol.js'
+import { ColumnsControl } from '../../../columnscontrol.js'
+import { FileHelper } from '../../../filehelper.js'
 
 export interface LinuxRootItem extends RootItem {
     type: string
@@ -21,7 +22,7 @@ export class RootPresenter extends RootPresenterBase {
             const initialItems = [ {
                 displayName: 'Home',
                 description: "Persönlicher Ordner",
-                size: 0,
+                size: -1,
                 type: "",
                 path: process.env.HOME!,
                 isDirectory: true
@@ -67,7 +68,7 @@ export class RootPresenter extends RootPresenterBase {
 
         td = PresenterBase.itemRightTemplate.cloneNode(true) as HTMLTableDataCellElement
         span = td.querySelector('span') as HTMLSpanElement
-        span.innerText = item ? item.size.toString() : 'W'
+        span.innerText = item ? FileHelper.formatFileSize(item.size) : 'W'
         tr.appendChild(td)
         
         tr.tabIndex = 1

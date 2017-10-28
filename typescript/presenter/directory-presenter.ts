@@ -1,11 +1,16 @@
 import { PresenterBase }  from './presenterbase.js'
 import { PresenterChooser } from './presenter-chooser.js'
-import { ColumnsControl }  from '../columnscontrol.js'
 import { Item } from '../model/item.js'
 import { FileHelper } from '../filehelper.js' 
 import { DirectoryItem } from '../model/directory-item.js'
+import { GlobalSettings } from '../global-settings.js'
+const Path = require('path')
 
-export class DirectoryPresenter extends PresenterBase {
+export abstract class DirectoryPresenter extends PresenterBase {
+
+    protected constructor() {
+        super()
+    }
     
     getSelectedPath(index: number) {
         var item = this.getItem(index) as DirectoryItem
@@ -54,7 +59,7 @@ export class DirectoryPresenter extends PresenterBase {
 
     protected processFill(selectPath?: string) {
         return new Promise<void>(async (resolve) => {
-            const items = await this.platform.getFiles(this.path)
+            const items = await this.getFiles(this.path)
             const folderItems = this.getFolderItems(items)
             const fileItems = this.getFileItems(items)
             this.items = [{
@@ -94,7 +99,7 @@ export class DirectoryPresenter extends PresenterBase {
 
         let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
         let img = td.querySelector('img') as HTMLImageElement
-        img.src = this.platform.getIconUrl(item!)
+        img.src = "" //this.platform.getIconUrl(item!)
         let span = td.querySelector('span') as HTMLSpanElement
         span.innerText = item ? Path.basename(item.displayName, ext) : 'W'
         tr.appendChild(td)
@@ -114,8 +119,8 @@ export class DirectoryPresenter extends PresenterBase {
         span.innerText = item ? FileHelper.formatFileSize(item.size) : 'W'
         tr.appendChild(td)
         
-        if (item)
-            this.extendedUpdateItem(tr, item)
+        // if (item)
+        //     this.extendedUpdateItem(tr, item)
 
         tr.tabIndex = 1
         if (item && item.isSelected)
@@ -126,13 +131,11 @@ export class DirectoryPresenter extends PresenterBase {
         return tr
     }
 
+    protected abstract async getFiles(path: string): Promise<DirectoryItem[]>
+
     updateItem(itemElement: HTMLTableRowElement, index: number) {
         const item = this.items[index]
         this.extendedUpdateItem(itemElement, item)
-    }
-
-    protected setColumns(): void {
-        this.view.setColumns(new ColumnsControl(["Name", "Erw.", "Datum", "Größe"].concat(this.platform.getAdditionalDirectoryColumns()), "6"))
     }
 
     protected canBeSelected(itemIndex: number) {
@@ -155,9 +158,5 @@ export class DirectoryPresenter extends PresenterBase {
     private async insertExtendedInfos() {
         await this.platform.insertExtendedInfos(this.path, this.items)
         this.view.updateItems()            
-    }
-
-    private extendedUpdateItem(itemElement: HTMLTableRowElement, item: Item) {
-        this.platform.extendedUpdateItem(PresenterBase.itemTemplate, itemElement, item)        
     }
 }
