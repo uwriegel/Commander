@@ -1,4 +1,4 @@
-﻿import { Grid }  from './grid'
+﻿import { Grid }  from './grid.js'
 
 class VerticalGrid
 {
@@ -34,12 +34,12 @@ class VerticalGrid
      */
     switchBottom(preview: boolean) {
         if (preview) {
-            this.bottomView.classList.remove("displayNone")
-            this.gridSplitter.classList.remove("displayNone")
+            this.bottomView.classList.remove("hidden")
+            this.gridSplitter.classList.remove("hidden")
             this.topView.style.height = `calc(${this.topPercent}% - 3px)`
         } else {
-            this.bottomView.classList.add("displayNone")
-            this.gridSplitter.classList.add("displayNone")
+            this.bottomView.classList.add("hidden")
+            this.gridSplitter.classList.add("hidden")
             this.topView.style.height = "100%"
         }
     }

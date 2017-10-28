@@ -21,13 +21,13 @@
 // NachRefresh Selektion erhalten
 // Conflicts: conflict liste in die Focusable anhängen
 // Rename auch von mehreren Dateien
-//import { Grid }  from './grid'
-//import { VerticalGrid }  from './vgrid'
+import { Grid }  from './grid.js'
+import { VerticalGrid }  from './vgrid.js'
 import { CommanderView }  from './commanderview.js'
 import { Menubar, MenuItemType }  from './menubar/menubar.js'
 import { MenuItemControl } from './menubar/menuitemcontrol.js'
 
-// import { Viewer }  from './viewer'
+import { Viewer }  from './viewer.js'
 // import { Item } from './model/item'
 // /*
 
@@ -90,13 +90,13 @@ export class Commander {
 //         this.rightView.setOnFocus(() =>this.focusedView = this.rightView)
 //         this.leftView.focus()
 
-//         const gridElement = document.getElementById("grid") as HTMLDivElement
-//         const viewerElement = document.getElementById("viewer")!
-//         new Grid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
-//              document.getElementById("grip") as HTMLDivElement, () => this.focusedView.focus())
+         const gridElement = document.getElementById("grid") as HTMLDivElement
+         const viewerElement = document.getElementById("viewer")!
+         new Grid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
+              document.getElementById("grip") as HTMLDivElement, () => this.focusedView.focus())
             
-//         const vgrid = new VerticalGrid(document.getElementById("vgrid") as HTMLDivElement, gridElement, viewerElement!,
-//              document.getElementById("vgrip") as HTMLDivElement, () => this.focusedView.focus())
+         const vgrid = new VerticalGrid(document.getElementById("vgrid") as HTMLDivElement, gridElement, viewerElement!,
+              document.getElementById("vgrip") as HTMLDivElement, () => this.focusedView.focus())
 
 //         viewerElement.onclick = () =>this.focusedView.focus()
 
@@ -331,12 +331,12 @@ export class Commander {
         })
     }
 
-//     private readonly leftView = new CommanderView("leftView")
-//     private readonly rightView = new CommanderView("rightView")
+    private readonly leftView = new CommanderView("leftView")
+    private readonly rightView = new CommanderView("rightView")
     private readonly menubar = new Menubar("header")
-    private readonly testview = new CommanderView("testview")
-    // private readonly footer = document.getElementById("footer")
-//     private readonly viewer = new Viewer()
+
+    private readonly footer = document.getElementById("footer")
+    private readonly viewer = new Viewer()
     
 //     private focusedView: CommanderView
 }

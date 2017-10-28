@@ -1,40 +1,4 @@
 
-#grid, #vgrid {
-    position: absolute;
-}
-
-#vgrid {
-    height: calc(100% - 20px);
-    width:100%
-}
-
-#grid {
-    height: calc(50% - 3px);
-    width: 100%;
-    top: 0px;
-    bottom: 0px;
-}
-
-#grip, #vgrip {
-    position: absolute;
-    background-color: #dcdcdc;
-    transition: background-color 0.5s;
-}
-
-#grip {
-    left: calc(50% - 3px);
-    width: 6px;
-    height: 100%;
-    cursor:ew-resize;
-}
-
-#vgrip {
-    top: calc(50% - 3px);
-    height: 6px;
-    width: 100%;
-    cursor:ns-resize;
-}
-
 #viewer {
     position: absolute;
     height: calc(50% - 3px);
@@ -66,34 +30,11 @@
 }
 
 
-#grip:hover, #vgrip:hover {
-    background-color: darkgray;
-}
-
-#grip:active, #vgrip:active {
-    background-color: #6b6969;
-}
-
 
 #templates {
     display: none;
 }
 
-#leftView {
-    position: absolute;
-    width: calc(50% - 3px);
-    height: 100%;
-    left: 0px;
-    right: 0px;
-}
-
-#rightView {
-    position: absolute;
-    width: calc(50% - 3px);
-    height: 100%;
-    left: calc(50% + 3px);
-    right: 0px;
-}
 
 
 

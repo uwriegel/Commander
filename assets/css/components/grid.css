@@ -1,0 +1,44 @@
+#grid, #vgrid {
+    position: absolute;
+}
+
+#vgrid {
+    height: calc(100% - 20px);
+    width:100%
+}
+
+#grid {
+    height: calc(50% - 3px);
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+}
+
+#grip, #vgrip {
+    position: absolute;
+    background-color: var(--grip-color);
+    transition: background-color 0.5s;
+}
+
+#grip {
+    left: calc(50% - 3px);
+    width: 6px;
+    height: 100%;
+    cursor:ew-resize;
+}
+
+#vgrip {
+    top: calc(50% - 3px);
+    height: 6px;
+    width: 100%;
+    cursor:ns-resize;
+}
+
+#grip:hover, #vgrip:hover {
+    background-color: darkgray;
+}
+
+#grip:active, #vgrip:active {
+    background-color: #6b6969;
+}
+
