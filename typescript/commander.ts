@@ -2,7 +2,6 @@
 
 // GetRootItems Windows
 // Menu-Theme in Ubuntu
-// Zwei CommanderViews in Commander
 // Menu mit Tasten: danach Focus im richtigen View
 
 // Entweder im DirectoryPresenter
