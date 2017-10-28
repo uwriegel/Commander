@@ -1,5 +1,6 @@
 import { Menu, Shortcut, ShortCutAction } from "./menu.js"
 import { SubMenuController } from "./submenucontroller.js"
+import { commanderInstance } from "../commander.js"
 export { Menu, MenuItemType } from "./menu.js"
 
 export class Menubar {
@@ -223,7 +224,7 @@ export class Menubar {
     }
     
     private setActive() {
-//        this.focusedView = commanderInstance.getFocused()
+        this.focusedView = commanderInstance.focused
         let lis = <HTMLLIElement[]>Array.from(this.menubarContainer.querySelectorAll(".menubar>li"))
         lis.forEach(n => {
             n.onmouseover = evt => {
@@ -313,7 +314,7 @@ export class Menubar {
         this.openedSubMenu = undefined
         let lis = <HTMLLIElement[]>Array.from(this.menubarContainer.querySelectorAll(".menubar>li"))
         lis.forEach(n => (n.onmouseover as any) = null)
-        //setTimeout(() => this.focusedView.focus(), 100)
+        setTimeout(() => this.focusedView.focus(), 100)
     }
 
     private static latestTabIndex = 0
@@ -327,5 +328,6 @@ export class Menubar {
     private openedSubMenu?: SubMenuController
     private actions = new Map<string, ()=>void>()
     private shortcuts: Shortcut[] = []
+    private focusedView: any
 }
  
