@@ -8,8 +8,10 @@
 
     --separator-color: lightgray;
 
+    --menu-color: black;
     --menu-background-color: rgb(67,67,68);
     --menu-hover-color: rgba(0, 0, 255, 0.3);
+    --menu-item-hover-color: rgba(0, 0, 255, 0.3);
     --menu-selected-background-color: blue;
     --menu-selected-color: white;
 

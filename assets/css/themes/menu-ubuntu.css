@@ -1,0 +1,8 @@
+:root {
+    --menu-color: rgba(255, 255, 255, 0.85);
+    --menu-background-color: rgb(67,67,68);
+    --menu-hover-color: rgb(85,85,85); 
+    --menu-item-hover-color: #f07746;
+    --menu-selected-background-color: rgb(85,85,85); 
+    --menu-selected-color: white;
+}

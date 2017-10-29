@@ -1,7 +1,7 @@
 ﻿// TODO: Weiterentwicklung
 
 // GetRootItems Windows
-// Menu-Theme in Ubuntu
+// Unterscheidung Selektion und Tastaturselektion im Menü
 
 // Entweder im DirectoryPresenter
 // getIconURl als c++/gtk-Dll über Webserver/c# abrufbar
@@ -25,6 +25,7 @@ import { CommanderView }  from './commanderview.js'
 import { Menubar, MenuItemType }  from './menubar/menubar.js'
 import { MenuItemControl } from './menubar/menuitemcontrol.js'
 import { GlobalSettings } from './global-settings.js'
+import { platform, Platform } from './platform.js'
 const Path = require('path')
 
 import { Viewer }  from './viewer.js'
@@ -167,6 +168,16 @@ export class Commander {
         link.href = `assets/css/themes/${theme}.css`
         link.media = 'all'
         head.appendChild(link)
+
+        if (platform == Platform.Linux) {
+            link = document.createElement('link')
+            link.rel = 'stylesheet'
+            link.id = 'theme'
+            link.type = 'text/css'
+            link.href = `assets/css/themes/menu-ubuntu.css`
+            link.media = 'all'
+            head.appendChild(link)
+        }
     }
 
     private initializeMenubar() {

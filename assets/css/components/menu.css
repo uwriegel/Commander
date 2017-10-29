@@ -1,5 +1,6 @@
 .menuParent {
     background-color: var(--menu-background-color);
+    color: var(--menu-color);
 }
 
 .menubar {
@@ -66,17 +67,17 @@
 }
 
 .submenu tr:hover {
-    background-color: var(--menu-hover-color);
+    background-color: var(--menu-item-hover-color);
 }
 
 .submenu tr.selected {
-    background-color: var(--menu-selected-background-color);
+    background-color: var(--menu-item-hover-color);
     color: var(--menu-selected-color);
     outline: none;
 }
 
 .submenu tr.separator:hover {
-    background-color: white
+    background-color: var(--menu-background-color)
 }
 
 .keyboardActivated .accelerator {
