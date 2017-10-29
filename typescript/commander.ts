@@ -1,5 +1,6 @@
 ﻿// TODO: Weiterentwicklung
 
+// Restrictor
 // GetRootItems Windows
 // Menu-Theme in Ubuntu
 
@@ -35,11 +36,6 @@ import { Item } from './model/item.js'
 //                 /  \
 //                /    \
 //             Model  View (TableView, ColumnsControl)
-
-//         Der Presenter kann einen Sorter hinzugefügt bekommen
-
-//         Presenter 
-// */
 
 export class Commander {
 
