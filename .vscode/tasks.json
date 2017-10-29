@@ -5,7 +5,7 @@
     "tasks": [
         {
             "type": "typescript",
-            "tsconfig": "tsconfig.json",
+            "tsconfig": "typescript/tsconfig.json",
             "problemMatcher": [
                 "$tsc"
             ],
@@ -13,6 +13,17 @@
                 "kind": "build",
                 "isDefault": true
             }
-        }
+        },
+        {
+            "type": "typescript",
+            "tsconfig": "nwgui/tsconfig.json",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }        
     ]
 }

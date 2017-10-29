@@ -18,6 +18,11 @@ export class DirectoryPresenter extends DirectoryPresenterBase {
         return await Promise.all(result.map(async file => await this.getFileInfos(path, file)))
     }
 
+    protected extendedGetIconUrl(item: DirectoryItem) {
+        const ext = Path.extname(item.displayName)    
+        return ext ? `http://localhost:20000/icon?ext=${ext}` : "assets/images/fault.png"
+    }
+
     private async readDir(path: string) {
         return new Promise<string[]>((resolve, reject) => {
             fs.readdir(path, (err: any, files: any) => {
@@ -29,7 +34,7 @@ export class DirectoryPresenter extends DirectoryPresenterBase {
         })
     }    
 
-    async getFileInfos(path: string, fileName: string) {
+    private async getFileInfos(path: string, fileName: string) {
         const file = Path.join(path, fileName)
         return new Promise<DirectoryItem>(resolve => {
             fs.stat(file, (err: any, stats: any) => {

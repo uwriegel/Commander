@@ -99,7 +99,7 @@ export abstract class DirectoryPresenter extends PresenterBase {
 
         let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
         let img = td.querySelector('img') as HTMLImageElement
-        img.src = "" //this.platform.getIconUrl(item!)
+        img.src = this.getIconUrl(item!)
         let span = td.querySelector('span') as HTMLSpanElement
         span.innerText = item ? Path.basename(item.displayName, ext) : 'W'
         tr.appendChild(td)
@@ -142,6 +142,8 @@ export abstract class DirectoryPresenter extends PresenterBase {
         return itemIndex != 0
     }
 
+    protected abstract extendedGetIconUrl(item: DirectoryItem): string
+
     private getFolderItems(items: DirectoryItem[]) {
         return items.filter(a => a.isDirectory).sort((a, b) => a.displayName.localeCompare(b.displayName))
     }
@@ -151,6 +153,15 @@ export abstract class DirectoryPresenter extends PresenterBase {
             const sort = this.sortItem(a, b)
             return this.sortAscending ? sort : -sort
         })
+    }
+
+    private getIconUrl(item: DirectoryItem) : string {
+        if (item && item.isDirectory)
+            return "assets/images/folder.png"
+        else if (!item)
+            return "assets/images/fault.png"
+        else
+            return this.extendedGetIconUrl(item)
     }
 
     private sortItem = (a: DirectoryItem, b: DirectoryItem)=>a.displayName.localeCompare(b.displayName)

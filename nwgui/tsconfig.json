@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "es2017",
-        "module": "esnext",
+        "module": "commonjs",
         "outDir": "scripts",
         "alwaysStrict": true,
         "noImplicitThis": true,

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "main": "http://localhost:20000/commander.html",
-  "node-main": "scripts/nwgui/loader.js",
+  "node-main": "./nwgui/scripts/loader.js",
   "license": "MIT",
   "node-remote": "http://localhost:20000",
   "window": {
@@ -11,7 +11,6 @@
     "icon": "./assets/images/kirk.png"
   },
   "dependencies": {
-    "@types/node": "^8.0.47",
     "compression": "^1.7.1",
     "express": "^4.16.2"
   }

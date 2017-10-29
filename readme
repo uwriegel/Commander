@@ -1,3 +1,6 @@
 npm i @types/node
 npm i express
+npm i @types/express
 npm i compression
+npm i @types/compression
+dependencies aus package.json entfernen

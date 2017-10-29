@@ -1,6 +1,6 @@
 ﻿// TODO: Weiterentwicklung
 
-// Icons bei Linux
+// isHidden über menu einschalten
 // GetRootItems Windows
 // Menu-Theme in Ubuntu
 
@@ -94,7 +94,7 @@ export class Commander {
          new Grid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
               document.getElementById("grip") as HTMLDivElement, () => this.focusedView.focus())
             
-         const vgrid = new VerticalGrid(document.getElementById("vgrid") as HTMLDivElement, gridElement, viewerElement!,
+         new VerticalGrid(document.getElementById("vgrid") as HTMLDivElement, gridElement, viewerElement!,
               document.getElementById("vgrip") as HTMLDivElement, () => this.focusedView.focus())
 
         viewerElement.onclick = () =>this.focusedView.focus()

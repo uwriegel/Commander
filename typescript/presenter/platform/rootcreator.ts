@@ -1,4 +1,4 @@
-import { platform, Platform } from '../../platform/platform.js'
+import { platform, Platform } from '../../platform.js'
 import { RootPresenter as RootPresenterWindows } from './windows/rootpresenter.js'
 import { RootPresenter as RootPresenterLinux } from './linux/rootpresenter.js'
 

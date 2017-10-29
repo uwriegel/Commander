@@ -1,6 +1,6 @@
 import { RootPresenter as RootPresenterBase, PresenterBase, RootItem } from '../../rootpresenter.js'
 import { ColumnsControl }  from '../../../columnscontrol.js'
-import { run } from '../../../child-processes/loader.js'
+import { run } from '../../../dotnetloader.js'
 
 export class RootPresenter extends RootPresenterBase {
 
