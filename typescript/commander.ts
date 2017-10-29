@@ -1,6 +1,5 @@
 ﻿// TODO: Weiterentwicklung
 
-// isHidden über menu einschalten
 // GetRootItems Windows
 // Menu-Theme in Ubuntu
 
@@ -136,7 +135,7 @@ export class Commander {
         }
     }
 
-    showHidden(show: boolean) {
+    private showHidden(show: boolean) {
         GlobalSettings.showHidden = show
         this.leftView.refresh()
         this.rightView.refresh()
@@ -154,7 +153,7 @@ export class Commander {
         }
     }
 
-     private setTheme(theme: string) {
+    private setTheme(theme: string) {
         let styleSheet = document.getElementById("dark")
         if (styleSheet)
             styleSheet.remove()
@@ -274,10 +273,11 @@ export class Commander {
             name: "_Versteckte Dateien",
             shortcut: {
                 display: "Strg+H",
-                key: 1,
+                key: 72,
                 ctrl: true
             },
-            type: MenuItemType.Checkable
+            type: MenuItemType.Checkable,
+            action: m => this.showHidden(m.isChecked)
         })
         menuView.appendItem({
             type: MenuItemType.Separator

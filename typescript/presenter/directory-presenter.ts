@@ -93,7 +93,7 @@ export abstract class DirectoryPresenter extends PresenterBase {
         const tr = document.createElement("tr")
 
         if (item && item.isHidden)
-            tr.classList.add("hidden")
+            tr.classList.add("it-hidden")
 
         const ext = item ? Path.extname(item.displayName) : ""
 
