@@ -1,6 +1,5 @@
 ﻿// TODO: Weiterentwicklung
 
-// Restrictor
 // GetRootItems Windows
 // Menu-Theme in Ubuntu
 
