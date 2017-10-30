@@ -1,11 +1,12 @@
 import { Server as LinuxServer } from './linux/server.js'
+import { Server as WindowsServer } from './windows/server.js'
+import * as process from 'process'
 
 export function create() {
-    // switch (platform) {
-    //     case Platform.Linux:
-           return new LinuxServer()
-        // default:
-        //     return undefined
-//    }
+    if (process.platform == "linux")
+        return new LinuxServer()
+    else
+        return new WindowsServer()
 }
+
 
