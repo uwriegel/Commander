@@ -7,20 +7,6 @@ export class SubMenuController {
         }
         this.subMenu.addEventListener("focusout", this.onFocusOut)
         this.initializeMouseHandler()
-
-        // if (subMenuId == "submenu4") {
-        //     var trCheck = document.querySelector("#menuShowHidden .checker")
-        //     if (localStorage["showHidden"] == "true")
-        //         trCheck.classList.remove("hidden")
-        //     else
-        //         trCheck.classList.add("hidden")
-
-        //     trCheck = document.querySelector("#menuDarkTheme .checker")
-        //     if (localStorage["darkTheme"] == "true")
-        //         trCheck.classList.remove("hidden")
-        //     else
-        //         trCheck.classList.add("hidden")
-        // }
     }
 
     onKeyDown() {
