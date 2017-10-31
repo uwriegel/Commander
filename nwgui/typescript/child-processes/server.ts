@@ -16,7 +16,7 @@ export abstract class Server {
         
         app.listen(20000, () => console.log('server listening'))
         
-        app.get("/icontest", (req, res) => {
+        app.get("/icon", (req, res) => {
             if (req.query.ext)  
                 this.sendIconResponse(req.query.ext, res)
             else
