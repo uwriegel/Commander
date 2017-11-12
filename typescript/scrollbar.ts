@@ -163,17 +163,7 @@ class Scrollbar {
         clearTimeout(this.timer)
         clearInterval(this.interval)
         this.gripping = false
-
-
-
-
-
-
-
-//TODO:
-
-
-        //this.tableView.focus()
+        this.tableView.focus()
     }
 
     private mouseUp()

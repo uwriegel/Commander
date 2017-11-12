@@ -1,5 +1,6 @@
 import { PresenterBase }  from './presenterbase.js'
 import { PresenterChooser } from './presenter-chooser.js'
+import { Item } from '../Model/Item.js'
 import { formatDate, formatFileSize } from '../filehelper.js'
 import { DirectoryItem } from '../model/directory-item.js'
 import { getShowHidden } from '../global-settings.js'
@@ -49,7 +50,7 @@ export abstract class DirectoryPresenter extends PresenterBase {
         this.items = this.getFolderItems(this.items as DirectoryItem[]).concat(this.getFileItems(this.items as DirectoryItem[]))
 
         const newCurrentIndex = currentIndex ? 
-            (this.items).findIndex((i: DirectoryItem) => i.displayName.localeCompare(currentItem.displayName) == 0)
+            (this.items).findIndex((di: Item) => di.displayName.localeCompare(currentItem.displayName) == 0)
             : 0
         
         this.view.itemsChanged(newCurrentIndex)
