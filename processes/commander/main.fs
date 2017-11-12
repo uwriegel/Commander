@@ -1,29 +1,42 @@
 open Json
+open FileSystem
+open Commands
 open System
-open System.Runtime.Serialization
+open System.Threading
 open System.Text
 
-[<DataContract>]
-type Person = {
-    [<DataMember(EmitDefaultValue = false)>]
-    mutable cmd: string
+printfn "Starting background service"
 
-    [<DataMember(EmitDefaultValue = false)>]
-    mutable text: string
-}
+let locker = Object ()
 
-Console.InputEncoding <- Encoding.UTF8
 let input = Console.OpenStandardInput()
+let output = Console.OpenStandardOutput()
+
+let run (requestId: string) action = 
+    ThreadPool.QueueUserWorkItem (fun _ -> 
+        action()
+
+        // Create Ergebnis mit requestId
+        lock locker (fun () ->
+            let buffer = Encoding.UTF8.GetBytes("Nichts")
+            // output.Write Länge buffer.Length binär!!
+            output.Write (buffer, 0, buffer.Length)
+        )
+    ) |> ignore
 
 let rec waitForAction () = 
     let buffer = Array.zeroCreate 20000
     let read = input.Read (buffer, 0, buffer.Length)
-    let person = deserializeJson<Person> buffer read
-    match person with
-    | p when p.cmd = "stop" ->
+    let cmd = deserializeJson<Command> buffer read
+    match cmd with
+    | cmd when cmd.cmd = "stop" ->
         ()
+    | cmd when cmd.cmd = "getDrives" ->
+        run cmd.requestId getDrives
     | _ ->
-        printfn "cmd: %s - text: %s" person.cmd person.text
+        printfn "cmd: %s - text: %s" cmd.cmd "Nichts"  
         waitForAction () 
 
 waitForAction () 
+
+printfn "background service stopped"

@@ -1,1 +1,5 @@
-{"cmd": "kommando", "text": "Da ist sar schon"}
+getDrives:
+{"cmd": "getDrives", reqestId="123"}
+
+stop:
+{"cmd": "stop", reqestId="444"}
