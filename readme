@@ -3,7 +3,17 @@ npm i express
 npm i @types/express
 npm i compression
 npm i @types/compression
-dependencies aus package.json entfernen
+remove dependencies from package.json
 
-Main-Thread erstellen: typescript übersetzen mit nwgui/tsconfig.json
-UI-Thread erstellen: typescript übersetzen mit typescript/tsconfig.json
+build main thread: compile typescript with nwgui/tsconfig.json
+build UI thread: compile typescript with typescript/tsconfig.json
+build Background process: 
+open vscode in folder ./processes/commander
+to debug: debug and paste content of test.txt
+
+
+
+
+
+// TODO:
+testfile getdrives: dotnet background-process < getdrives: Ausgabe: JSON von getDrivesd
