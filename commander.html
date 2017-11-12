@@ -14,7 +14,7 @@
                         <div id="leftView"></div>
                         <div id="grip"></div>
                         <div id="rightView"></div>
-                    </div>
+                    </div>  
                     <div id="vgrip"></div>
                     <div id="viewer">
                         <img id="viewerImg" class="hidden" />
@@ -29,7 +29,7 @@
         <template id="tableDataItemIconNameTemplate">
             <td>
                 <div class="it-iconName">
-                    <img class="it-image" alt="" onerror="evt => evt.target.src = 'assets/images/fault.png'"/>
+                    <img class="it-image" alt="" onerror="this.onerror=null;this.src='assets/images/fault.png'"/>
                     <span class="it-nameValue"></span>
                 </div>
             </td>

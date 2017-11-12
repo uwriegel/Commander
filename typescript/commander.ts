@@ -174,7 +174,7 @@ export class Commander {
             link.rel = 'stylesheet'
             link.id = 'theme'
             link.type = 'text/css'
-            link.href = `assets/css/themes/menu-ubuntu.css`
+            link.href = `assets/css/themes/ubuntu.css`
             link.media = 'all'
             head.appendChild(link)
         }
