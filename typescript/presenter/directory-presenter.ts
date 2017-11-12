@@ -1,9 +1,8 @@
 import { PresenterBase }  from './presenterbase.js'
 import { PresenterChooser } from './presenter-chooser.js'
-import { Item } from '../model/item.js'
-import { FileHelper } from '../filehelper.js' 
+import { formatDate, formatFileSize } from '../filehelper.js'
 import { DirectoryItem } from '../model/directory-item.js'
-import { GlobalSettings } from '../global-settings.js'
+import { getShowHidden } from '../global-settings.js'
 const Path = require('path')
 
 export abstract class DirectoryPresenter extends PresenterBase {
@@ -69,7 +68,7 @@ export abstract class DirectoryPresenter extends PresenterBase {
                 }
             ].concat(folderItems).concat(fileItems)
 
-            if (!GlobalSettings.showHidden)
+            if (!getShowHidden())
                 this.items = this.items.filter(n => !n.isHidden)
 
             let lastIndex = 0
@@ -111,12 +110,12 @@ export abstract class DirectoryPresenter extends PresenterBase {
 
         td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
         span = td.querySelector('span') as HTMLSpanElement
-        span.innerText = item ? FileHelper.formatDate(item.date) : 'W'
+        span.innerText = item ? formatDate(item.date) : 'W'
         tr.appendChild(td)
 
         td = PresenterBase.itemRightTemplate.cloneNode(true) as HTMLTableDataCellElement
         span = td.querySelector('span') as HTMLSpanElement
-        span.innerText = item ? FileHelper.formatFileSize(item.size) : 'W'
+        span.innerText = item ? formatFileSize(item.size) : 'W'
         tr.appendChild(td)
         
         // if (item)
@@ -133,10 +132,10 @@ export abstract class DirectoryPresenter extends PresenterBase {
 
     protected abstract async getFiles(path: string): Promise<DirectoryItem[]>
 
-    updateItem(itemElement: HTMLTableRowElement, index: number) {
+//    updateItem(itemElement: HTMLTableRowElement, index: number) {
 //        const item = this.items[index]
 //        this.extendedUpdateItem(itemElement, item)
-    }
+//    }
 
     protected canBeSelected(itemIndex: number) {
         return itemIndex != 0

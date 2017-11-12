@@ -1,15 +1,13 @@
 ﻿import { TableView }  from './tableview.js'
 
-class Scrollbar
-{
+class Scrollbar {
     /**
      * Scrollbar der TableView
      * 
      * @param parent Das Element, welches mit einer Scrollbar versehen werden soll
      * @param positionChanged Callback zum Scrollen
      */
-    constructor(parent: HTMLElement, positionChanged: (position: number)=>void)
-    {
+    constructor(parent: HTMLElement, positionChanged: (position: number)=>void) {
         this.parent = parent
         this.positionChanged = positionChanged
         this.scrollbar = document.createElement("div")

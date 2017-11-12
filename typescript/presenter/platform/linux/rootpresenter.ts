@@ -1,6 +1,6 @@
 import { RootPresenter as RootPresenterBase, PresenterBase, RootItem } from '../../rootpresenter.js'
 import { ColumnsControl } from '../../../columnscontrol.js'
-import { FileHelper } from '../../../filehelper.js'
+import { formatFileSize } from '../../../filehelper.js'
 
 export interface LinuxRootItem extends RootItem {
     type: string
@@ -68,7 +68,7 @@ export class RootPresenter extends RootPresenterBase {
 
         td = PresenterBase.itemRightTemplate.cloneNode(true) as HTMLTableDataCellElement
         span = td.querySelector('span') as HTMLSpanElement
-        span.innerText = item ? FileHelper.formatFileSize(item.size) : 'W'
+        span.innerText = item ? formatFileSize(item.size) : 'W'
         tr.appendChild(td)
         
         tr.tabIndex = 1

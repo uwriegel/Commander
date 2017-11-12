@@ -1,9 +1,37 @@
-﻿/**
- * Funktionssammlung für die Darstellung von Item-Properties
- */
-class FileHelper
-{ 
-    // /**
+﻿const dateFormat = Intl.DateTimeFormat("de-DE", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+})
+const timeFormat = Intl.DateTimeFormat("de-DE", {
+    hour: "2-digit",
+    minute: "2-digit"
+})
+
+export function formatFileSize(fileSize: number): string {
+    if (fileSize == -1)
+        return ""
+    var strNumber = `${fileSize}`
+    var thSep = '.'
+    if (strNumber.length > 3) {
+        var begriff = strNumber
+        strNumber = ""
+        for (var j = 3; j < begriff.length; j += 3) {
+            var extract = begriff.slice(begriff.length - j, begriff.length - j + 3)
+            strNumber = thSep + extract + strNumber
+        }
+        var strfirst = begriff.substr(0, (begriff.length % 3 == 0) ? 3 : (begriff.length % 3))
+        strNumber = strfirst + strNumber
+    }
+    return strNumber
+}
+
+export function formatDate(date: Date): string {
+    return `${dateFormat.format(date)} ${timeFormat.format(date)}`
+}
+
+
+ // /**
     //  * Aus einem Dateinamen nur den Namesteil ohne Endung ermitteln
     //  * @param name
     //  */
@@ -60,27 +88,6 @@ class FileHelper
     //     }
     // }
 
-    static formatFileSize(fileSize: number): string {
-        if (fileSize == -1)
-            return ""
-        var strNumber = `${fileSize}`
-        var thSep = '.'
-        if (strNumber.length > 3) {
-            var begriff = strNumber
-            strNumber = ""
-            for (var j = 3; j < begriff.length; j += 3) {
-                var extract = begriff.slice(begriff.length - j, begriff.length - j + 3)
-                strNumber = thSep + extract + strNumber
-            }
-            var strfirst = begriff.substr(0, (begriff.length % 3 == 0) ? 3 : (begriff.length % 3))
-            strNumber = strfirst + strNumber
-        }
-        return strNumber
-    }
-
-    static formatDate(date: Date): string {
-        return FileHelper.dateFormat.format(date) + " " + FileHelper.timeFormat.format(date)
-    }
 
     // static compareVersion(versionLeft: string, versionRight: string): number
     // {
@@ -104,15 +111,3 @@ class FileHelper
     //     return 0
     // }
 
-    private static readonly dateFormat = Intl.DateTimeFormat("de-DE", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-    })
-    private static readonly timeFormat = Intl.DateTimeFormat("de-DE", {
-        hour: "2-digit",
-        minute: "2-digit"
-    })
-}
-
-export { FileHelper }

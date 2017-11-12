@@ -1,6 +1,6 @@
 import { Menu, Shortcut, ShortCutAction } from "./menu.js"
 import { SubMenuController } from "./submenucontroller.js"
-import { commanderInstance } from "../commander.js"
+import { getFocused } from "../commander.js"
 export { Menu, MenuItemType } from "./menu.js"
 
 export class Menubar {
@@ -224,7 +224,7 @@ export class Menubar {
     }
     
     private setActive() {
-        this.focusedView = commanderInstance.focused
+        this.focusedView = getFocused()
         let lis = <HTMLLIElement[]>Array.from(this.menubarContainer.querySelectorAll(".menubar>li"))
         lis.forEach(n => {
             n.onmouseover = evt => {
