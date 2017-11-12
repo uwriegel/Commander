@@ -4,3 +4,6 @@ npm i @types/express
 npm i compression
 npm i @types/compression
 dependencies aus package.json entfernen
+
+Main-Thread erstellen: typescript übersetzen mit nwgui/tsconfig.json
+UI-Thread erstellen: typescript übersetzen mit typescript/tsconfig.json

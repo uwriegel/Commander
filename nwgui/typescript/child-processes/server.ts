@@ -27,6 +27,7 @@ export abstract class Server {
             res.send("")
             process.exit()
         })
+        console.log("server process started")
     }
 
     protected abstract sendIconResponse(query: string, res: any): void
