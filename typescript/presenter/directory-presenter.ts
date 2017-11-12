@@ -1,6 +1,6 @@
 import { PresenterBase }  from './presenterbase.js'
 import { PresenterChooser } from './presenter-chooser.js'
-import { Item } from '../Model/Item.js'
+import { Item } from '../model/item.js'
 import { formatDate, formatFileSize } from '../filehelper.js'
 import { DirectoryItem } from '../model/directory-item.js'
 import { getShowHidden } from '../global-settings.js'
