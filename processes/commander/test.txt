@@ -1,5 +1,5 @@
 getDrives:
-{"cmd": "getDrives", reqestId="123"}
+{"cmd": "getDrives", "requestId": "123"}
 
 stop:
-{"cmd": "stop", reqestId="444"}
+{"cmd": "stop", "reqestId": "444"}

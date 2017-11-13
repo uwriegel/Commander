@@ -5,8 +5,6 @@ open System
 open System.Threading
 open System.Text
 
-printfn "Starting background service"
-
 let locker = Object ()
 
 let input = Console.OpenStandardInput()
@@ -18,7 +16,7 @@ let run (requestId: string) action =
 
         // Create Ergebnis mit requestId
         lock locker (fun () ->
-            let buffer = Encoding.UTF8.GetBytes("Nichts")
+            let buffer = Encoding.UTF8.GetBytes("Nichts ist das älles!")
             // output.Write Länge buffer.Length binär!!
             output.Write (buffer, 0, buffer.Length)
         )
@@ -33,10 +31,14 @@ let rec waitForAction () =
         ()
     | cmd when cmd.cmd = "getDrives" ->
         run cmd.requestId getDrives
+        run cmd.requestId getDrives
+        run cmd.requestId getDrives
+        run cmd.requestId getDrives
+        run cmd.requestId getDrives
+        waitForAction ()
     | _ ->
         printfn "cmd: %s - text: %s" cmd.cmd "Nichts"  
         waitForAction () 
 
 waitForAction () 
 
-printfn "background service stopped"
