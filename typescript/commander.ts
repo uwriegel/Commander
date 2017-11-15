@@ -1,5 +1,11 @@
 ﻿// TODO: Weiterentwicklung
 
+// Start Fis-Commanderserver (sehr früh, aber im UI-Thread)
+// Beim Beenden Stop-Befehl senden
+
+// GetRootItems Linux test, ob es funktioniert
+// Dann wieder nativ
+
 // GetRootItems Windows
 // Unterscheidung Selektion und Tastaturselektion im Menü
 

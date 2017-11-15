@@ -12,3 +12,7 @@ build Background process:
 open vscode in folder ./processes/commander
 to debug: debug and paste content of test.txt
 
+to build: dotnet publish:
+dotnet publish --framework netcoreapp2.0 -c release (dotnet publish --framework netcoreapp2.0 --self-contained)
+copy content of /processes/commander/bin/release/netcoreapp2.0/publish to /processes/bin
+
