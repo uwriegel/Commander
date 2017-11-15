@@ -1,9 +1,15 @@
 module FileSystem
 open System.IO
-let getDrives () = 
-    let drives = 
+open Results
+
+let getDrives requestId = 
+    let driveInfoResult = 
         DriveInfo.GetDrives () 
         |> Seq.filter (fun drive -> drive.IsReady)
         |> Seq.sortBy (fun n -> n.Name)
-    let affe = drives 
-    ()
+        |> Seq.map (fun n -> { name = n.Name })
+        |> Seq.toArray
+    {   
+        requestId = requestId
+        driveInfoResult = driveInfoResult
+    }

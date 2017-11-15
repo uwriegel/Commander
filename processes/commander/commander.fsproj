@@ -8,6 +8,7 @@
   <ItemGroup>
     <Compile Include="json.fs" />
     <Compile Include="types/commands.fs" />
+    <Compile Include="types/results.fs" />
     <Compile Include="filesystem.fs" />
     <Compile Include="main.fs" />
   </ItemGroup>

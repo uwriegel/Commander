@@ -1,6 +1,7 @@
 open Json
 open FileSystem
 open Commands
+open Results
 open System
 open System.Threading
 open System.Text
@@ -10,14 +11,12 @@ let locker = Object ()
 let input = Console.OpenStandardInput()
 let output = Console.OpenStandardOutput()
 
-let run (requestId: string) action = 
+let run (requestId: string) (action: string->Result) = 
     ThreadPool.QueueUserWorkItem (fun _ -> 
-        action()
+        let result = action requestId
 
-        // Create Ergebnis mit requestId
         lock locker (fun () ->
-            let buffer = Encoding.UTF8.GetBytes("Nichts ist das älles!")
-            // output.Write Länge buffer.Length binär!!
+            let buffer = serializeJson result
             output.Write (buffer, 0, buffer.Length)
         )
     ) |> ignore

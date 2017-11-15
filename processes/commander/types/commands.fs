@@ -8,6 +8,5 @@ type Command = {
 
     [<DataMember>]
     mutable requestId: string
-    // [<DataMember(EmitDefaultValue = false)>]
-    // mutable text: string
 }
+
