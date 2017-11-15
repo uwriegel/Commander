@@ -31,10 +31,6 @@ let rec waitForAction () =
         ()
     | cmd when cmd.cmd = "getDrives" ->
         run cmd.requestId getDrives
-        run cmd.requestId getDrives
-        run cmd.requestId getDrives
-        run cmd.requestId getDrives
-        run cmd.requestId getDrives
         waitForAction ()
     | _ ->
         printfn "cmd: %s - text: %s" cmd.cmd "Nichts"  
