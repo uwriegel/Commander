@@ -32,6 +32,7 @@ import { Menubar, MenuItemType }  from './menubar/menubar.js'
 import { MenuItemControl } from './menubar/menuitemcontrol.js'
 import { setShowHidden } from './global-settings.js'
 import { platform, Platform } from './platform.js'
+import { start } from './child-process.js'
 const Path = require('path')
 
 import { Viewer }  from './viewer.js'
@@ -54,6 +55,13 @@ export function getFocused() {
 }
 
 (function () {
+    try {
+    start()
+    }
+    catch (err) {
+        alert (err.toString())
+    }
+
     const gui = require("nw.gui")
     const mainWindow = gui.Window.get()
     
