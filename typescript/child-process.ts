@@ -1,13 +1,22 @@
 const { spawn } = require("child_process")
 
 export function start() {
-    const process = spawn("dotnet", ["/home/uwe/Projekte/Commander/processes/bin/commander.dll"])
-    
     process.stdout.on('data', (data: Buffer) => {
-        const ergebnis = data.toString('utf8')
-        alert(ergebnis)
+        const result = JSON.parse(data.toString('utf8'))
+        requests.get(result.requestId)!(result.driveInfoResult)
+        requests.delete(result.requestId)
     })    
-    
-    process.stdin.write('{"cmd": "getDrives", "requestId": "123"}\n')
-
 }
+
+// TODO: cmd: enum
+export function run<t>(cmd: string) {
+    return new Promise<t>(async resolve => {
+        const reqId = ++latestRequestId
+        requests.set(reqId.toString(), resolve)
+        process.stdin.write(`{"cmd": "${cmd}", "requestId": "${reqId}"}\n`)
+    })
+}
+
+const process = spawn("dotnet", ["./processes/bin/commander.dll"])
+const requests = new Map<string, (val:any)=>void>()
+var latestRequestId = 0

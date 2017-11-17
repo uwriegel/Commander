@@ -4,8 +4,6 @@ open Commands
 open Results
 open System
 open System.Threading
-open System.Text
-
 let locker = Object ()
 
 let input = Console.OpenStandardInput()

@@ -4,7 +4,13 @@ open System.Runtime.Serialization
 [<DataContract>]
 type DriveInfoResult = {
     [<DataMember>]
-    mutable name: string
+    mutable displayName: string
+    [<DataMember>]
+    mutable path: string
+    [<DataMember>]
+    mutable description: string
+    [<DataMember>]
+    mutable size: int64
 }
 
 [<DataContract>]

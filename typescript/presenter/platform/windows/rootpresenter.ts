@@ -1,6 +1,6 @@
 import { RootPresenter as RootPresenterBase, PresenterBase, RootItem } from '../../rootpresenter.js'
 import { ColumnsControl }  from '../../../columnscontrol.js'
-import { run } from '../../../dotnetloader.js'
+import { run } from '../../../child-process.js'
 
 export class RootPresenter extends RootPresenterBase {
 
@@ -12,11 +12,15 @@ export class RootPresenter extends RootPresenterBase {
         this.view.setColumns(new ColumnsControl(["Name", "Beschreibung", "Größe"], "4"))
     }
 
-    protected processFill() {
-        return new Promise<void>(async resolve => {
-            run("getDrives")
-            resolve()
-        })
+    protected async processFill() {
+
+        alert("Geht losss")
+        let rootItems = await run<RootItem[]>("getDrives")
+        for (let i = 0; i < 100; i++)
+             rootItems = await run<RootItem[]>("getDrives")
+        alert("Das warsss")
+        this.items = rootItems
+        this.view.itemsChanged(0)
     }
 
     protected createItem(item?: RootItem) : HTMLTableRowElement {
