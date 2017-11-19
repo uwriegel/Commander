@@ -14,11 +14,9 @@ export class RootPresenter extends RootPresenterBase {
 
     protected async processFill() {
 
-        alert("Geht losss")
         let rootItems = await run<RootItem[]>("getDrives")
         for (let i = 0; i < 100; i++)
              rootItems = await run<RootItem[]>("getDrives")
-        alert("Das warsss")
         this.items = rootItems
         this.view.itemsChanged(0)
     }

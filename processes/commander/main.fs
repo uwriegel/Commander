@@ -7,7 +7,7 @@ let main args =
     let configuration = Configuration.create {
             Configuration.createEmpty() with 
                 Port = 20000; 
-                WebRoot = args.[0]
+                WebRoot = if args.Length > 0 then args.[0] else "."
         }
 
     try

@@ -1,5 +1,5 @@
 
-to build: dotnet publish:
+to build: 
 cd processes/commander
 dotnet publish --framework netcoreapp2.0 -c Release (dotnet publish --framework netcoreapp2.0 --self-contained)
 copy content of /processes/commander/bin/Release/netcoreapp2.0/publish to /processes/bin
