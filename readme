@@ -1,9 +1,3 @@
-npm i @types/node
-npm i express
-npm i @types/express
-npm i compression
-npm i @types/compression
-remove dependencies from package.json
 
 to build: dotnet publish:
 cd processes/commander
