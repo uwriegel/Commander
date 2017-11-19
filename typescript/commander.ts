@@ -1,18 +1,14 @@
 ﻿// TODO: Weiterentwicklung
 
-// Start Fis-Commanderserver (sehr früh, aber im UI-Thread)
-// Beim Beenden Stop-Befehl senden
-
-// GetRootItems Linux test, ob es funktioniert
-// Dann wieder nativ
-
+// Extension in Webserver
 // GetRootItems Windows
-// Unterscheidung Selektion und Tastaturselektion im Menü
 
 // Entweder im DirectoryPresenter
-// getIconURl als c++/gtk-Dll über Webserver/c# abrufbar
+// getIconURl als c/gtk-Dll über Webserver/c# abrufbar
 // oder 
 // GetDriveItems as c++
+
+// Unterscheidung Selektion und Tastaturselektion im Menü
 
 // Sortierung bei Spalte Version berücksichtigen
 // Css-Definitions, Theme
