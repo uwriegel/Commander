@@ -5,5 +5,8 @@ dotnet publish --framework netcoreapp2.0 -c Release (dotnet publish --framework 
 copy content of /processes/commander/bin/Release/netcoreapp2.0/publish to /processes/bin
 
 to debug webservice:
-F# Project Explorer: > drücken, dann nw .
+cd /processes/commander
+dotnet build
+in debug pane choose launch
+
 
