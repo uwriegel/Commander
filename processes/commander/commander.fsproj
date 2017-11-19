@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="json.fs" />
-    <Compile Include="types/commands.fs" />
-    <Compile Include="types/results.fs" />
-    <Compile Include="filesystem.fs" />
+    <ProjectReference Include="..\..\..\dotnet\WebServer\WebServer\WebServer.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="main.fs" />
   </ItemGroup>
 

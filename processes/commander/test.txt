@@ -1,5 +1,0 @@
-getDrives:
-{"cmd": "getDrives", "requestId": "123"}
-
-stop:
-{"cmd": "stop", "reqestId": "444"}

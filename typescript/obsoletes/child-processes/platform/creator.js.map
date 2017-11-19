@@ -1,0 +1,1 @@
+{"version":3,"file":"creator.js","sourceRoot":"","sources":["../../../typescript/child-processes/platform/creator.ts"],"names":[],"mappings":";;AAAA,iDAAyD;AACzD,mDAA6D;AAC7D,mCAAkC;AAElC;IACI,EAAE,CAAC,CAAC,OAAO,CAAC,QAAQ,IAAI,OAAO,CAAC;QAC5B,MAAM,CAAC,IAAI,kBAAW,EAAE,CAAA;IAC5B,IAAI;QACA,MAAM,CAAC,IAAI,kBAAa,EAAE,CAAA;AAClC,CAAC;AALD,wBAKC"}
