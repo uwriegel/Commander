@@ -1,5 +1,5 @@
-open Configuration
 open Server
+open Request
 
 [<EntryPoint>]
 let main args =
@@ -12,6 +12,7 @@ let main args =
 
     try
         let server = create configuration
+        server.registerRequests asyncRequest
         server.start ()
         stdin.ReadLine() |> ignore
         server.stop ()
