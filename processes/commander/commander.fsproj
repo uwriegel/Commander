@@ -1,17 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\dotnet\WebServer\WebServer\WebServer.fsproj" />
   </ItemGroup>
-
   <ItemGroup>
+    <Compile Include="filesystem.fs" />
     <Compile Include="request.fs" />
     <Compile Include="main.fs" />
   </ItemGroup>
-
 </Project>

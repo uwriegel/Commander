@@ -1,16 +1,7 @@
 module Results
-open System.Runtime.Serialization
 
-[<DataContract>]
-type DriveInfoResult = {
-    [<DataMember>]
-    mutable displayName: string
-    [<DataMember>]
-    mutable path: string
-    [<DataMember>]
-    mutable description: string
-    [<DataMember>]
-    mutable size: int64
+
+
 }
 
 [<DataContract>]

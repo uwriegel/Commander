@@ -8,5 +8,3 @@ to debug webservice:
 cd /processes/commander
 dotnet build
 in debug pane choose launch
-
-

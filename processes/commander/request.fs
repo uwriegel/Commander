@@ -27,5 +27,9 @@ let asyncRequest (url: string) responseData =
             //System.Threading.Thread.Sleep 3
             do! Response.asyncSendJson responseData command
             return true
+        | "getDrives" ->
+            let result = FileSystem.getDrives ()
+            do! Response.asyncSendJson responseData result  
+            return true
         | _ -> return false
     }
