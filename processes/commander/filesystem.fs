@@ -15,8 +15,10 @@ type DriveInfoResult = {
     [<DataMember(EmitDefaultValue = false)>]
     mutable isHidden: bool
 }
+
 let getDrives () = 
     DriveInfo.GetDrives () 
+    |> Seq.filter (fun n -> n.IsReady)
     |> Seq.sortBy (fun n -> n.Name)
     |> Seq.map (fun n -> 
         { 
@@ -24,6 +26,6 @@ let getDrives () =
             path = n.Name
             description = n.VolumeLabel
             size = n.TotalSize
-            isHidden = not n.IsReady
+            isHidden = false
         })
     |> Seq.toArray
