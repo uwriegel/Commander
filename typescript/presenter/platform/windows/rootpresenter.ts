@@ -1,6 +1,6 @@
 import { RootPresenter as RootPresenterBase, PresenterBase, RootItem } from '../../rootpresenter.js'
 import { ColumnsControl }  from '../../../columnscontrol.js'
-import { run } from '../../../child-process.js'
+import {getDrives } from '../../../connection.js'
 
 export class RootPresenter extends RootPresenterBase {
 
@@ -13,11 +13,7 @@ export class RootPresenter extends RootPresenterBase {
     }
 
     protected async processFill() {
-
-        let rootItems = await run<RootItem[]>("getDrives")
-        for (let i = 0; i < 100; i++)
-             rootItems = await run<RootItem[]>("getDrives")
-        this.items = rootItems
+        this.items = await getDrives()
         this.view.itemsChanged(0)
     }
 
