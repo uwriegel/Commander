@@ -19,5 +19,15 @@ export abstract class RootPresenter extends PresenterBase {
     checkPath(path: string) {
         return path == PresenterChooser.rootSelector
     }
+
+    itemsChanged(selectedPath?: string) {
+        let lastIndex = 0
+        if (selectedPath) {
+            const rootItems = this.items as RootItem[]
+            lastIndex = rootItems.findIndex(n => n.displayName == selectedPath)
+        }
+
+        this.view.itemsChanged(lastIndex)
+    }
 }
 

@@ -2,15 +2,6 @@ import { RootPresenter as RootPresenterBase, PresenterBase, RootItem } from '../
 import { ColumnsControl } from '../../../columnscontrol.js'
 import { formatFileSize } from '../../../filehelper.js'
 
-
-
-
-
-
-
-
-import {getDrives as affe} from '../../../connection.js'
-
 export interface LinuxRootItem extends RootItem {
     type: string
 }
@@ -25,7 +16,7 @@ export class RootPresenter extends RootPresenterBase {
         this.view.setColumns(new ColumnsControl(["Name", "Typ", "Beschreibung", "Mount", "Größe"], "4"))
     }
 
-    protected processFill() {
+    protected processFill(selectedPath?: string) {
         return new Promise<void>(async resolve => {
 
             const initialItems = [ {
@@ -40,7 +31,7 @@ export class RootPresenter extends RootPresenterBase {
             var rootItems = await this.getItems()
 
             this.items = initialItems.concat(rootItems)
-            this.view.itemsChanged(0)
+            this.itemsChanged(selectedPath)
 
             resolve()
         })
@@ -86,10 +77,6 @@ export class RootPresenter extends RootPresenterBase {
 
     async getItems() {
         const childProcess = require("child_process")
-
-        let neue = await affe() 
-
-            console.log (neue)
 
         async function getDrives() {
             return new Promise<string>(resolve => {

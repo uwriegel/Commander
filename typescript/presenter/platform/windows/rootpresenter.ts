@@ -12,9 +12,9 @@ export class RootPresenter extends RootPresenterBase {
         this.view.setColumns(new ColumnsControl(["Name", "Beschreibung", "Größe"], "4"))
     }
 
-    protected async processFill() {
+    protected async processFill(selectedPath?: string) {
         this.items = await getDrives()
-        this.view.itemsChanged(0)
+        this.itemsChanged(selectedPath)
     }
 
     protected createItem(item?: RootItem) : HTMLTableRowElement {
