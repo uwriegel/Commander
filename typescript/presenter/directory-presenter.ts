@@ -57,36 +57,32 @@ export abstract class DirectoryPresenter extends PresenterBase {
         return true
     }
 
-    protected processFill(selectPath?: string) {
-        return new Promise<void>(async (resolve) => {
-            const items = await this.getFiles(this.path)
-            const folderItems = this.getFolderItems(items)
-            const fileItems = this.getFileItems(items)
-            this.items = [{
-                    displayName: "..",
-                    size: -1,
-                    isDirectory: true
-                }
-            ].concat(folderItems).concat(fileItems)
-
-            if (!getShowHidden())
-                this.items = this.items.filter(n => !n.isHidden)
-
-            let lastIndex = 0
-            if (selectPath) {
-                const directoryItems = this.items as DirectoryItem[]
-                const dir = Path.basename(selectPath)
-                const lastItem = directoryItems.find(n => n.displayName == dir)
-                if (lastItem)
-                    lastIndex = directoryItems.indexOf(lastItem)
+    protected async processFill(selectPath?: string) {
+        const items = await this.getFiles(this.path)
+        const folderItems = this.getFolderItems(items)
+        const fileItems = this.getFileItems(items)
+        this.items = [{
+                displayName: "..",
+                size: -1,
+                isDirectory: true
             }
+        ].concat(folderItems).concat(fileItems)
 
-            this.view.itemsChanged(lastIndex)
+        if (!getShowHidden())
+            this.items = this.items.filter(n => !n.isHidden)
 
-            resolve()
+        let lastIndex = 0
+        if (selectPath) {
+            const directoryItems = this.items as DirectoryItem[]
+            const dir = Path.basename(selectPath)
+            const lastItem = directoryItems.find(n => n.displayName == dir)
+            if (lastItem)
+                lastIndex = directoryItems.indexOf(lastItem)
+        }
 
-            this.insertExtendedInfos()
-        })
+        this.view.itemsChanged(lastIndex)
+
+        await this.insertExtendedInfos()
     }
 
     protected createItem(item?: DirectoryItem | undefined): HTMLTableRowElement {

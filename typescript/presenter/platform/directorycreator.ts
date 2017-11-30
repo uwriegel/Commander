@@ -1,13 +1,14 @@
-//import { platform, Platform } from '../../platform/platform.js'
+import { platform, Platform } from '../../platform.js'
 import { DirectoryPresenter as DirectoryPresenterLinux } from './linux/directorypresenter.js'
+import { DirectoryPresenter as DirectoryPresenterWindows } from './windows/directorypresenter.js'
 
 export function create() {
     
-    // switch (platform) {
-    //     case Platform.Linux:
+    switch (platform) {
+        case Platform.Linux:
             return new DirectoryPresenterLinux()
-        // default:
-        //     return undefined
-//    }
+        case Platform.Windows:
+            return new DirectoryPresenterWindows()
+    }
 }
 
