@@ -1,4 +1,5 @@
 ﻿// TODO: Weiterentwicklung
+// Siehe main.fs
 
 // Extension in Webserver
 // GetRootItems Windows
@@ -28,11 +29,11 @@ import { Menubar, MenuItemType }  from './menubar/menubar.js'
 import { MenuItemControl } from './menubar/menuitemcontrol.js'
 import { setShowHidden } from './global-settings.js'
 import { platform, Platform } from './platform.js'
-import { start } from './child-process.js'
-const Path = require('path')
+import { joinPath } from './filehelper.js'
 
 import { Viewer }  from './viewer.js'
 import { Item } from './model/item.js'
+
 
 //               Presenter (Steuert die Daten, passt die Views an, sorgt für die Sortierung und Ansichtsfilterung)
 //                  /\
@@ -51,41 +52,6 @@ export function getFocused() {
 }
 
 (function () {
-    try {
-    start()
-    }
-    catch (err) {
-        alert (err.toString())
-    }
-
-    const gui = require("nw.gui")
-    const mainWindow = gui.Window.get()
-    
-    const data = localStorage['position']
-    if (data) {
-        const position = JSON.parse(data)
-        mainWindow.x = position.x
-        mainWindow.y = position.y
-        mainWindow.width = position.width
-        mainWindow.height = position.height
-    }
-
-    setTimeout(() => mainWindow.show(), 0)
-
-    mainWindow.on("close", () => {
-        const xmlhttp = new XMLHttpRequest()
-        xmlhttp.onload = () => mainWindow.close(true)
-        xmlhttp.open('GET', 'http://localhost:20000/exit', true)
-        xmlhttp.send()
-
-        localStorage['position'] = JSON.stringify( {
-            x: mainWindow.x,
-            y: mainWindow.y,
-            width: mainWindow.width,
-            height: mainWindow.height
-        })
-    })
-
     setTheme("blue")
     initializeMenubar()
     leftView.otherView = rightView
@@ -109,6 +75,8 @@ export function getFocused() {
     viewerElement.onclick = focusedView.focus
 
     initializeOnKeyDownHandler()
+
+    window.addEventListener('close', _ => alert("exit()"))
 })()
 
 // getCommanderView(id: string) {
@@ -153,7 +121,7 @@ function showHidden(show: boolean) {
 
 function currentItemChanged(item: Item, path: string) {
     if (item) {
-        const text = Path.join(path, item.displayName)
+        const text = joinPath(path, item.displayName)
         footer!.textContent = text
         viewer.selectionChanged(text)
     }

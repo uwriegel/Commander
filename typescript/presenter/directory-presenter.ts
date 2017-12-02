@@ -1,10 +1,10 @@
 import { PresenterBase }  from './presenterbase.js'
 import { PresenterChooser } from './presenter-chooser.js'
-import { Item } from '../model/item.js'
-import { formatDate, formatFileSize } from '../filehelper.js'
+//import { Item } from '../model/item.js'
+//import { formatDate, formatFileSize, joinPath } from '../filehelper.js'
 import { DirectoryItem } from '../model/directory-item.js'
 import { getShowHidden } from '../global-settings.js'
-const Path = require('path')
+import { joinPath } from '../filehelper.js';
 
 export abstract class DirectoryPresenter extends PresenterBase {
 
@@ -18,7 +18,7 @@ export abstract class DirectoryPresenter extends PresenterBase {
             return { selectedPath: "", currentPath: "" }
         if ((this.path == '/' || (this.path.length == 3 && this.path[1] == ':')) && item.displayName == "..")
             return { selectedPath: PresenterChooser.rootSelector, currentPath: this.path } 
-        return { selectedPath: Path.join(this.path, item.displayName), 
+        return { selectedPath: joinPath(this.path, item.displayName), 
             currentPath: item.displayName == ".." ? this.path : "" }
     }
     
@@ -28,36 +28,38 @@ export abstract class DirectoryPresenter extends PresenterBase {
 
     isDefault = true
 
-    sort(columnIndex: number, ascending: boolean) {
-        this.sortAscending = ascending
-        switch (columnIndex) {
-            case 0:
-                this.sortItem = (a: DirectoryItem, b: DirectoryItem) => a.displayName.localeCompare(b.displayName)                
-                break
-            case 1:
-                this.sortItem = (a: DirectoryItem, b: DirectoryItem) => Path.extname(a.displayName).localeCompare(Path.extname(b.displayName))
-                break;
-            case 2:
-                this.sortItem = (a: DirectoryItem, b: DirectoryItem )=> a.date.getTime() - b.date.getTime()
-                break
-            case 3:
-                this.sortItem = (a: DirectoryItem, b: DirectoryItem )=> a.size - b.size                
-                break
-        }
+    sort(_: number, __: boolean) {
+    //sort(columnIndex: number, ascending: boolean) {
+        // this.sortAscending = ascending
+        // switch (columnIndex) {
+        //     case 0:
+        //         this.sortItem = (a: DirectoryItem, b: DirectoryItem) => a.displayName.localeCompare(b.displayName)                
+        //         break
+        //     case 1:
+        //         this.sortItem = (a: DirectoryItem, b: DirectoryItem) => Path.extname(a.displayName).localeCompare(Path.extname(b.displayName))
+        //         break;
+        //     case 2:
+        //         this.sortItem = (a: DirectoryItem, b: DirectoryItem )=> a.date.getTime() - b.date.getTime()
+        //         break
+        //     case 3:
+        //         this.sortItem = (a: DirectoryItem, b: DirectoryItem )=> a.size - b.size                
+        //         break
+        // }
 
-        const currentIndex = this.view.getCurrentItemIndex()
-        const currentItem = this.items[currentIndex]
-        this.items = this.getFolderItems(this.items as DirectoryItem[]).concat(this.getFileItems(this.items as DirectoryItem[]))
+        // const currentIndex = this.view.getCurrentItemIndex()
+        // const currentItem = this.items[currentIndex]
+        // this.items = this.getFolderItems(this.items as DirectoryItem[]).concat(this.getFileItems(this.items as DirectoryItem[]))
 
-        const newCurrentIndex = currentIndex ? 
-            (this.items).findIndex((di: Item) => di.displayName.localeCompare(currentItem.displayName) == 0)
-            : 0
+        // const newCurrentIndex = currentIndex ? 
+        //     (this.items).findIndex((di: Item) => di.displayName.localeCompare(currentItem.displayName) == 0)
+        //     : 0
         
-        this.view.itemsChanged(newCurrentIndex)
+        // this.view.itemsChanged(newCurrentIndex)
         return true
     }
 
-    protected async processFill(selectPath?: string) {
+    //protected async processFill(selectPath?: string) {
+        protected async processFill(_?: string) {
         const items = await this.getFiles(this.path)
         const folderItems = this.getFolderItems(items)
         const fileItems = this.getFileItems(items)
@@ -72,57 +74,58 @@ export abstract class DirectoryPresenter extends PresenterBase {
             this.items = this.items.filter(n => !n.isHidden)
 
         let lastIndex = 0
-        if (selectPath) {
-            const directoryItems = this.items as DirectoryItem[]
-            const dir = Path.basename(selectPath)
-            const lastItem = directoryItems.find(n => n.displayName == dir)
-            if (lastItem)
-                lastIndex = directoryItems.indexOf(lastItem)
-        }
+        // if (selectPath) {
+        //     const directoryItems = this.items as DirectoryItem[]
+        //     const dir = Path.basename(selectPath)
+        //     const lastItem = directoryItems.find(n => n.displayName == dir)
+        //     if (lastItem)
+        //         lastIndex = directoryItems.indexOf(lastItem)
+        // }
 
         this.view.itemsChanged(lastIndex)
 
         await this.insertExtendedInfos()
     }
 
-    protected createItem(item?: DirectoryItem | undefined): HTMLTableRowElement {
+    //protected createItem(item?: DirectoryItem | undefined): HTMLTableRowElement {
+    protected createItem(_?: DirectoryItem | undefined): HTMLTableRowElement {
         const tr = document.createElement("tr")
 
-        if (item && item.isHidden)
-            tr.classList.add("it-hidden")
+        // if (item && item.isHidden)
+        //     tr.classList.add("it-hidden")
 
-        const ext = item ? Path.extname(item.displayName) : ""
+        // const ext = item ? Path.extname(item.displayName) : ""
 
-        let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
-        let img = td.querySelector('img') as HTMLImageElement
-        img.src = this.getIconUrl(item!)
-        let span = td.querySelector('span') as HTMLSpanElement
-        span.innerText = item ? Path.basename(item.displayName, ext) : 'W'
-        tr.appendChild(td)
+        // let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
+        // let img = td.querySelector('img') as HTMLImageElement
+        // img.src = this.getIconUrl(item!)
+        // let span = td.querySelector('span') as HTMLSpanElement
+        // span.innerText = item ? Path.basename(item.displayName, ext) : 'W'
+        // tr.appendChild(td)
         
-        td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
-        span = td.querySelector('span') as HTMLSpanElement
-        span.innerText = item ? ext : 'W'
-        tr.appendChild(td)
+        // td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
+        // span = td.querySelector('span') as HTMLSpanElement
+        // span.innerText = item ? ext : 'W'
+        // tr.appendChild(td)
 
-        td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
-        span = td.querySelector('span') as HTMLSpanElement
-        span.innerText = item ? formatDate(item.date) : 'W'
-        tr.appendChild(td)
+        // td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
+        // span = td.querySelector('span') as HTMLSpanElement
+        // span.innerText = item ? formatDate(item.date) : 'W'
+        // tr.appendChild(td)
 
-        td = PresenterBase.itemRightTemplate.cloneNode(true) as HTMLTableDataCellElement
-        span = td.querySelector('span') as HTMLSpanElement
-        span.innerText = item ? formatFileSize(item.size) : 'W'
-        tr.appendChild(td)
+        // td = PresenterBase.itemRightTemplate.cloneNode(true) as HTMLTableDataCellElement
+        // span = td.querySelector('span') as HTMLSpanElement
+        // span.innerText = item ? formatFileSize(item.size) : 'W'
+        // tr.appendChild(td)
         
-        // if (item)
-        //     this.extendedUpdateItem(tr, item)
+        // // if (item)
+        // //     this.extendedUpdateItem(tr, item)
 
-        tr.tabIndex = 1
-        if (item && item.isSelected)
-            tr.classList.add("selected")
-        else
-            tr.classList.remove("selected")
+        // tr.tabIndex = 1
+        // if (item && item.isSelected)
+        //     tr.classList.add("selected")
+        // else
+        //     tr.classList.remove("selected")
 
         return tr
     }
@@ -151,14 +154,14 @@ export abstract class DirectoryPresenter extends PresenterBase {
         })
     }
 
-    private getIconUrl(item: DirectoryItem) : string {
-        if (item && item.isDirectory)
-            return "assets/images/folder.png"
-        else if (!item)
-            return "assets/images/fault.png"
-        else
-            return this.extendedGetIconUrl(item)
-    }
+    // private getIconUrl(item: DirectoryItem) : string {
+    //     if (item && item.isDirectory)
+    //         return "assets/images/folder.png"
+    //     else if (!item)
+    //         return "assets/images/fault.png"
+    //     else
+    //         return this.extendedGetIconUrl(item)
+    // }
 
     private sortItem = (a: DirectoryItem, b: DirectoryItem)=>a.displayName.localeCompare(b.displayName)
 

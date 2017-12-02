@@ -2,6 +2,7 @@ module Request
 open ResponseData
 
 open System.Runtime.Serialization
+open System.Threading
 [<DataContract>]
 type Command = {
     [<DataMember>]
@@ -10,6 +11,8 @@ type Command = {
     [<DataMember>]
     mutable requestId: string
 }
+
+let waitHandle = new ManualResetEvent false
 
 let asyncRequest (url: string) responseData = 
     async {
@@ -31,5 +34,8 @@ let asyncRequest (url: string) responseData =
             let result = FileSystem.getDrives ()
             do! Response.asyncSendJson responseData result  
             return true
+        | "exit" -> 
+            waitHandle.Set () |> ignore
+            return false
         | _ -> return false
     }

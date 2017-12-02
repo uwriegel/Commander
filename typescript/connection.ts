@@ -4,6 +4,10 @@ export function getDrives() {
     return invoke<RootItem[]>("getDrives")
 }
 
+export function exit() {
+    return invoke("exit")
+}
+
 //function invoke<T>(method: string, param?: string) {
 function invoke<T>(method: string) {
     return new Promise<T>(resolve => {

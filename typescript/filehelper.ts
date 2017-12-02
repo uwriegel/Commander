@@ -8,6 +8,10 @@ const timeFormat = Intl.DateTimeFormat("de-DE", {
     minute: "2-digit"
 })
 
+export function joinPath(path: string, path2: string) {
+    return `${path}/${path2}`
+}
+
 export function formatFileSize(fileSize: number): string {
     if (fileSize == -1)
         return ""
