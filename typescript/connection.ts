@@ -21,3 +21,5 @@ function invoke<T>(method: string) {
     })
 }
     
+const socket = new WebSocket("ws://localhost:20000/Socke")
+

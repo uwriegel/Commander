@@ -20,8 +20,5 @@ let asyncRequest requestSession =
             let result = FileSystem.getDrives ()
             do! requestSession.asyncSendJson (result :> obj)
             return true
-        | "exit" -> 
-            waitHandle.Set () |> ignore
-            return false
         | _ -> return false
     }

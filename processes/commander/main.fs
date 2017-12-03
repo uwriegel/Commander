@@ -3,9 +3,7 @@ open Request
 open System.Threading
 open System.Diagnostics
 
-// TODO: Beim Beenden der Webseite Webserver runterfahren per WebSocket close
 // TODO: Portscanner
-// TODO: Start mit Webroot ohne Debugger
 // Ubuntu Theme
 // TODO: fawikon
 
@@ -27,7 +25,6 @@ try
     p.EnableRaisingEvents <- true
     p.StartInfo <- info
     p.Start() |> ignore    
-    Thread.Sleep 20000
     waitHandle.WaitOne () |> ignore
     server.stop ()
 with

@@ -221,11 +221,7 @@ function initializeMenubar() {
             key: 115,
             alt: true
         },
-        action: () => {
-            var gui = require("nw.gui")
-            const mainWindow = gui.Window.get()
-            mainWindow.close()
-        }
+        action: () => window.close()
     })
 
     menuNavigation.appendItem({
