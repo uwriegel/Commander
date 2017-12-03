@@ -4,10 +4,5 @@ export enum Platform {
     Windows
 }
 
- export var platform = (function() {
-//     const process = require("process")
-//     return process.platform == "linux" ? Platform.Linux : Platform.Windows
-    return Platform.Linux
- })()
-
+export var platform = (() => navigator.platform.startsWith("Linux") ? Platform.Linux : Platform.Windows)()
 
