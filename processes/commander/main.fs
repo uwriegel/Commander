@@ -5,8 +5,8 @@ open System.Diagnostics
 open System.Runtime.InteropServices
 
 // TODO: Portscanner
-// Ubuntu Theme
 // TODO: fawikon
+// TODO: GetDrives Linux mit DVD
 
 printfn "Starting Test Server"
 let configuration = Configuration.create {
