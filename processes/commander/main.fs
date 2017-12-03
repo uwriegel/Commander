@@ -19,8 +19,7 @@ let configuration = Configuration.create {
 ThreadPool.SetMinThreads(60, 60) |> ignore
 
 try
-    let server = create configuration
-    server.registerRequests asyncRequest
+    let server = create configuration { asyncRequest = asyncRequest; onNewWebSocket = onNewWebSocket }
     server.start ()
     let info = ProcessStartInfo (@"google-chrome", "--app=http://localhost:20000/commander.html")
     info.UseShellExecute <- true

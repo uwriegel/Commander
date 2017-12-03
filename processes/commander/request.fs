@@ -1,38 +1,24 @@
 module Request
-open ResponseData
-
-open System.Runtime.Serialization
+open Session
 open System.Threading
-[<DataContract>]
-type Command = {
-    [<DataMember>]
-    mutable cmd: string
-
-    [<DataMember>]
-    mutable requestId: string
-}
 
 let waitHandle = new ManualResetEvent false
 
-let asyncRequest (url: string) responseData = 
-    async {
-        match responseData.query.Value.method with
-        | "affe" ->
-            let test = responseData.query.Value
-            let param1 = test.Query "param1" 
-            let param2 = test.Query "param2"
-            let param3 = test.Query "param41"
+let onWebSocketClose _ =
+    waitHandle.Set () |> ignore
 
-            let command = {
-                cmd = "Kommando12"
-                requestId = "RekwestEidie34"
-            }
-            //System.Threading.Thread.Sleep 3
-            do! Response.asyncSendJson responseData command
-            return true
+let onNewWebSocket _ __ = 
+    {
+        id = ""
+        onClose = onWebSocketClose
+    }
+
+let asyncRequest requestSession = 
+    async {
+        match requestSession.query.Value.method with
         | "getDrives" ->
             let result = FileSystem.getDrives ()
-            do! Response.asyncSendJson responseData result  
+            do! requestSession.asyncSendJson (result :> obj)
             return true
         | "exit" -> 
             waitHandle.Set () |> ignore
