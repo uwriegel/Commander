@@ -2,6 +2,7 @@ module FileSystem
 open System.IO
 open System.Runtime.Serialization
 open System.Runtime.InteropServices
+open Platform
 
 [<DataContract>]
 type DriveInfoResult = {
@@ -26,7 +27,7 @@ let isReady drive =
     let mutable freeBytes = 0UL
     GetDiskFreeSpaceEx (drive, &&freeBytesForUser, &&totalBytes, &&freeBytes)
 
-let getDrives () = 
+let getWindowsDrives () = 
     let driveNames = Directory.GetLogicalDrives ()
     driveNames
     |> Seq.filter (fun n -> isReady <| n)    
@@ -41,3 +42,22 @@ let getDrives () =
             isHidden = false
         })
     |> Seq.toArray
+
+let getLinuxDrives () = 
+    let drives = DriveInfo.GetDrives()
+    drives
+    |> Seq.filter (fun n -> n.IsReady)
+    //|> Seq.filter (fun n -> not (isNull n.DriveFormat))    
+    |> Seq.filter (fun n -> n.DriveFormat <> "tmpfs" && n.DriveFormat <> "hugetlbfs" && n.DriveFormat <> "proc")
+    |> Seq.sortBy (fun n -> n.Name)
+    |> Seq.map (fun n -> 
+        { 
+            displayName = n.Name
+            path = n.DriveFormat
+            description = n.VolumeLabel
+            size = n.TotalSize
+            isHidden = false
+        })
+    |> Seq.toArray
+
+let getDrives () = if windows then getWindowsDrives () else getLinuxDrives ()

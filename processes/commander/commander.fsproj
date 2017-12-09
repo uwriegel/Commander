@@ -7,6 +7,7 @@
     <ProjectReference Include="..\..\..\dotnet\WebServer\WebServer\WebServer.fsproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="platform.fs" />
     <Compile Include="filesystem.fs" />
     <Compile Include="request.fs" />
     <Compile Include="main.fs" />

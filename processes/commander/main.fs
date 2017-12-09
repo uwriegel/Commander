@@ -2,8 +2,8 @@ open Server
 open Request
 open System.Threading
 open System.Diagnostics
-open System.Runtime.InteropServices
 open System.Net.Sockets
+open Platform
 
 // TODO: GetDrives Linux mit DVD
 
@@ -16,12 +16,8 @@ let rec checkPort port =
         checkPort <| port + 1
     with
     | _ -> port
-
 let port = checkPort 20000
 printfn "using port %d" port
-
-let os = RuntimeInformation.OSDescription 
-let windows = os.StartsWith "Microsoft"
 
 
 let configuration = Configuration.create {
