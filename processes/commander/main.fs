@@ -9,6 +9,21 @@ open Platform
 
 printfn "Starting Test Server"
 
+
+// TODO: perhaps faster in C without cin and startprocess
+let psi = ProcessStartInfo ("/bin/bash", "-c \"lsblk --bytes --output NAME,LABEL,MOUNTPOINT,FSTYPE,SIZE\"")
+psi.RedirectStandardOutput <- true
+psi.CreateNoWindow <- true   
+use child = new Process () //use
+child.StartInfo <- psi
+child.Start () |> ignore
+let result = child.StandardOutput.ReadToEnd ()
+
+
+
+
+
+
 let rec checkPort port = 
     try
         use client = new TcpClient ("localhost", port)

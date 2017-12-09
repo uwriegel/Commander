@@ -1,13 +1,11 @@
+to debug webservice:
+dotnet build /processes/commander
+F5
 
-to build: 
+to build Release: 
 cd processes/commander
 dotnet publish --framework netcoreapp2.0 -c Release (dotnet publish --framework netcoreapp2.0 --self-contained)
 copy content of /processes/commander/bin/Release/netcoreapp2.0/publish to /processes/bin
 
-to debug webservice:
-cd /processes/commander
-dotnet build
-in debug pane choose launch
-
-to run:
+to run Release:
 dotnet processes/bin/commander.dll
