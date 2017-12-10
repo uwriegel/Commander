@@ -5,25 +5,7 @@ open System.Diagnostics
 open System.Net.Sockets
 open Platform
 
-// TODO: GetDrives Linux mit DVD
-
 printfn "Starting Test Server"
-
-
-// TODO: perhaps faster in C without cin and startprocess
-let psi = ProcessStartInfo ("/bin/bash", "-c \"lsblk --bytes --output NAME,LABEL,MOUNTPOINT,FSTYPE,SIZE\"")
-psi.RedirectStandardOutput <- true
-psi.CreateNoWindow <- true   
-use child = new Process () //use
-child.StartInfo <- psi
-child.Start () |> ignore
-let result = child.StandardOutput.ReadToEnd ()
-
-
-
-
-
-
 let rec checkPort port = 
     try
         use client = new TcpClient ("localhost", port)
@@ -33,7 +15,6 @@ let rec checkPort port =
     | _ -> port
 let port = checkPort 20000
 printfn "using port %d" port
-
 
 let configuration = Configuration.create {
         Configuration.createEmpty() with 
