@@ -1,9 +1,10 @@
 module FileSystem
 open System.IO
 open System.Runtime.Serialization
-open System.Runtime.InteropServices
+open Api
 open Platform
 open System.Diagnostics
+#nowarn "51"
 
 [<DataContract>]
 type DriveInfoResult = {
@@ -20,14 +21,10 @@ type DriveInfoResult = {
     [<DataMember(EmitDefaultValue = false)>]
     mutable isHidden: bool
 }
-
-let MachInt str =
+let parseSize str =
    match System.Int64.TryParse(str) with
    | (true,int) -> int
    | _ -> -1L
-
-[<DllImport("kernel32.dll", BestFitMapping = false, CharSet = CharSet.Auto, SetLastError = true)>]
-extern bool GetDiskFreeSpaceEx(string drive, uint64 *freeBytesForUser, uint64 *totalBytes, uint64 *freeBytes)
 
 let isReady drive = 
     let mutable freeBytesForUser = 0UL
@@ -37,11 +34,7 @@ let isReady drive =
 
 let getWindowsDrives () = 
     let driveNames = Directory.GetLogicalDrives ()
-    driveNames
-    |> Seq.filter (fun n -> isReady <| n)    
-    |> Seq.map (fun n -> DriveInfo n)
-    |> Seq.sortBy (fun n -> n.Name)
-    |> Seq.map (fun n -> 
+    (Seq.map ((fun n -> DriveInfo n) >> (fun n -> 
         { 
             displayName = n.Name
             driveType = ""
@@ -49,11 +42,17 @@ let getWindowsDrives () =
             description = n.VolumeLabel
             size = n.TotalSize
             isHidden = false
-        })
+        })) (driveNames
+    |> Seq.filter (fun n -> isReady <| n)))
+    |> Seq.sortByDescending (fun n -> not n.isHidden, n.displayName)
     |> Seq.toArray
 
+let trimLinuxDriveChild (str: string) =
+    let result = if str.StartsWith("└") || str.StartsWith("├") then str.Substring 2 else str
+    result.Trim ()
+
 let getLinuxDrives () = 
-    // // TODO: perhaps faster in C without cin and startprocess
+    // TODO: perhaps faster in C without cin and startprocess
     let psi = ProcessStartInfo ("/bin/bash", "-c \"lsblk --bytes --output SIZE,NAME,LABEL,MOUNTPOINT,FSTYPE\"")
     psi.RedirectStandardOutput <- true
     psi.CreateNoWindow <- true   
@@ -61,7 +60,9 @@ let getLinuxDrives () =
     child.StartInfo <- psi
     child.Start () |> ignore
     let result = child.StandardOutput.ReadToEnd ()
-    let lines = result.Split ([|'\n'|], System.StringSplitOptions.RemoveEmptyEntries) |> Array.toList
+    let lines = 
+        result.Split ([|'\n'|], System.StringSplitOptions.RemoveEmptyEntries) 
+        |> Array.toList
     match lines with
     | [] -> []
     | first::rest ->
@@ -70,18 +71,18 @@ let getLinuxDrives () =
         let pos4 = first.IndexOf("MOUNT")
         let pos5 = first.IndexOf("FSTYPE")
         rest 
-        |> List.filter (fun n -> n.Contains("└") || n.Contains("/media/"))
+        |> List.filter (fun n -> n.Contains("└") || n.Contains("├") || n.Contains("/media/"))
         |> List.map (fun n -> 
             let path = n.Substring(pos4, pos5 - pos4).Trim()
             {
-                size = MachInt (n.Substring(0, pos2).Trim())
-                displayName = n.Substring(pos2, pos3 - pos2).Trim()
+                size = parseSize <| n.Substring(0, pos2).Trim()
+                displayName = n.Substring(pos2, pos3 - pos2) |> trimLinuxDriveChild
                 description = n.Substring(pos3, pos4 - pos3).Trim()
                 path = path
                 driveType = n.Substring(pos5).Trim()
                 isHidden = path = ""
             })
-        |> List.sortBy (fun n -> n.path)
+        |> List.sortBy (fun n -> n.isHidden, n.path)
     |> List.toArray
 
 let getDrives () = if windows then getWindowsDrives () else getLinuxDrives ()
