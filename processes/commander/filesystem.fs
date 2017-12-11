@@ -7,6 +7,7 @@ open System.Diagnostics
 open System.ComponentModel
 open System.Collections.Generic
 #nowarn "51"
+open System
 
 [<DataContract>]
 type DriveInfoResult = {
@@ -90,7 +91,7 @@ let getLinuxDrives () =
             size = -1L
             displayName = "home"
             description = ""
-            path = "/"
+            path = Environment.GetFolderPath Environment.SpecialFolder.UserProfile
             driveType = ""
             isHidden = false
         }]

@@ -5,8 +5,20 @@ open System.Diagnostics
 open System.Net.Sockets
 open Platform
 
-// TODO: home directory in fileSystem.fs per C-API-Library
-printfn "Starting Test Server"
+
+// open System.Runtime.InteropServices
+// open System.Text
+
+// [<DllImport("libc")>]
+// extern System.IntPtr getcwd(System.Text.StringBuilder sb, int length)
+
+
+// let sb = StringBuilder(400)
+// let affe = getcwd (sb, sb.Capacity)
+
+// printfn "pwd: %s" <|sb.ToString ()
+
+printfn "Starting Commander service"
 let rec checkPort port = 
     try
         use client = new TcpClient ("localhost", port)
