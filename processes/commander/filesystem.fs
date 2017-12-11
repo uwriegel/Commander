@@ -4,6 +4,8 @@ open System.Runtime.Serialization
 open Api
 open Platform
 open System.Diagnostics
+open System.ComponentModel
+open System.Collections.Generic
 #nowarn "51"
 
 [<DataContract>]
@@ -83,6 +85,14 @@ let getLinuxDrives () =
                 isHidden = path = ""
             })
         |> List.sortBy (fun n -> n.isHidden, n.path)
+    |> List.append
+        [{
+            size = -1L
+            displayName = "home"
+            description = ""
+            path = "/"
+            driveType = ""
+            isHidden = false
+        }]
     |> List.toArray
-
 let getDrives () = if windows then getWindowsDrives () else getLinuxDrives ()

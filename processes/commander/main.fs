@@ -5,8 +5,7 @@ open System.Diagnostics
 open System.Net.Sockets
 open Platform
 
-// TODO: home directory in fileSystem.fs
-
+// TODO: home directory in fileSystem.fs per C-API-Library
 printfn "Starting Test Server"
 let rec checkPort port = 
     try
