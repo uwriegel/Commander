@@ -1,5 +1,5 @@
 to debug webservice:
-dotnet build /processes/commander
+dotnet build processes/commander
 F5
 
 to build Release: 
