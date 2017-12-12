@@ -33,7 +33,11 @@ type Item = {
     mutable isDirectory: bool
     [<DataMember>]
     mutable size: int64
+    [<DataMember(EmitDefaultValue = false)>]
+    mutable dateTime: string 
 }
+
+let dateTimeIso = "yyyy-MM-ddTHH:mmK"
 
 let parseSize str =
    match System.Int64.TryParse(str) with
@@ -122,6 +126,7 @@ let getDirectories (directoryInfo: DirectoryInfo) =
                         displayName = n.Name
                         isDirectory = true
                         size = -1L
+                        dateTime = null
                     })
     |> Seq.sortBy (fun n -> n.displayName)                    
     |> Seq.toList                    
@@ -137,6 +142,7 @@ let getFiles (directoryInfo: DirectoryInfo) =
                         displayName = n.Name
                         isDirectory = false
                         size = n.Length
+                        dateTime = n.LastWriteTime.ToUniversalTime().ToString dateTimeIso
                     })
     |> Seq.sortBy (fun n -> n.displayName)
     |> Seq.toList                    
@@ -147,6 +153,7 @@ let getItems () =
     [{ 
         displayName = ".."
         isDirectory = true
+        dateTime = null
         size = -1L
     }] 
     |> List.append <| safeDirCall getDirectories
