@@ -24,10 +24,28 @@ type DriveInfoResult = {
     [<DataMember(EmitDefaultValue = false)>]
     mutable isHidden: bool
 }
+
+[<DataContract>]
+type Item = {
+    [<DataMember>]
+    mutable displayName: string
+    [<DataMember>]
+    mutable isDirectory: bool
+    [<DataMember>]
+    mutable size: int64
+}
+
 let parseSize str =
    match System.Int64.TryParse(str) with
    | (true,int) -> int
    | _ -> -1L
+
+
+let safeCall<'a> (directoryInfo: DirectoryInfo) action = 
+    try
+        action directoryInfo
+    with
+    | :? UnauthorizedAccessException -> List.empty<'a>
 
 let isReady drive = 
     let mutable freeBytesForUser = 0UL
@@ -64,7 +82,7 @@ let getLinuxDrives () =
     child.Start () |> ignore
     let result = child.StandardOutput.ReadToEnd ()
     let lines = 
-        result.Split ([|'\n'|], System.StringSplitOptions.RemoveEmptyEntries) 
+        result.Split ([|'\n'|], StringSplitOptions.RemoveEmptyEntries) 
         |> Array.toList
     match lines with
     | [] -> []
@@ -96,4 +114,41 @@ let getLinuxDrives () =
             isHidden = false
         }]
     |> List.toArray
+
+let getDirectories (directoryInfo: DirectoryInfo) = 
+    directoryInfo.GetDirectories ()
+    |> Seq.map (fun n 
+                    -> {
+                        displayName = n.Name
+                        isDirectory = true
+                        size = -1L
+                    })
+    |> Seq.sortBy (fun n -> n.displayName)                    
+    |> Seq.toList                    
+
+let dirInfo = DirectoryInfo("/home/uwe")
+let safeDirCall = safeCall dirInfo
+   
+
+let getFiles (directoryInfo: DirectoryInfo) = 
+    directoryInfo.GetFiles()
+    |> Seq.map (fun n 
+                    -> {
+                        displayName = n.Name
+                        isDirectory = false
+                        size = n.Length
+                    })
+    |> Seq.sortBy (fun n -> n.displayName)
+    |> Seq.toList                    
+    
 let getDrives () = if windows then getWindowsDrives () else getLinuxDrives ()
+
+let getItems () = 
+    [{ 
+        displayName = ".."
+        isDirectory = true
+        size = -1L
+    }] 
+    |> List.append <| safeDirCall getDirectories
+    |> List.append <| safeDirCall getFiles
+    |> List.toArray

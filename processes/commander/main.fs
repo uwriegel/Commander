@@ -11,24 +11,6 @@ open Platform
 // open System.Runtime.InteropServices
 // open System.Text
 
-
-open System.IO
-
-let safeCall<'a> (directoryInfo: DirectoryInfo) action = 
-    try
-        action directoryInfo
-    with
-    | :? System.UnauthorizedAccessException -> Array.empty<'a>
-
-let getDirectories (directoryInfo: DirectoryInfo) = directoryInfo.GetDirectories()
-let getFiles (directoryInfo: DirectoryInfo) = directoryInfo.GetFiles()
-
-let dirInfo = DirectoryInfo("/home/uwe")
-
-
-let dirs = safeCall dirInfo getDirectories
-let files = safeCall dirInfo getFiles
-
 // [<DllImport("libc")>]
 // extern System.IntPtr getcwd(System.Text.StringBuilder sb, int length)
 
@@ -48,7 +30,6 @@ let rec checkPort port =
     | _ -> port
 let port = checkPort 20000
 printfn "using port %d" port
-
 let configuration = Configuration.create {
         Configuration.createEmpty() with 
             Port = port 

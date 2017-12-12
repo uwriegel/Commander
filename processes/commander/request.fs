@@ -20,5 +20,9 @@ let asyncRequest requestSession =
             let result = FileSystem.getDrives ()
             do! requestSession.asyncSendJson (result :> obj)
             return true
+        | "getItems" ->
+            let result = FileSystem.getItems ()
+            do! requestSession.asyncSendJson (result :> obj)
+            return true
         | _ -> return false
     }
