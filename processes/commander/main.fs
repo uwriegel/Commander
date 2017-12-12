@@ -5,7 +5,8 @@ open System.Diagnostics
 open System.Net.Sockets
 open Platform
 
-
+// TODO: ReadFir in DirectoryPresenter
+// TODO: getFiles in FileSystem.ts
 // open System.Runtime.InteropServices
 // open System.Text
 
