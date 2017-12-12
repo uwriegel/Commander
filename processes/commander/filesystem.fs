@@ -126,7 +126,7 @@ let getDirectories (directoryInfo: DirectoryInfo) =
     |> Seq.sortBy (fun n -> n.displayName)                    
     |> Seq.toList                    
 
-let dirInfo = DirectoryInfo("/home/uwe")
+let dirInfo = DirectoryInfo(@"c:\windows\system32")
 let safeDirCall = safeCall dirInfo
    
 
