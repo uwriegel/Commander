@@ -5,10 +5,29 @@ open System.Diagnostics
 open System.Net.Sockets
 open Platform
 
+
 // TODO: ReadFir in DirectoryPresenter
 // TODO: getFiles in FileSystem.ts
 // open System.Runtime.InteropServices
 // open System.Text
+
+
+open System.IO
+
+let safeCall<'a> (directoryInfo: DirectoryInfo) action = 
+    try
+        action directoryInfo
+    with
+    | :? System.UnauthorizedAccessException -> Array.empty<'a>
+
+let getDirectories (directoryInfo: DirectoryInfo) = directoryInfo.GetDirectories()
+let getFiles (directoryInfo: DirectoryInfo) = directoryInfo.GetFiles()
+
+let dirInfo = DirectoryInfo("/home/uwe")
+
+
+let dirs = safeCall dirInfo getDirectories
+let files = safeCall dirInfo getFiles
 
 // [<DllImport("libc")>]
 // extern System.IntPtr getcwd(System.Text.StringBuilder sb, int length)
