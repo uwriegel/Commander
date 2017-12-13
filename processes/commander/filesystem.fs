@@ -67,8 +67,7 @@ let getWindowsDrives () =
             description = n.VolumeLabel
             size = n.TotalSize
             isHidden = false
-        })) (driveNames
-    |> Seq.filter (fun n -> isReady <| n)))
+        })) (driveNames |> Seq.filter (fun n -> isReady <| n)))
     |> Seq.sortByDescending (fun n -> not n.isHidden, n.displayName)
     |> Seq.toArray
 
@@ -121,13 +120,13 @@ let getLinuxDrives () =
 
 let getDirectories (directoryInfo: DirectoryInfo) = 
     directoryInfo.GetDirectories ()
-    |> Seq.map (fun n 
-                    -> {
-                        displayName = n.Name
-                        isDirectory = true
-                        size = -1L
-                        dateTime = null
-                    })
+    |> Seq.map (fun n -> 
+        {
+            displayName = n.Name
+            isDirectory = true
+            size = -1L
+            dateTime = null
+        })
     |> Seq.sortBy (fun n -> n.displayName)                    
     |> Seq.toList                    
 
@@ -137,13 +136,13 @@ let safeDirCall = safeCall dirInfo
 
 let getFiles (directoryInfo: DirectoryInfo) = 
     directoryInfo.GetFiles()
-    |> Seq.map (fun n 
-                    -> {
-                        displayName = n.Name
-                        isDirectory = false
-                        size = n.Length
-                        dateTime = n.LastWriteTime.ToUniversalTime().ToString dateTimeIso
-                    })
+    |> Seq.map (fun n -> 
+        {
+            displayName = n.Name
+            isDirectory = false
+            size = n.Length
+            dateTime = n.LastWriteTime.ToUniversalTime().ToString dateTimeIso
+        })
     |> Seq.sortBy (fun n -> n.displayName)
     |> Seq.toList                    
     
