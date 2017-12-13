@@ -130,10 +130,6 @@ let getDirectories (directoryInfo: DirectoryInfo) =
     |> Seq.sortBy (fun n -> n.displayName)                    
     |> Seq.toList                    
 
-let dirInfo = DirectoryInfo(@"c:\windows\system32")
-let safeDirCall = safeCall dirInfo
-   
-
 let getFiles (directoryInfo: DirectoryInfo) = 
     directoryInfo.GetFiles()
     |> Seq.map (fun n -> 
@@ -148,13 +144,15 @@ let getFiles (directoryInfo: DirectoryInfo) =
     
 let getDrives () = if windows then getWindowsDrives () else getLinuxDrives ()
 
-let getItems () = 
+let getItems path = 
+    let dirInfo = DirectoryInfo path
+    let safeDirCall = safeCall dirInfo
     [{ 
         displayName = ".."
         isDirectory = true
         dateTime = null
         size = -1L
     }] 
-    |> List.append <| safeDirCall getDirectories
-    |> List.append <| safeDirCall getFiles
+    |> List.append <| safeDirCall getDirectories 
+    |> List.append <| safeDirCall getFiles 
     |> List.toArray

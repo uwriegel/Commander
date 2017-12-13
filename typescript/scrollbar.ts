@@ -269,7 +269,7 @@ class Scrollbar {
     /**
     * Ein zyklischer Timer
     */
-    private timer: NodeJS.Timer
+    private timer: number
     /**
     * Ein einmalige Timeout-Intervall
     */

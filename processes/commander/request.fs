@@ -21,8 +21,13 @@ let asyncRequest requestSession =
             do! requestSession.asyncSendJson (result :> obj)
             return true
         | "getItems" ->
-            let result = FileSystem.getItems ()
-            do! requestSession.asyncSendJson (result :> obj)
+            let test = requestSession.query.Value
+            match test.Query "path" with
+            | Some path -> 
+                let result = FileSystem.getItems path
+                do! requestSession.asyncSendJson (result :> obj)
+            // TODO: SendErr                
+            | None -> do! requestSession.asyncSendJson null
             return true
         | _ -> return false
     }
