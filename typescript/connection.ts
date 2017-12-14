@@ -1,22 +1,19 @@
-import { RootItem } from "./model/root-item"
+import { RootItem } from "./model/root-item.js"
+import { DirectoryItem } from "./model/directory-item.js"
 
-export function getDrives() {
-    return invoke<RootItem[]>("getDrives")
-}
+export const getDrives = () => invoke<RootItem[]>("getDrives")
+export const getItems = (path: string) => invoke<DirectoryItem[]>("getItems", {path: path})
+export const exit = () => invoke("exit")
 
-export function exit() {
-    return invoke("exit")
-}
-
-//function invoke<T>(method: string, param?: string) {
-function invoke<T>(method: string) {
+function invoke<T>(method: string, param?: any) {
     return new Promise<T>(resolve => {
         var xmlhttp = new XMLHttpRequest()
         xmlhttp.onload = _ => {
             var result = <T>JSON.parse(xmlhttp.responseText);
             resolve(result)
         }
-        xmlhttp.open('GET', `cmd/${method}`, true)
+
+        xmlhttp.open('GET', param? `cmd/${method}?${Object.keys(param).map(n => n + '=' + param[n]).join('&')}` : `cmd/${method}`, true)
         xmlhttp.send()
     })
 }

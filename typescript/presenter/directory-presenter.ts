@@ -5,6 +5,7 @@ import { PresenterChooser } from './presenter-chooser.js'
 import { DirectoryItem } from '../model/directory-item.js'
 import { getShowHidden } from '../global-settings.js'
 import { joinPath } from '../filehelper.js';
+import { getItems } from '../connection.js';
 
 export abstract class DirectoryPresenter extends PresenterBase {
 
@@ -60,7 +61,7 @@ export abstract class DirectoryPresenter extends PresenterBase {
 
     //protected async processFill(selectPath?: string) {
         protected async processFill(_?: string) {
-        const items = await this.getFiles(this.path)
+        const items = await getItems(this.path)
         const folderItems = this.getFolderItems(items)
         const fileItems = this.getFileItems(items)
         this.items = [{
@@ -87,14 +88,13 @@ export abstract class DirectoryPresenter extends PresenterBase {
         await this.insertExtendedInfos()
     }
 
-    //protected createItem(item?: DirectoryItem | undefined): HTMLTableRowElement {
-    protected createItem(_?: DirectoryItem | undefined): HTMLTableRowElement {
+    protected createItem(item?: DirectoryItem | undefined): HTMLTableRowElement {
         const tr = document.createElement("tr")
 
-        // if (item && item.isHidden)
-        //     tr.classList.add("it-hidden")
+         if (item && item.isHidden)
+             tr.classList.add("it-hidden")
 
-        // const ext = item ? Path.extname(item.displayName) : ""
+        //const ext = item ? Path.extname(item.displayName) : ""
 
         // let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
         // let img = td.querySelector('img') as HTMLImageElement

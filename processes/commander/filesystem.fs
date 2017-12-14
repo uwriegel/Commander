@@ -43,8 +43,6 @@ let parseSize str =
    match System.Int64.TryParse(str) with
    | (true,int) -> int
    | _ -> -1L
-
-
 let safeCall<'a> (directoryInfo: DirectoryInfo) action = 
     try
         action directoryInfo
