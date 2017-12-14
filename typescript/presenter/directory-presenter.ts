@@ -58,29 +58,23 @@ export abstract class DirectoryPresenter extends PresenterBase {
         return true
     }
 
-    //protected async processFill(selectPath?: string) {
-        protected async processFill(_?: string) {
+    protected async processFill(selectPath?: string) {
         const items = await getItems(this.path)
         const folderItems = this.getFolderItems(items)
         const fileItems = this.getFileItems(items)
-        this.items = [{
-                displayName: "..",
-                size: -1,
-                isDirectory: true
-            }
-        ].concat(folderItems).concat(fileItems)
+        this.items = folderItems.concat(fileItems)
 
         if (!getShowHidden())
             this.items = this.items.filter(n => !n.isHidden)
 
         let lastIndex = 0
-        // if (selectPath) {
-        //     const directoryItems = this.items as DirectoryItem[]
-        //     const dir = Path.basename(selectPath)
-        //     const lastItem = directoryItems.find(n => n.displayName == dir)
-        //     if (lastItem)
-        //         lastIndex = directoryItems.indexOf(lastItem)
-        // }
+        if (selectPath) {
+            const directoryItems = this.items as DirectoryItem[]
+            const dir = getNameOnly(selectPath)
+            const lastItem = directoryItems.find(n => n.displayName == dir)
+            if (lastItem)
+                lastIndex = directoryItems.indexOf(lastItem)
+        }
 
         this.view.itemsChanged(lastIndex)
 

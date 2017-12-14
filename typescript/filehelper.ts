@@ -41,18 +41,18 @@ export function formatDate(date: Date): string {
  */
 export function getNameOnly(name:string): string {
     var pos = name.lastIndexOf('.');
-    if (pos == -1)
+    if (name == '..' || pos <= 0)
         return name
     return name.substring(0, pos)
 }
 
 /**
- * Aus einem Dateinamen nur Die Endung ohne Namen ermitteln
+ * Aus einem Dateinamen nur die Endung ohne Namen ermitteln
  * @param name
  */
 export function getExtension(name: string): string {
     var pos = name.lastIndexOf('.')
-    if (pos == -1)
+    if (name == '..' || pos <= 0)
         return ""
     return name.substring(pos)
 }
