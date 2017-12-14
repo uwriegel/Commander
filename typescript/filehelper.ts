@@ -35,27 +35,27 @@ export function formatDate(date: Date): string {
 }
 
 
- // /**
-    //  * Aus einem Dateinamen nur den Namesteil ohne Endung ermitteln
-    //  * @param name
-    //  */
-    // static getNameOnly(name:string): string {
-    //     var pos = name.lastIndexOf('.');
-    //     if (pos == -1)
-    //         return name
-    //     return name.substring(0, pos)
-    // }
+/**
+ * Aus einem Dateinamen nur den Namesteil ohne Endung ermitteln
+ * @param name
+ */
+export function getNameOnly(name:string): string {
+    var pos = name.lastIndexOf('.');
+    if (pos == -1)
+        return name
+    return name.substring(0, pos)
+}
 
-    // /**
-    //  * Aus einem Dateinamen nur Die Endung ohne Namen ermitteln
-    //  * @param name
-    //  */
-    // static getExtension(name: string): string {
-    //     var pos = name.lastIndexOf('.')
-    //     if (pos == -1)
-    //         return ""
-    //     return name.substring(pos)
-    // }
+/**
+ * Aus einem Dateinamen nur Die Endung ohne Namen ermitteln
+ * @param name
+ */
+export function getExtension(name: string): string {
+    var pos = name.lastIndexOf('.')
+    if (pos == -1)
+        return ""
+    return name.substring(pos)
+}
 
     // /**
     //  * Kombinieren von Pfaden

@@ -1,10 +1,9 @@
 import { PresenterBase }  from './presenterbase.js'
 import { PresenterChooser } from './presenter-chooser.js'
 //import { Item } from '../model/item.js'
-//import { formatDate, formatFileSize, joinPath } from '../filehelper.js'
 import { DirectoryItem } from '../model/directory-item.js'
 import { getShowHidden } from '../global-settings.js'
-import { joinPath } from '../filehelper.js';
+import { joinPath, getExtension, getNameOnly, formatDate, formatFileSize } from '../filehelper.js';
 import { getItems } from '../connection.js';
 
 export abstract class DirectoryPresenter extends PresenterBase {
@@ -91,41 +90,41 @@ export abstract class DirectoryPresenter extends PresenterBase {
     protected createItem(item?: DirectoryItem | undefined): HTMLTableRowElement {
         const tr = document.createElement("tr")
 
-         if (item && item.isHidden)
+        if (item && item.isHidden)
              tr.classList.add("it-hidden")
 
-        //const ext = item ? Path.extname(item.displayName) : ""
+        const ext = item ? getExtension(item.displayName) : ""
 
-        // let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
-        // let img = td.querySelector('img') as HTMLImageElement
-        // img.src = this.getIconUrl(item!)
-        // let span = td.querySelector('span') as HTMLSpanElement
-        // span.innerText = item ? Path.basename(item.displayName, ext) : 'W'
-        // tr.appendChild(td)
+        let td = PresenterBase.itemIconNameTemplate.cloneNode(true) as HTMLTableDataCellElement
+        const img = td.querySelector('img') as HTMLImageElement
+        img.src = this.getIconUrl(item!)
+        let span = td.querySelector('span') as HTMLSpanElement
+        span.innerText = item ? getNameOnly(item.displayName) : 'W'
+        tr.appendChild(td)
         
-        // td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
-        // span = td.querySelector('span') as HTMLSpanElement
-        // span.innerText = item ? ext : 'W'
-        // tr.appendChild(td)
+        td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
+        span = td.querySelector('span') as HTMLSpanElement
+        span.innerText = item ? ext : 'W'
+        tr.appendChild(td)
 
-        // td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
-        // span = td.querySelector('span') as HTMLSpanElement
-        // span.innerText = item ? formatDate(item.date) : 'W'
-        // tr.appendChild(td)
+        td = PresenterBase.itemTemplate.cloneNode(true) as HTMLTableDataCellElement
+        span = td.querySelector('span') as HTMLSpanElement
+        span.innerText = item ? formatDate(item.date) : 'W'
+        tr.appendChild(td)
 
-        // td = PresenterBase.itemRightTemplate.cloneNode(true) as HTMLTableDataCellElement
-        // span = td.querySelector('span') as HTMLSpanElement
-        // span.innerText = item ? formatFileSize(item.size) : 'W'
-        // tr.appendChild(td)
+        td = PresenterBase.itemRightTemplate.cloneNode(true) as HTMLTableDataCellElement
+        span = td.querySelector('span') as HTMLSpanElement
+        span.innerText = item ? formatFileSize(item.size) : 'W'
+        tr.appendChild(td)
         
-        // // if (item)
-        // //     this.extendedUpdateItem(tr, item)
+        // if (item)
+        //     this.extendedUpdateItem(tr, item)
 
-        // tr.tabIndex = 1
-        // if (item && item.isSelected)
-        //     tr.classList.add("selected")
-        // else
-        //     tr.classList.remove("selected")
+        tr.tabIndex = 1
+        if (item && item.isSelected)
+            tr.classList.add("selected")
+        else
+            tr.classList.remove("selected")
 
         return tr
     }
@@ -154,14 +153,14 @@ export abstract class DirectoryPresenter extends PresenterBase {
         })
     }
 
-    // private getIconUrl(item: DirectoryItem) : string {
-    //     if (item && item.isDirectory)
-    //         return "assets/images/folder.png"
-    //     else if (!item)
-    //         return "assets/images/fault.png"
-    //     else
-    //         return this.extendedGetIconUrl(item)
-    // }
+    private getIconUrl(item: DirectoryItem) : string {
+        if (item && item.isDirectory)
+            return "assets/images/folder.png"
+        else if (!item)
+            return "assets/images/fault.png"
+        else
+            return this.extendedGetIconUrl(item)
+    }
 
     private sortItem = (a: DirectoryItem, b: DirectoryItem)=>a.displayName.localeCompare(b.displayName)
 

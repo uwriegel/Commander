@@ -81,7 +81,7 @@ class Viewer
     private readonly video = <HTMLVideoElement>document.getElementById("viewerVideo")
     private readonly frame = <HTMLIFrameElement>document.getElementById("viewerFrame")
     private lastFile: string
-    private timer: NodeJS.Timer
+    private timer: number
 }
 
 export { Viewer }
