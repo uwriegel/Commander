@@ -1,17 +1,25 @@
 
-export class MenuItemControl {
-    constructor(private checker: HTMLSpanElement | undefined){}
+export interface MenuItemSelector {
+    isSelected: ()=>boolean
+    setSelection: (calue: boolean)=>void
+}
 
-    get isChecked() {
-        return this.checker ? !this.checker!.classList.contains("hidden") : false
+export function createMenuItemSelector(checker: HTMLSpanElement | undefined) {
+    function isSelected() {
+        return checker ? !checker!.classList.contains("hidden") : false
     }
 
-    set isChecked(value: boolean) {
-        if (this.checker) {
+    function setSelection(value: boolean) {
+        if (checker) {
             if (value)
-                this.checker!.classList.remove("hidden")
+                checker!.classList.remove("hidden")
             else
-                this.checker!.classList.add("hidden")
+                checker!.classList.add("hidden")
         }
+    }
+
+    return {
+        isSelected: isSelected,
+        setSelection: setSelection
     }
 }

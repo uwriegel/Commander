@@ -1,5 +1,5 @@
 import { Menubar } from "./menubar.js"
-import { MenuItemControl } from "./menuitemcontrol.js"
+import { createMenuItemSelector, MenuItemSelector } from "./menuitemcontrol.js"
 
 export enum MenuItemType {
     MenuItem,
@@ -23,7 +23,7 @@ export interface MenuItem {
     name?: string
     type?: MenuItemType
     shortcut?: Shortcut
-    action?: (menuItemControl: MenuItemControl)=>void
+    action?: (menuItemSelector: MenuItemSelector)=>void
 }
 
 export class Menu {
@@ -57,7 +57,7 @@ export class Menu {
         tr.appendChild(td)
 
         const checker = item.type == MenuItemType.Checkable ? tr.querySelector(".checker") as HTMLSpanElement : undefined
-        const result = new MenuItemControl(checker)
+        const result = createMenuItemSelector(checker)
 
         if (item.type != MenuItemType.Separator) {
             const td2 = document.createElement("td")
@@ -71,7 +71,7 @@ export class Menu {
             tr.dataset["id"] = id
 
             const action = item.type == MenuItemType.Checkable ? () => {
-                result.isChecked = !result.isChecked
+                result.setSelection(!result.isSelected())
                 item.action!(result)  
             } 
             : () => item.action!(result)

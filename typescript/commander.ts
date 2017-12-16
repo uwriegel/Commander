@@ -26,7 +26,7 @@ import { createGrid }  from './grid.js'
 import { createVerticalGrid }  from './vgrid.js'
 import { CommanderView }  from './commanderview.js'
 import { Menubar, MenuItemType }  from './menubar/menubar.js'
-import { MenuItemControl } from './menubar/menuitemcontrol.js'
+import { MenuItemSelector } from './menubar/menuitemcontrol.js'
 import { setShowHidden } from './global-settings.js'
 import { platform, Platform } from './platform.js'
 import { joinPath } from './filehelper.js'
@@ -260,22 +260,22 @@ function initializeMenubar() {
             ctrl: true
         },
         type: MenuItemType.Checkable,
-        action: m => showHidden(m.isChecked)
+        action: m => showHidden(m.isSelected())
     })
     menuView.appendItem({
         type: MenuItemType.Separator
     })
 
-    const changeTheme = (menuItemControl: MenuItemControl) => {
-        menuLightBlue.isChecked = false
-        menuBlue.isChecked = false
-        menuDark.isChecked = false
-        menuItemControl.isChecked = true
-        if (menuItemControl == menuLightBlue)
+    const changeTheme = (menuItemSelector: MenuItemSelector) => {
+        menuLightBlue.setSelection(false)
+        menuBlue.setSelection(false)
+        menuDark.setSelection(false)
+        menuItemSelector.setSelection(true)
+        if (menuItemSelector == menuLightBlue)
             setTheme("lightblue")
-        else if (menuItemControl == menuBlue)
+        else if (menuItemSelector == menuBlue)
             setTheme("blue")
-        else if (menuItemControl == menuDark)
+        else if (menuItemSelector == menuDark)
             setTheme("dark")
     }
 
@@ -289,7 +289,7 @@ function initializeMenubar() {
         type: MenuItemType.Checkable,
         action: m => changeTheme(m)
     })
-    menuBlue.isChecked = true
+    menuBlue.setSelection(true)
     var menuDark = menuView.appendItem({
         name: "_Dunkles Schema",
         type: MenuItemType.Checkable,
