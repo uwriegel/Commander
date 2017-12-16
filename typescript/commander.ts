@@ -22,8 +22,8 @@
 // NachRefresh Selektion erhalten
 // Conflicts: conflict liste in die Focusable anhängen
 // Rename auch von mehreren Dateien
-import { Grid }  from './grid.js'
-import { VerticalGrid }  from './vgrid.js'
+import { createGrid }  from './grid.js'
+import { createVerticalGrid }  from './vgrid.js'
 import { CommanderView }  from './commanderview.js'
 import { Menubar, MenuItemType }  from './menubar/menubar.js'
 import { MenuItemControl } from './menubar/menuitemcontrol.js'
@@ -51,33 +51,32 @@ export function getFocused() {
     return focusedView
 }
 
-(function () {
-    setTheme("blue")
-    initializeMenubar()
-    leftView.otherView = rightView
-    rightView.otherView = leftView
-    leftView.setOnCurrentItemChanged(currentItemChanged)
-    rightView.setOnCurrentItemChanged(currentItemChanged)
+setTheme("blue")
+initializeMenubar()
+leftView.otherView = rightView
+rightView.otherView = leftView
+leftView.setOnCurrentItemChanged(currentItemChanged)
+rightView.setOnCurrentItemChanged(currentItemChanged)
 
-    focusedView = leftView
-    leftView.setOnFocus(() => focusedView = leftView)
-    rightView.setOnFocus(() =>focusedView = rightView)
-    leftView.focus()
+focusedView = leftView
+leftView.setOnFocus(() => focusedView = leftView)
+rightView.setOnFocus(() =>focusedView = rightView)
+leftView.focus()
 
-    const gridElement = document.getElementById("grid") as HTMLDivElement
-    const viewerElement = document.getElementById("viewer")!
-    new Grid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
-        document.getElementById("grip") as HTMLDivElement, focusedView.focus)
-    
-    new VerticalGrid(document.getElementById("vgrid") as HTMLDivElement, gridElement, viewerElement!,
-        document.getElementById("vgrip") as HTMLDivElement, focusedView.focus)
+const gridElement = document.getElementById("grid") as HTMLDivElement
+const viewerElement = document.getElementById("viewer")!
+createGrid(gridElement, document.getElementById("leftView")!, document.getElementById("rightView")!, 
+    document.getElementById("grip") as HTMLDivElement, focusedView.focus)
 
-    viewerElement.onclick = focusedView.focus
+createVerticalGrid(document.getElementById("vgrid") as HTMLDivElement, gridElement, viewerElement!,
+    document.getElementById("vgrip") as HTMLDivElement, focusedView.focus)
 
-    initializeOnKeyDownHandler()
+viewerElement.onclick = focusedView.focus
 
-    window.addEventListener('close', _ => alert("exit()"))
-})()
+initializeOnKeyDownHandler()
+
+window.addEventListener('close', _ => alert("exit()"))
+
 
 // getCommanderView(id: string) {
 //     switch (id)
@@ -306,10 +305,7 @@ function initializeMenubar() {
             key: 122
         },
         type: MenuItemType.Checkable,
-        action: menu => {
-            var gui = require("nw.gui")
-            const mainWindow = gui.Window.get()
-            menu.isChecked ? mainWindow.enterFullscreen() : mainWindow.leaveFullscreen()
+        action: _ => {
         }
     })
 }

@@ -1,50 +1,48 @@
-﻿import { Grid }  from './grid.js'
+﻿import { createGrid }  from './grid.js'
 
-class VerticalGrid
-{
-    /**
-     * Oben beide CommanderViews, unten, wenn eingeschaltet, der Viewer
-     * @param gridContainer der beinhaltende Container
-     * @param topView die obere Ansicht
-     * @param bottomView die untere Ansicht
-     * @param gridSplitter der Teiler
-     * @param onChanged Callback, wird aufgerufen wenn die Aufteilung geändert wurde
-     */
-    constructor (gridContainer: HTMLDivElement, 
-        private topView: HTMLElement, 
-        private bottomView: HTMLElement, 
-        private gridSplitter: HTMLDivElement, onChanged: ()=>void) {
+/**
+ * Oben beide CommanderViews, unten, wenn eingeschaltet, der Viewer
+ * @param gridContainer der beinhaltende Container
+ * @param topView die obere Ansicht
+ * @param bottomView die untere Ansicht
+ * @param gridSplitter der Teiler
+ * @param onChanged Callback, wird aufgerufen wenn die Aufteilung geändert wurde
+ */
+export function createVerticalGrid(
+    gridContainer: HTMLDivElement, 
+    topView: HTMLElement, 
+    bottomView: HTMLElement, 
+    gridSplitter: HTMLDivElement, 
+    onChanged: ()=>void) {
 
-        const grid = new Grid(gridContainer, topView, bottomView, gridSplitter, (firstPercent) =>
-        {
-            this.topPercent = firstPercent
+    let topPercent = localStorage["vgrid"]
+    if (!topPercent)
+        topPercent = 70
+    
+    const grid = createGrid(gridContainer, topView, bottomView, gridSplitter, 
+        (firstPercent) => {
+            topPercent = firstPercent
             localStorage["vgrid"] = firstPercent
             onChanged()
-        }, true)
+        }, 
+        true)
 
-        this.topPercent = localStorage["vgrid"]
-        if (!this.topPercent)
-            this.topPercent = 70
-        grid.setSize(this.topPercent)
-        this.switchBottom(false)
-    }
+    grid.setSize(topPercent)
+    switchBottom(false)
 
     /**
      * Ein/Ausblenden der unteren Ansicht
      */
-    switchBottom(preview: boolean) {
+    function switchBottom(preview: boolean) {
         if (preview) {
-            this.bottomView.classList.remove("hidden")
-            this.gridSplitter.classList.remove("hidden")
-            this.topView.style.height = `calc(${this.topPercent}% - 3px)`
+            bottomView.classList.remove("hidden")
+            gridSplitter.classList.remove("hidden")
+            topView.style.height = `calc(${topPercent}% - 3px)`
         } else {
-            this.bottomView.classList.add("hidden")
-            this.gridSplitter.classList.add("hidden")
-            this.topView.style.height = "100%"
+            bottomView.classList.add("hidden")
+            gridSplitter.classList.add("hidden")
+            topView.style.height = "100%"
         }
     }
-
-    private topPercent: number
 }
-    
-export { VerticalGrid }
+
