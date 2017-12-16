@@ -1,5 +1,5 @@
 import { Menu, Shortcut, ShortCutAction } from "./menu.js"
-import { SubMenuController } from "./submenucontroller.js"
+import { createSubMenuController, SubMenuController } from "./submenucontroller.js"
 import { getFocused } from "../commander.js"
 export { Menu, MenuItemType } from "./menu.js"
 
@@ -283,7 +283,7 @@ function openSubMenu(offsetLeft: number, offsetTop: number, index: number, keybo
     if (subMenuOpened) {
         if (openedSubMenu)
             openedSubMenu.close()
-        openedSubMenu = new SubMenuController(table, actions, keyboardActivated, () => close())
+        openedSubMenu = createSubMenuController(table, actions, keyboardActivated, () => close())
     }
 }
 
