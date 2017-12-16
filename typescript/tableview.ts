@@ -1,4 +1,4 @@
-import { Scrollbar }  from './scrollbar.js'
+import { createScrollbar }  from './scrollbar.js'
 import { ColumnsControl }  from './columnscontrol.js'
 import { Presenter }  from './presenter/presenter.js'
 import { EmptyPresenter }  from './presenter/emptypresenter.js'
@@ -6,6 +6,7 @@ import { View }  from './view.js'
 
 class TableView implements View
 {
+    private scrollbar: any
     /**
      * Listview mit mehreren Spalten
      * 
@@ -19,7 +20,7 @@ class TableView implements View
         this.tableView.tabIndex = 1
         parent.appendChild(this.tableView)
 
-        this.scrollbar = new Scrollbar(parent, this.scroll.bind(this))
+        this.scrollbar = createScrollbar(parent, this.scroll.bind(this))
 
         this.table = document.createElement("table")
         this.table.classList.add('tableViewTable')
@@ -493,7 +494,6 @@ class TableView implements View
     */
     private tableCapacity = -1
     private rowHeight: number
-    private readonly scrollbar: Scrollbar
 
     private presenter: Presenter = new EmptyPresenter()
 

@@ -1,7 +1,7 @@
 import { ColumnsControl }  from './columnscontrol.js'
 import { Presenter }  from './presenter/presenter.js'
 
-interface View
+export interface View
 {
     Presenter: Presenter
     ItemsCleared(): void 
@@ -12,5 +12,3 @@ interface View
     getCurrentItemIndex(): number
     setColumns(value: ColumnsControl): void
 }
-
-export { View }
