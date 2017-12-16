@@ -31,7 +31,7 @@ import { setShowHidden } from './global-settings.js'
 import { platform, Platform } from './platform.js'
 import { joinPath } from './filehelper.js'
 
-import { Viewer }  from './viewer.js'
+import { createViewer }  from './viewer.js'
 import { Item } from './model/item.js'
 
 
@@ -44,7 +44,7 @@ import { Item } from './model/item.js'
 const leftView = createCommanderView("leftView")
 const rightView = createCommanderView("rightView")
 const footer = document.getElementById("footer")
-const viewer = new Viewer()
+const viewer = createViewer()
 
 export function getFocused() {
     return focusedView
