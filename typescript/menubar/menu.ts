@@ -1,4 +1,4 @@
-import { Menubar } from "./menubar.js"
+import { insertAcceleratableItem } from "./menubar.js"
 import { createMenuItemSelector, MenuItemSelector } from "./menuitemcontrol.js"
 
 export enum MenuItemType {
@@ -45,7 +45,7 @@ export class Menu {
         if (item.type != MenuItemType.Separator) {
             tr.tabIndex = ++Menu.latestTabIndex
             tr.classList.add("selectable")
-            Menubar.insertAcceleratableItem(td, item.name!, item.type == MenuItemType.Checkable)
+            insertAcceleratableItem(td, item.name!, item.type == MenuItemType.Checkable)
         }
         else {
             tr.classList.add("separator")

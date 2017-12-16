@@ -25,7 +25,7 @@
 import { createGrid }  from './grid.js'
 import { createVerticalGrid }  from './vgrid.js'
 import { CommanderView }  from './commanderview.js'
-import { Menubar, MenuItemType }  from './menubar/menubar.js'
+import { MenuItemType, insertItem as insertMenuItem }  from './menubar/menubar.js'
 import { MenuItemSelector } from './menubar/menuitemcontrol.js'
 import { setShowHidden } from './global-settings.js'
 import { platform, Platform } from './platform.js'
@@ -45,7 +45,6 @@ const leftView = new CommanderView("leftView")
 const rightView = new CommanderView("rightView")
 const footer = document.getElementById("footer")
 const viewer = new Viewer()
-const menubar = new Menubar("header")
 
 export function getFocused() {
     return focusedView
@@ -162,10 +161,10 @@ function setTheme(theme: string) {
 }
 
 function initializeMenubar() {
-    const menuFile = menubar.insertItem("_Datei")
-    const menuNavigation = menubar.insertItem("_Navigation")
-    const menuSelection = menubar.insertItem("_Selektion")
-    const menuView = menubar.insertItem("_Ansicht")
+    const menuFile = insertMenuItem("_Datei")
+    const menuNavigation = insertMenuItem("_Navigation")
+    const menuSelection = insertMenuItem("_Selektion")
+    const menuView = insertMenuItem("_Ansicht")
     menuFile.appendItem({
         name: "_Umbenennen",
         shortcut: {
