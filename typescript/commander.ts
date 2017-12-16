@@ -24,7 +24,7 @@
 // Rename auch von mehreren Dateien
 import { createGrid }  from './grid.js'
 import { createVerticalGrid }  from './vgrid.js'
-import { CommanderView }  from './commanderview.js'
+import { CommanderView, createCommanderView }  from './commanderview.js'
 import { MenuItemType, insertItem as insertMenuItem }  from './menubar/menubar.js'
 import { MenuItemSelector } from './menubar/menuitemcontrol.js'
 import { setShowHidden } from './global-settings.js'
@@ -41,8 +41,8 @@ import { Item } from './model/item.js'
 //                /    \
 //             Model  View (TableView, ColumnsControl)
 
-const leftView = new CommanderView("leftView")
-const rightView = new CommanderView("rightView")
+const leftView = createCommanderView("leftView")
+const rightView = createCommanderView("rightView")
 const footer = document.getElementById("footer")
 const viewer = new Viewer()
 
@@ -52,8 +52,8 @@ export function getFocused() {
 
 setTheme(localStorage["theme"] || "blue")
 initializeMenubar()
-leftView.otherView = rightView
-rightView.otherView = leftView
+leftView.setOtherView(rightView)
+rightView.setOtherView(leftView)
 leftView.setOnCurrentItemChanged(currentItemChanged)
 rightView.setOnCurrentItemChanged(currentItemChanged)
 
