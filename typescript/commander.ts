@@ -50,7 +50,7 @@ export function getFocused() {
     return focusedView
 }
 
-setTheme("blue")
+setTheme(localStorage["theme"] || "blue")
 initializeMenubar()
 leftView.otherView = rightView
 rightView.otherView = leftView
@@ -130,6 +130,8 @@ function currentItemChanged(item: Item, path: string) {
 }
 
 function setTheme(theme: string) {
+    localStorage["theme"] = theme
+
     let styleSheet = document.getElementById("dark")
     if (styleSheet)
         styleSheet.remove()
@@ -288,12 +290,25 @@ function initializeMenubar() {
         type: MenuItemType.Checkable,
         action: m => changeTheme(m)
     })
-    menuBlue.setSelection(true)
     var menuDark = menuView.appendItem({
         name: "_Dunkles Schema",
         type: MenuItemType.Checkable,
         action: m => changeTheme(m)
     })
+
+    const selectedTheme = localStorage["theme"] || "blue"
+    switch (selectedTheme) {
+        case "blue":
+            menuBlue.setSelection(true)
+            break;
+        case "lightblue":
+            menuLightBlue.setSelection(true)
+            break;
+        case "dark":
+            menuDark.setSelection(true)
+            break;
+    }
+
     menuView.appendItem({
         type: MenuItemType.Separator
     })
