@@ -1,6 +1,6 @@
 import { DirectoryPresenter as DirectoryPresenterBase } from '../../directory-presenter.js'
 import { DirectoryItem } from '../../../model/directory-item.js'
-import { ColumnsControl }  from '../../../columnscontrol.js'
+import { createColumnsControl }  from '../../../columnscontrol.js'
 // const fs = require('fs')
 // const Path = require('path')
 
@@ -10,7 +10,7 @@ export class DirectoryPresenter extends DirectoryPresenterBase {
     }
 
     protected setColumns(): void {
-        this.view.setColumns(new ColumnsControl(["Name", "Erw.", "Datum", "Größe", ""], "6"))
+        this.view.setColumns(createColumnsControl(["Name", "Erw.", "Datum", "Größe", ""], "6"))
     }
 
     protected async getFiles(path: string) {

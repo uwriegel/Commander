@@ -1,5 +1,5 @@
 import { RootPresenter as RootPresenterBase, PresenterBase, RootItem } from '../../rootpresenter.js'
-import { ColumnsControl }  from '../../../columnscontrol.js'
+import { createColumnsControl }  from '../../../columnscontrol.js'
 import {getDrives } from '../../../connection.js'
 
 export class RootPresenter extends RootPresenterBase {
@@ -9,7 +9,7 @@ export class RootPresenter extends RootPresenterBase {
     }
     
     protected setColumns() {
-        this.view.setColumns(new ColumnsControl(["Name", "Beschreibung", "Größe"], "4"))
+        this.view.setColumns(createColumnsControl(["Name", "Beschreibung", "Größe"], "4"))
     }
 
     protected async processFill(selectedPath?: string) {
