@@ -3,7 +3,8 @@ import { Presenter }  from './presenter/presenter.js'
 
 export interface View
 {
-    Presenter: Presenter
+    setPresenter(value: Presenter): void
+    getPresenter(): Presenter
     ItemsCleared(): void 
     itemsChanged(lastCurrentIndex: number): void
     updateItems(): void

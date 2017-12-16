@@ -1,6 +1,4 @@
-﻿import { TableView }  from './tableview.js'
-
-/**
+﻿/**
  * Scrollbar der TableView
  * @param parent Das Element, welches mit einer Scrollbar versehen werden soll
  * @param positionChanged Callback zum Scrollen
@@ -32,6 +30,8 @@ export function createScrollbar(parent: HTMLElement, positionChanged: (position:
     const grip = document.createElement("div")
     grip.classList.add("scrollbarGrip")
     scrollbar.appendChild(grip)
+
+    let setFocus: ()=>void
 
     parent.appendChild(scrollbar)
 
@@ -111,8 +111,8 @@ export function createScrollbar(parent: HTMLElement, positionChanged: (position:
         clearInterval(interval)
     }
 
-    function initialize(tableViewToSet: TableView) {
-        tableView = tableViewToSet
+    function initialize(setFocusToSet: ()=>void) {
+        setFocus = setFocusToSet
     }
 
     function itemsChanged(itemsCount: number, tableCapacity: number, newPosition?: number) {
@@ -156,7 +156,7 @@ export function createScrollbar(parent: HTMLElement, positionChanged: (position:
         clearTimeout(timer)
         clearInterval(interval)
         gripping = false
-        tableView.focus()
+        setFocus()
     }
 
     function mouseUp() {
@@ -255,7 +255,7 @@ export function createScrollbar(parent: HTMLElement, positionChanged: (position:
     var steps: number
     var itemsCountAbsolute: number
     var itemsCountVisible: number
-    var tableView: TableView
+//    var tableView: TableView
 
     return {
         initialize: initialize,

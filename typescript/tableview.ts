@@ -2,512 +2,481 @@ import { createScrollbar }  from './scrollbar.js'
 import { ColumnsControl }  from './columnscontrol.js'
 import { Presenter }  from './presenter/presenter.js'
 import { EmptyPresenter }  from './presenter/emptypresenter.js'
-import { View }  from './view.js'
 
-class TableView implements View
-{
-    private scrollbar: any
+/**
+ * Listview mit mehreren Spalten
+ * 
+ * @param parent Das Elternelement, das die Tableview beinhaltet
+ */
+export function createTableView(parent: HTMLElement) {
+    const tableView = document.createElement("div")
+
+    let columnsControl: ColumnsControl
+    let itemsCount = 0
     /**
-     * Listview mit mehreren Spalten
-     * 
-     * @param parent Das Elternelement, das die Tableview beinhaltet
-     */
-    constructor(parent: HTMLElement) {
-        this.id = 'tableView-' + TableView.tableViewId++
-        this.tableView = document.createElement("div")
-        this.tableView.classList.add('tableView')
-        this.tableView.id = this.id
-        this.tableView.tabIndex = 1
-        parent.appendChild(this.tableView)
+    * Index des aktuellen Eintrags in der Liste der Einträge (items)
+    */
+    let currentItemIndex = 0
+    let startPosition = 0
+    /**
+    * Die Anzahl der Einträge, die dieses TableView in der momentanen Größe tatsächlich auf dem Bildschirm anzeigen kann
+    */
+    let tableCapacity = -1
+    let rowHeight: number
 
-        this.scrollbar = createScrollbar(parent, this.scroll.bind(this))
+    let presenter: Presenter = new EmptyPresenter()
 
-        this.table = document.createElement("table")
-        this.table.classList.add('tableViewTable')
-        this.tableView.appendChild(this.table)
+    let onCurrentItemChanged: (itemIndex: number) => void
+    let onToggleSelection: (itemIndex: number) => void
+    let onDragCallback: () => void
+    let onSelectedCallback: (itemIndex: number, openWith: boolean, showProperties: boolean)=>void
+    let onFocus: ()=>void
 
-        this.tableView.addEventListener("focusin", () => {
-            if (this.onFocus)
-                this.onFocus()
-            this.focus()
-        })
+    tableView.classList.add('tableView')
+    tableView.tabIndex = 1
+    parent.appendChild(tableView)
 
-        this.tableView.onkeydown = e => {
-            switch (e.which) {
-                case 13: // Return
-                    if (this.onSelectedCallback)
-                        this.onSelectedCallback(this.currentItemIndex, e.ctrlKey, e.altKey)
-                    break;
-                case 33:
-                    this.pageUp()
-                    break
-                case 34:
-                    this.pageDown()
-                    break
-                case 35: // End
-                    if (!e.shiftKey)
-                        this.end()
-                    break
-                case 36: //Pos1
-                    if (!e.shiftKey)
-                        this.pos1()
-                    break
-                case 38:
-                    this.upOne()
-                    break
-                case 40:
-                    this.downOne()
-                    break
-                default:
-                    return // exit this handler for other keys
-            }
-            e.preventDefault() // prevent the default action (scroll / move caret)
+    const scrollbar = createScrollbar(parent, scroll)
+
+    const table = document.createElement("table")
+    table.classList.add('tableViewTable')
+    tableView.appendChild(table)
+
+    tableView.addEventListener("focusin", () => {
+        if (onFocus)
+            onFocus()
+        focus()
+    })
+
+    tableView.onkeydown = e => {
+        switch (e.which) {
+            case 13: // Return
+                if (onSelectedCallback)
+                    onSelectedCallback(currentItemIndex, e.ctrlKey, e.altKey)
+                break;
+            case 33:
+                pageUp()
+                break
+            case 34:
+                pageDown()
+                break
+            case 35: // End
+                if (!e.shiftKey)
+                    end()
+                break
+            case 36: //Pos1
+                if (!e.shiftKey)
+                    pos1()
+                break
+            case 38:
+                upOne()
+                break
+            case 40:
+                downOne()
+                break
+            default:
+                return // exit this handler for other keys
         }
-
-        this.recentHeight = this.tableView.clientHeight
-        this.thead = document.createElement("thead")
-        this.table.appendChild(this.thead)
-
-        this.tbody = document.createElement("tbody")
-        this.table.appendChild(this.tbody)
-
-        this.tbody.addEventListener('mousewheel', evt =>
-        {
-            var wheelEvent = <WheelEvent>evt
-            var delta = wheelEvent.wheelDelta / Math.abs(wheelEvent.wheelDelta) * 3
-            this.scroll(this.startPosition - delta)
-        });
-
-        this.tbody.ondblclick = () => 
-        {
-            if (this.onSelectedCallback)
-                this.onSelectedCallback(this.currentItemIndex, false, false)
-        }
-
-        {
-            let tr = document.createElement("tr")
-            this.thead.appendChild(tr)
-        }
-
-        this.scrollbar.initialize(this)
-
-        this.tbody.onmousedown = evt =>
-        {
-            var tr = <HTMLTableRowElement>(<HTMLElement>evt.target).closest("tr")
-            this.currentItemIndex = Array.from(this.tbody.querySelectorAll("tr")).findIndex(n => n == tr) + this.startPosition
-
-            if (this.onCurrentItemChanged)
-                this.onCurrentItemChanged(this.currentItemIndex)
-
-            if (!this.hasFocus())
-                tr.focus()
-            else if (this.onToggleSelection)
-                this.onToggleSelection(this.currentItemIndex)
-        }
-
-        window.addEventListener('resize', () => this.resizeChecking())        
+        e.preventDefault() // prevent the default action (scroll / move caret)
     }
 
-    set Presenter(presenter: Presenter) {
-        this.presenter = presenter
-        this.presenter.registerView(this)
+    let recentHeight = tableView.clientHeight
+    const thead = document.createElement("thead")
+    table.appendChild(thead)
+
+    const tbody = document.createElement("tbody")
+    table.appendChild(tbody)
+
+    tbody.addEventListener('mousewheel', evt => {
+        var wheelEvent = <WheelEvent>evt
+        var delta = wheelEvent.wheelDelta / Math.abs(wheelEvent.wheelDelta) * 3
+        scroll(startPosition - delta)
+    })
+
+    tbody.ondblclick = () => {
+        if (onSelectedCallback)
+            onSelectedCallback(currentItemIndex, false, false)
     }
 
-    get Presenter() {
-        return this.presenter
+    {
+        let tr = document.createElement("tr")
+        thead.appendChild(tr)
+    }
+
+    scrollbar.initialize(focus)
+
+    tbody.onmousedown = evt =>{
+        const tr = <HTMLTableRowElement>(<HTMLElement>evt.target).closest("tr")
+        currentItemIndex = Array.from(tbody.querySelectorAll("tr")).findIndex(n => n == tr) + startPosition
+
+        if (onCurrentItemChanged)
+            onCurrentItemChanged(currentItemIndex)
+
+        if (!hasFocus())
+            tr.focus()
+        else if (onToggleSelection)
+            onToggleSelection(currentItemIndex)
+    }
+
+    window.addEventListener('resize', () => resizeChecking())        
+
+    function setPresenter(presenterToSet: Presenter) {
+        presenter = presenterToSet
+        presenter.registerView(view)
+    }
+
+    function getPresenter() {
+        return presenter
     }
     
-    getCurrentItemIndex() {
-        return this.currentItemIndex
+    function getCurrentItemIndex() {
+        return currentItemIndex
     }
 
-    ItemsCleared() {
-        this.currentItemIndex = 0
-        this.clearItems()
+    function ItemsCleared() {
+        currentItemIndex = 0
+        clearItems()
     }
 
-    itemsChanged(lastCurrentIndex: number) {
-        this.ItemsCleared()
-        this.currentItemIndex = lastCurrentIndex
-        this.displayItems(0)
+    function itemsChanged(lastCurrentIndex: number) {
+        ItemsCleared()
+        currentItemIndex = lastCurrentIndex
+        displayItems(0)
 
-        if (this.tableView == document.activeElement)
-            this.focus()
-        this.scrollIntoView()
-        if (this.onCurrentItemChanged)
-            this.onCurrentItemChanged(this.currentItemIndex)
+        if (tableView == document.activeElement)
+            focus()
+        scrollIntoView()
+        if (onCurrentItemChanged)
+            onCurrentItemChanged(currentItemIndex)
     }
 
-    updateItems() {
-        var trs = this.tbody.querySelectorAll('tr')
-        for (var i = 0; i < trs.length; i++) 
-            this.presenter.updateItem(trs[i], i + this.startPosition)
+    function updateItems() {
+        const trs = tbody.querySelectorAll('tr')
+        for (let i = 0; i < trs.length; i++) 
+            presenter.updateItem(trs[i], i + startPosition)
     }
 
-    updateSelections() {
-        var trs = this.tbody.querySelectorAll('tr')
-        for (var i = 0; i < trs.length; i++) 
-            this.presenter.updateSelection(trs[i], i + this.startPosition)
+    function updateSelections() {
+        const trs = tbody.querySelectorAll('tr')
+        for (let i = 0; i < trs.length; i++) 
+            presenter.updateSelection(trs[i], i + startPosition)
     }
 
-    updateSelection(itemIndex: number) {
-        const item = this.tbody.querySelectorAll('tr')[itemIndex - this.startPosition]
-        this.presenter.updateSelection(item, itemIndex)
+    function updateSelection(itemIndex: number) {
+        const item = tbody.querySelectorAll('tr')[itemIndex - startPosition]
+        presenter.updateSelection(item, itemIndex)
     }
     
-    setOnSelectedCallback(callback: (itemIndex: number, openWith: boolean, showProperties: boolean) => void) {
-        this.onSelectedCallback = callback
+    function setOnSelectedCallback(callback: (itemIndex: number, openWith: boolean, showProperties: boolean) => void) {
+        onSelectedCallback = callback
     }
 
-    setOnCurrentItemChanged(callback: (itemIndex: number) => void) {
-        this.onCurrentItemChanged = callback
+    function setOnCurrentItemChanged(callback: (itemIndex: number) => void) {
+        onCurrentItemChanged = callback
     }
 
-    setOnFocus(callback: ()=>void)
-    {
-        this.onFocus = callback
+    function setOnFocus(callback: ()=>void) {
+        onFocus = callback
     }
 
-    setOnToggleSelection(callback: (itemIndex: number) => void)
-    {
-        this.onToggleSelection = callback
+    function setOnToggleSelection(callback: (itemIndex: number) => void) {
+        onToggleSelection = callback
     }
 
-    setOnDragCallback(callback: () => void)
-    {
-        this.onDragCallback = callback
+    function setOnDragCallback(callback: () => void) {
+        onDragCallback = callback
     }
 
     /**
      * Setzen des Focuses
      * @returns true, wenn der Fokus gesetzt werden konnte
      */
-    focus(): boolean
-    {
-        if (this.onCurrentItemChanged)
-            this.onCurrentItemChanged(this.currentItemIndex)
+    function focus(): boolean {
+        if (onCurrentItemChanged)
+            onCurrentItemChanged(currentItemIndex)
 
-        var index = this.currentItemIndex - this.startPosition
-        if (index >= 0 && index < this.tableCapacity)
-        {
-            var trs = this.tbody.querySelectorAll('tr')
-            if (index < trs.length)
-            {
+        const index = currentItemIndex - startPosition
+        if (index >= 0 && index < tableCapacity) {
+            const trs = tbody.querySelectorAll('tr')
+            if (index < trs.length) {
                 trs[index].focus()
                 return true
             }
         }
-        this.tableView.focus()
+        tableView.focus()
         return false
     }
 
-    pos1()
-    {
-        this.clearItems()
-        this.displayItems(0)
-        this.currentItemIndex = 0
-        this.tbody.querySelectorAll('tr')[0].focus()
-        if (this.onCurrentItemChanged)
-            this.onCurrentItemChanged(this.currentItemIndex)
+    function pos1() {
+        clearItems()
+        displayItems(0)
+        currentItemIndex = 0
+        tbody.querySelectorAll('tr')[0].focus()
+        if (onCurrentItemChanged)
+            onCurrentItemChanged(currentItemIndex)
     }
 
-    downOne()
-    {
-        if (this.currentItemIndex == this.itemsCount - 1)
+    function downOne() {
+        if (currentItemIndex == itemsCount - 1)
             return false
 
-        this.scrollIntoView()
+        scrollIntoView()
 
-        this.currentItemIndex++
-        if (this.currentItemIndex - this.startPosition >= this.tableCapacity)
-        {
-            this.tbody.querySelector('tr')!.remove()
-            this.startPosition += 1
-            this.scrollbar.setPosition(this.startPosition)
-            if (this.currentItemIndex < this.itemsCount - 1)
-            {
-                var node = this.insertItem(this.currentItemIndex + 1)
-                this.tbody.appendChild(node)
+        currentItemIndex++
+        if (currentItemIndex - startPosition >= tableCapacity) {
+            tbody.querySelector('tr')!.remove()
+            startPosition += 1
+            scrollbar.setPosition(startPosition)
+            if (currentItemIndex < itemsCount - 1) {
+                const node = insertItem(currentItemIndex + 1)
+                tbody.appendChild(node)
             }
         }
 
-        this.tbody.querySelectorAll('tr')[this.currentItemIndex - this.startPosition].focus()
-        if (this.onCurrentItemChanged)
-            this.onCurrentItemChanged(this.currentItemIndex)
+        tbody.querySelectorAll('tr')[currentItemIndex - startPosition].focus()
+        if (onCurrentItemChanged)
+            onCurrentItemChanged(currentItemIndex)
         return true
     }
 
-
-    isMouseWithin(x: number, y: number): boolean
-    {
-        var rect = this.tableView.getBoundingClientRect()
+    function isMouseWithin(x: number, y: number): boolean {
+        const rect = tableView.getBoundingClientRect()
         rect.left, rect.top, rect.width, rect.bottom
 
         //console.log(`${x} ${y} ${rectObject.left} ${rectObject.top} ${rectObject.width} ${rectObject.bottom}`)
 
-        var result = (x > rect.left && x < (rect.left + rect.width)
+        const result = (x > rect.left && x < (rect.left + rect.width)
             && y > rect.top && y < (rect.top + rect.bottom))
         if (result)
-            this.tableView.classList.add("highlight")
+            tableView.classList.add("highlight")
         else
-            this.tableView.classList.remove("highlight")
+            tableView.classList.remove("highlight")
         return result
     }
 
-    dragLeave()
-    {
-        this.tableView.classList.remove("highlight")
+    function dragLeave() {
+        tableView.classList.remove("highlight")
     }
 
-    setColumns(value: ColumnsControl)
-    {
-        this.columnsControl = value
+    function setColumns(value: ColumnsControl) {
+        columnsControl = value
 
-        const theadrow = this.thead.querySelector('tr')!
+        const theadrow = thead.querySelector('tr')!
         theadrow.innerHTML = ""
-        this.columnsControl.initializeEachColumn(item =>
-        {
-            var th = document.createElement("th")
+        columnsControl.initializeEachColumn(item => {
+            const th = document.createElement("th")
             th.innerHTML = item
             theadrow.appendChild(th)
         })
 
-        this.columnsControl.initialize(this.tableView, this)
+        columnsControl.initialize(tableView, view)
     }
 
-    private initializeRowHeight()
-    {
-        var node = this.presenter.insertMeasureItem()
-        this.tbody.appendChild(node)
-        var td = this.tbody.querySelector('td')!
-        this.rowHeight = td.clientHeight
-        this.clearItems()
+    function initializeRowHeight() {
+        const node = presenter.insertMeasureItem()
+        tbody.appendChild(node)
+        const td = tbody.querySelector('td')!
+        rowHeight = td.clientHeight
+        clearItems()
     }
 
-    private calculateTableHeight() {
-        if (this.rowHeight) {
-            this.tableCapacity = Math.floor((this.tableView.offsetHeight - this.thead.offsetHeight) / this.rowHeight)
-            if (this.tableCapacity < 0)
-                this.tableCapacity = 0
+    function calculateTableHeight() {
+        if (rowHeight) {
+            tableCapacity = Math.floor((tableView.offsetHeight - thead.offsetHeight) / rowHeight)
+            if (tableCapacity < 0)
+                tableCapacity = 0
         }
         else
-            this.tableCapacity = -1
-        this.scrollbar.itemsChanged(0, this.tableCapacity)
+            tableCapacity = -1
+        scrollbar.itemsChanged(0, tableCapacity)
     }
 
-    private insertItem(index: number): HTMLTableRowElement
-    {
-        return this.presenter.insertItem(index, this.onDragCallback)
+    function insertItem(index: number): HTMLTableRowElement {
+        return presenter.insertItem(index, onDragCallback)
     }
 
-    private clearItems()
-    {
-        var hasFocus = this.hasFocus() 
-        this.tbody.innerHTML = ''
-        if (hasFocus)
-            this.tableView.focus()
+    function hasFocus() {
+        return tableView.contains(document.activeElement)
     }
 
-    private hasFocus()
-    {
-        return this.tableView.contains(document.activeElement)
+    function clearItems() {
+        const focus = hasFocus() 
+        tbody.innerHTML = ''
+        if (focus)
+            tableView.focus()
     }
 
-    private displayItems(start: number)
-    {
-        this.startPosition = start
-        this.itemsCount = this.presenter.getItemsCount()
+    function displayItems(start: number) {
+        startPosition = start
+        itemsCount = presenter.getItemsCount()
 
-        if (this.tableCapacity == -1) {
-            this.initializeRowHeight()
-            this.calculateTableHeight()
+        if (tableCapacity == -1) {
+            initializeRowHeight()
+            calculateTableHeight()
         }
 
-        const end = Math.min(this.tableCapacity + 1 + this.startPosition, this.itemsCount)
-        for (let i = this.startPosition; i < end; i++) {
-            var node = this.insertItem(i)
-            this.tbody.appendChild(node)
+        const end = Math.min(tableCapacity + 1 + startPosition, itemsCount)
+        for (let i = startPosition; i < end; i++) {
+            var node = insertItem(i)
+            tbody.appendChild(node)
         }
 
-        this.scrollbar.itemsChanged(this.itemsCount, this.tableCapacity, this.startPosition)
+        scrollbar.itemsChanged(itemsCount, tableCapacity, startPosition)
     }
 
-    private upOne()
-    {
-        if (this.currentItemIndex == 0)
+    function upOne() {
+        if (currentItemIndex == 0)
             return
-        this.scrollIntoView()
+        scrollIntoView()
 
-        this.currentItemIndex--
-        if (this.currentItemIndex - this.startPosition < 0)
-        {
-            if (this.currentItemIndex + this.tableCapacity < this.itemsCount - 1)
-            {
-                var trs = this.tbody.querySelectorAll('tr')
+        currentItemIndex--
+        if (currentItemIndex - startPosition < 0) {
+            if (currentItemIndex + tableCapacity < itemsCount - 1) {
+                const trs = tbody.querySelectorAll('tr')
                 trs[trs.length - 1].remove()
             }
-            if (this.currentItemIndex >= 0)
-            {
-                this.startPosition -= 1
-                this.scrollbar.setPosition(this.startPosition)
-                var node = this.insertItem(this.currentItemIndex)
-                this.tbody.insertBefore(node, this.tbody.firstChild)
+            if (currentItemIndex >= 0) {
+                startPosition -= 1
+                scrollbar.setPosition(startPosition)
+                const node = insertItem(currentItemIndex)
+                tbody.insertBefore(node, tbody.firstChild)
             }
         }
 
-        this.tbody.querySelectorAll('tr')[this.currentItemIndex - this.startPosition].focus()
-        if (this.onCurrentItemChanged)
-            this.onCurrentItemChanged(this.currentItemIndex)
+        tbody.querySelectorAll('tr')[currentItemIndex - startPosition].focus()
+        if (onCurrentItemChanged)
+            onCurrentItemChanged(currentItemIndex)
     }
 
 
-    private pageUp()
-    {
-        if (this.currentItemIndex == 0)
+    function pageUp() {
+        if (currentItemIndex == 0)
             return
 
-        this.scrollIntoView()
+        scrollIntoView()
 
-        if (this.currentItemIndex - this.startPosition > 0)
-            this.currentItemIndex = this.startPosition
-        else
-        {
-            this.currentItemIndex -= this.tableCapacity
-            if (this.currentItemIndex < 0)
-                this.currentItemIndex = 0
-            this.clearItems()
-            this.displayItems(this.currentItemIndex)
+        if (currentItemIndex - startPosition > 0)
+            currentItemIndex = startPosition
+        else {
+            currentItemIndex -= tableCapacity
+            if (currentItemIndex < 0)
+                currentItemIndex = 0
+            clearItems()
+            displayItems(currentItemIndex)
         }
 
-        this.tbody.querySelectorAll('tr')[this.currentItemIndex - this.startPosition].focus()
-        if (this.onCurrentItemChanged)
-            this.onCurrentItemChanged(this.currentItemIndex)
+        tbody.querySelectorAll('tr')[currentItemIndex - startPosition].focus()
+        if (onCurrentItemChanged)
+            onCurrentItemChanged(currentItemIndex)
     }
 
-    private pageDown()
-    {
-        if (this.currentItemIndex == this.itemsCount - 1)
+    function pageDown() {
+        if (currentItemIndex == itemsCount - 1)
             return
 
-        this.scrollIntoView()
+        scrollIntoView()
 
-        if (this.currentItemIndex - this.startPosition < this.tableCapacity - 1)
-        {
-            this.currentItemIndex = Math.min(this.tableCapacity, this.itemsCount) - 1 + this.startPosition
-            if (this.currentItemIndex >= this.itemsCount)
-                this.currentItemIndex = this.itemsCount - 1
+        if (currentItemIndex - startPosition < tableCapacity - 1) {
+            currentItemIndex = Math.min(tableCapacity, itemsCount) - 1 + startPosition
+            if (currentItemIndex >= itemsCount)
+                currentItemIndex = itemsCount - 1
         }
-        else
-        {
-            this.currentItemIndex += this.tableCapacity
-            if (this.currentItemIndex >= this.itemsCount)
-                this.currentItemIndex = this.itemsCount - 1
-            this.clearItems()
-            this.displayItems(this.currentItemIndex - this.tableCapacity + 1)
+        else {
+            currentItemIndex += tableCapacity
+            if (currentItemIndex >= itemsCount)
+                currentItemIndex = itemsCount - 1
+            clearItems()
+            displayItems(currentItemIndex - tableCapacity + 1)
         }
 
-        this.tbody.querySelectorAll('tr')[this.currentItemIndex - this.startPosition].focus()
-        if (this.onCurrentItemChanged)
-            this.onCurrentItemChanged(this.currentItemIndex)
+        tbody.querySelectorAll('tr')[currentItemIndex - startPosition].focus()
+        if (onCurrentItemChanged)
+            onCurrentItemChanged(currentItemIndex)
     }
     
-    private end()
-    {
-        this.clearItems()
-        this.currentItemIndex = this.itemsCount - 1
-        var startPos = this.currentItemIndex - this.tableCapacity + 1
+    function end() {
+        clearItems()
+        currentItemIndex = itemsCount - 1
+        let startPos = currentItemIndex - tableCapacity + 1
         if (startPos < 0)
             startPos = 0
-        this.displayItems(startPos)
-        this.tbody.querySelectorAll('tr')[this.currentItemIndex - this.startPosition].focus()
-        if (this.onCurrentItemChanged)
-            this.onCurrentItemChanged(this.currentItemIndex)
+        displayItems(startPos)
+        tbody.querySelectorAll('tr')[currentItemIndex - startPosition].focus()
+        if (onCurrentItemChanged)
+            onCurrentItemChanged(currentItemIndex)
     }
 
-    private scrollIntoView()
-    {
-        var selector = this.currentItemIndex - this.startPosition;
+    function scrollIntoView() {
+        const selector = currentItemIndex - startPosition;
         if (selector < 0)
-            this.scroll(this.currentItemIndex)
-        else if (selector >= this.tableCapacity)
-        {
-            this.scroll(this.currentItemIndex)
-            this.scroll(this.currentItemIndex - this.tableCapacity + 1)
+            scroll(currentItemIndex)
+        else if (selector >= tableCapacity) {
+            scroll(currentItemIndex)
+            scroll(currentItemIndex - tableCapacity + 1)
         }
     }
 
-    private scroll(position: number)
-    {
-        if (this.itemsCount < this.tableCapacity)
+    function scroll(position: number) {
+        if (itemsCount < tableCapacity)
             return
         if (position < 0)
             position = 0
-        else if (position > this.itemsCount - this.tableCapacity)
-            position = this.itemsCount - this.tableCapacity
-        this.startPosition = position
-        this.clearItems()
-        this.displayItems(this.startPosition)
+        else if (position > itemsCount - tableCapacity)
+            position = itemsCount - tableCapacity
+        startPosition = position
+        clearItems()
+        displayItems(startPosition)
 
-        var selector = this.currentItemIndex - this.startPosition
-        if (selector >= 0 && selector < this.tableCapacity)
-            this.tbody.querySelectorAll('tr')[this.currentItemIndex - this.startPosition].focus()
+        const selector = currentItemIndex - startPosition
+        if (selector >= 0 && selector < tableCapacity)
+            tbody.querySelectorAll('tr')[currentItemIndex - startPosition].focus()
         else
-            this.tableView.focus()
+            tableView.focus()
     }
 
-    private resizeChecking() {
-        if (this.tableView.clientHeight != this.recentHeight) {
-            var isFocused = this.tableView.contains(document.activeElement)
-            this.recentHeight = this.tableView.clientHeight
-            var tableCapacityOld = this.tableCapacity
-            this.calculateTableHeight()
-            var itemsCountOld = Math.min(tableCapacityOld + 1, this.itemsCount - this.startPosition)
-            var itemsCountNew = Math.min(this.tableCapacity + 1, this.itemsCount - this.startPosition)
+    function resizeChecking() {
+        if (tableView.clientHeight != recentHeight) {
+            const isFocused = tableView.contains(document.activeElement)
+            recentHeight = tableView.clientHeight
+            const tableCapacityOld = tableCapacity
+            calculateTableHeight()
+            const itemsCountOld = Math.min(tableCapacityOld + 1, itemsCount - startPosition)
+            const itemsCountNew = Math.min(tableCapacity + 1, itemsCount - startPosition)
             if (itemsCountNew < itemsCountOld) {
                 for (i = itemsCountOld - 1; i >= itemsCountNew; i--)
-                    this.tbody.children[i].remove()
+                    tbody.children[i].remove()
             }
             else {
                 for (var i = itemsCountOld; i < itemsCountNew; i++) {
-                    var node = this.insertItem(i + this.startPosition)
-                    this.tbody.appendChild(node)
+                    const node = insertItem(i + startPosition)
+                    tbody.appendChild(node)
                 }
             }
             if (isFocused)
-                this.focus()
+                focus()
         }
     }
 
-    private static tableViewId = 1000;
-
-    private readonly id: string
-    private columnsControl: ColumnsControl
-    private readonly tableView: HTMLDivElement
-    private itemsCount = 0
-    /**
-    * Index des aktuellen Eintrags in der Liste der Einträge (items)
-    */
-    private currentItemIndex = 0
-    private startPosition = 0
-    /**
-    * Die Anzahl der Einträge, die dieses TableView in der momentanen Größe tatsächlich auf dem Bildschirm anzeigen kann
-    */
-    private tableCapacity = -1
-    private rowHeight: number
-
-    private presenter: Presenter = new EmptyPresenter()
-
-    private readonly table: HTMLTableElement
-    private recentHeight: number
-
-    private thead: HTMLTableSectionElement
-    private tbody: HTMLTableSectionElement
-
-    private onCurrentItemChanged: (itemIndex: number) => void
-    private onToggleSelection: (itemIndex: number) => void
-    private onDragCallback: () => void
-    private onSelectedCallback: (itemIndex: number, openWith: boolean, showProperties: boolean)=>void
-    private onFocus: ()=>void
+    const view = {
+        setPresenter: setPresenter,
+        getPresenter: getPresenter,
+        getCurrentItemIndex: getCurrentItemIndex,
+        ItemsCleared: ItemsCleared,
+        itemsChanged: itemsChanged,
+        updateItems: updateItems,
+        updateSelections: updateSelections,
+        updateSelection: updateSelection,
+        setOnSelectedCallback: setOnSelectedCallback,
+        setOnCurrentItemChanged: setOnCurrentItemChanged,
+        setOnFocus: setOnFocus,
+        setOnToggleSelection: setOnToggleSelection,
+        setOnDragCallback: setOnDragCallback,
+        focus: focus,
+        pos1: pos1,
+        downOne: downOne,
+        isMouseWithin: isMouseWithin,
+        dragLeave: dragLeave,
+        setColumns: setColumns
+    }
+    return view
 }
-
-export { TableView }

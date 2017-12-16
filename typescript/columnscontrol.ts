@@ -59,7 +59,7 @@ export function createColumnsControl(columns: string[], id: string) {
                 const column = <HTMLElement>evt.target
                 if (!grippingReady) {
                     const ascending = column.classList.contains("sortAscending")
-                    if (view.Presenter.sort(columnIndex, !ascending)) {
+                    if (view.getPresenter().sort(columnIndex, !ascending)) {
                         for (let i = 0; i < ths.length; i++) {
                             ths[i].classList.remove("sortAscending")
                             ths[i].classList.remove("sortDescending")

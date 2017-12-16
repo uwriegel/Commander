@@ -15,15 +15,15 @@ export class PresenterChooser
                 return currentPresenter
             else {
                 const presenter = createRoot()
-                view.Presenter = presenter
+                view.setPresenter(presenter)
                 return presenter
             }
         }
         else {
             if (currentPresenter.isDefault)
                 return currentPresenter
-            view.Presenter = createDirectory()
-            return view.Presenter
+            view.setPresenter(createDirectory()!)
+            return view.getPresenter()
         }
     }
 }

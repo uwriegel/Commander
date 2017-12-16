@@ -1,8 +1,8 @@
-import { TableView }  from './tableview.js'
 import { PresenterChooser } from './presenter/presenter-chooser.js'
 import { EmptyPresenter } from './presenter/emptypresenter.js'
 import { Item } from './model/item.js'
 import { Presenter } from './presenter/presenter.js';
+import { createTableView } from './tableview.js';
 
 
 export interface CommanderView {
@@ -42,8 +42,8 @@ export function createCommanderView(id: string) {
 
     let presenter: Presenter = new EmptyPresenter()
 
-    const tableView = new TableView(commanderTable)
-    tableView.Presenter = presenter
+    const tableView = createTableView(commanderTable)
+    tableView.setPresenter(presenter)
         
     /**
     * Das input-Element, welches die Beschränkungszeichen darstellt</var>
