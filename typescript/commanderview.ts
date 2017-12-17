@@ -1,6 +1,7 @@
 import { createTableView } from './tableview.js';
 import { Item } from './item.js'
 import { createItems } from './items.js'
+import { Presenter, checkPresenter } from './presenter.js'
 
 export interface CommanderView {
     getOtherView: ()=>CommanderView,
@@ -114,7 +115,8 @@ export function createCommanderView(id: string) {
     
     commanderDirectory.onfocus = () => commanderDirectory.select()
 
-    changePath(localStorage[id] || "root") // TODO: "root"
+    // TODO:
+    //changePath(localStorage[id] || "root") // TODO: "root"
 
     function getOtherView() {
         return otherView;
@@ -153,8 +155,9 @@ export function createCommanderView(id: string) {
 
     async function changePath(path: string, selectPath?: string) {
         closeRestrict(true)
-        // TODO: 
-        //presenter = PresenterChooser.get(path, presenter, tableView)     
+        presenter = checkPresenter(path, presenter, tableView)
+     
+        // TODO:        
         //await presenter.fill(path, selectPath)
         localStorage[id] = path
         commanderDirectory.value = path
@@ -200,6 +203,8 @@ export function createCommanderView(id: string) {
             tableView.focus()
         }
     }
+
+    var presenter: Presenter
 
     return {
         /**

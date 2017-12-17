@@ -1,21 +1,3 @@
-// import { RootPresenter as RootPresenterBase, PresenterBase, RootItem } from '../../rootpresenter.js'
-// import { createColumnsControl } from '../../../columnscontrol.js'
-// import { formatFileSize } from '../../../filehelper.js'
-// import { getDrives } from '../../../connection.js'
-
-// export interface LinuxRootItem extends RootItem {
-//     driveType: string
-// }
-
-// export class RootPresenter extends RootPresenterBase {
-
-//     constructor() {
-//         super()
-//     }
-
-//     protected setColumns() {
-//         this.view.setColumns(createColumnsControl(["Name", "Beschreibung", "Mount", "Größe", "Typ"], "4"))
-//     }
 
 //     protected processFill(selectedPath?: string) {
 //         return new Promise<void>(async resolve => {
