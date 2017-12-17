@@ -1,8 +1,6 @@
-import { RootItem } from "./model/root-item.js"
-import { DirectoryItem } from "./model/directory-item.js"
 
-export const getDrives = () => invoke<RootItem[]>("getDrives")
-export const getItems = (path: string) => invoke<DirectoryItem[]>("getItems", {path: path})
+// export const getDrives = () => invoke<RootItem[]>("getDrives")
+// export const getItems = (path: string) => invoke<DirectoryItem[]>("getItems", {path: path})
 export const exit = () => invoke("exit")
 
 function invoke<T>(method: string, param?: any) {

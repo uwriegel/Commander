@@ -1,9 +1,6 @@
-import { PresenterChooser } from './presenter/presenter-chooser.js'
-import { EmptyPresenter } from './presenter/emptypresenter.js'
-import { Item } from './model/item.js'
-import { Presenter } from './presenter/presenter.js';
 import { createTableView } from './tableview.js';
-
+import { Item } from './item.js'
+import { createItems } from './items.js'
 
 export interface CommanderView {
     getOtherView: ()=>CommanderView,
@@ -40,10 +37,8 @@ export function createCommanderView(id: string) {
     commanderTable.classList.add('commanderTable')
     parent.appendChild(commanderTable)
 
-    let presenter: Presenter = new EmptyPresenter()
-
     const tableView = createTableView(commanderTable)
-    tableView.setPresenter(presenter)
+    let items = createItems(tableView)
         
     /**
     * Das input-Element, welches die Beschränkungszeichen darstellt</var>
@@ -81,22 +76,22 @@ export function createCommanderView(id: string) {
                 break
             case 32: // _
                 if (restrictor.value == "")
-                    presenter.toggleSelection(tableView.getCurrentItemIndex())
+                    items.toggleSelection(tableView.getCurrentItemIndex())
                 break
             case 35: // End
                 if (e.shiftKey) {
-                    presenter.selectAll(true, tableView.getCurrentItemIndex())
+                    items.selectAll(true, tableView.getCurrentItemIndex())
                     e.preventDefault()
                 }
                 break
             case 36: // Pos1
                 if (e.shiftKey) {
-                    presenter.selectAll(false, tableView.getCurrentItemIndex() + 1)
+                    items.selectAll(false, tableView.getCurrentItemIndex() + 1)
                     e.preventDefault();
                 }
                 break;
             case 45: // Einfg
-                presenter.toggleSelection(tableView.getCurrentItemIndex())
+                items.toggleSelection(tableView.getCurrentItemIndex())
                 tableView.downOne()
                 break
             case 82: // r
@@ -106,20 +101,20 @@ export function createCommanderView(id: string) {
                 }
                 break
             case 107: // NUM +
-                presenter.selectAll(true)
+                items.selectAll(true)
                 break
             case 109: // NUM -
-                presenter.selectAll(false)
+                items.selectAll(false)
                 break
             case 120: // F9
-                otherView.changePath(presenter.getPath())
+                otherView.changePath(items.getPath())
                 break
         }
     }
     
     commanderDirectory.onfocus = () => commanderDirectory.select()
 
-    changePath(localStorage[id] || PresenterChooser.rootSelector)
+    changePath(localStorage[id] || "root") // TODO: "root"
 
     function getOtherView() {
         return otherView;
@@ -130,7 +125,7 @@ export function createCommanderView(id: string) {
     }
 
     function refresh() {
-        changePath(presenter.getPath())
+        changePath(items.getPath())
     }
 
     function focus() {
@@ -151,22 +146,22 @@ export function createCommanderView(id: string) {
 
     function setOnCurrentItemChanged(callback: (item: Item, path: string) => void) {
         tableView.setOnCurrentItemChanged(itemIndex => {
-            const item = presenter.getItem(itemIndex)
-            callback(item, presenter.getPath())
+            const item = items.getItem(itemIndex)
+            callback(item, items.getPath())
         })
     }
 
     async function changePath(path: string, selectPath?: string) {
         closeRestrict(true)
-        presenter = PresenterChooser.get(path, presenter, tableView)     
-        await presenter.fill(path, selectPath)
+        // TODO: 
+        //presenter = PresenterChooser.get(path, presenter, tableView)     
+        //await presenter.fill(path, selectPath)
         localStorage[id] = path
         commanderDirectory.value = path
     }
 
-    //private processItem(itemIndex: number, openWith: boolean, showProperties: boolean, fromOtherView?: boolean) {
-    function processItem(itemIndex: number, _: boolean, __: boolean, ___?: boolean) {
-        const { selectedPath, currentPath } = presenter.getSelectedPath(itemIndex)
+    function processItem(itemIndex: number, openWith: boolean, showProperties: boolean, fromOtherView?: boolean) {
+        const { selectedPath, currentPath } = items.getSelectedPath(itemIndex)
         changePath(selectedPath, currentPath)
         tableView.focus()
     }
@@ -175,7 +170,7 @@ export function createCommanderView(id: string) {
         let restrict = String.fromCharCode(e.charCode).toLowerCase()
         restrict = restrictor.value + restrict
 
-        if (presenter.restrict(restrict))
+        if (items.restrict(restrict))
             checkRestrict(restrict)
         if (!tableView.focus())
             tableView.pos1()
@@ -190,7 +185,7 @@ export function createCommanderView(id: string) {
     function closeRestrict(noRefresh?: boolean) {
         restrictor.classList.add('restrictorHide')
         restrictor.value = ""
-        presenter.closeRestrict(noRefresh!)
+        items.closeRestrict(noRefresh!)
         tableView.focus()
     }
 
@@ -200,7 +195,7 @@ export function createCommanderView(id: string) {
         if (restrict.length == 0)
             closeRestrict()
         else {
-            if (presenter.restrict(restrict, true))
+            if (items.restrict(restrict, true))
                 checkRestrict(restrict)
             tableView.focus()
         }

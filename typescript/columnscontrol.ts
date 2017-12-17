@@ -42,7 +42,7 @@ export function createColumnsControl(columns: string[], id: string) {
      */
     function initialize(tableViewToSet: HTMLElement, viewToSet: View) {
         tableView = tableViewToSet
-        view = viewToSet
+        //view = viewToSet
         const ths = tableView.getElementsByTagName("th")
 
         const json = localStorage[id]
@@ -58,15 +58,16 @@ export function createColumnsControl(columns: string[], id: string) {
             th.onmousedown = evt => {
                 const column = <HTMLElement>evt.target
                 if (!grippingReady) {
-                    const ascending = column.classList.contains("sortAscending")
-                    if (view.getPresenter().sort(columnIndex, !ascending)) {
-                        for (let i = 0; i < ths.length; i++) {
-                            ths[i].classList.remove("sortAscending")
-                            ths[i].classList.remove("sortDescending")
-                        }
+                    // TODO:                    
+                    //const ascending = column.classList.contains("sortAscending")
+                    // if (view.getPresenter().sort(columnIndex, !ascending)) {
+                    //     for (let i = 0; i < ths.length; i++) {
+                    //         ths[i].classList.remove("sortAscending")
+                    //         ths[i].classList.remove("sortDescending")
+                    //     }
                             
-                        column.classList.add(ascending ? "sortDescending" : "sortAscending")
-                    }
+                    //     column.classList.add(ascending ? "sortDescending" : "sortAscending")
+                    // }
                 }
                 else
                     beginColumnDragging(evt.pageX, column)
@@ -178,7 +179,7 @@ export function createColumnsControl(columns: string[], id: string) {
 
     var previous = false
     var tableView: HTMLElement
-    var view: View
+    //var view: View
 
     return {
         initialize: initialize,

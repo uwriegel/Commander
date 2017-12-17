@@ -30,16 +30,8 @@ import { MenuItemSelector } from './menubar/menuitemcontrol.js'
 import { setShowHidden } from './global-settings.js'
 import { platform, Platform } from './platform.js'
 import { joinPath } from './filehelper.js'
-
 import { createViewer }  from './viewer.js'
-import { Item } from './model/item.js'
-
-
-//               Presenter (Steuert die Daten, passt die Views an, sorgt für die Sortierung und Ansichtsfilterung)
-//                  /\
-//                 /  \
-//                /    \
-//             Model  View (TableView, ColumnsControl)
+import { Item } from './item.js'
 
 const leftView = createCommanderView("leftView")
 const rightView = createCommanderView("rightView")

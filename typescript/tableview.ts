@@ -1,7 +1,6 @@
 import { createScrollbar }  from './scrollbar.js'
 import { ColumnsControl }  from './columnscontrol.js'
-import { Presenter }  from './presenter/presenter.js'
-import { EmptyPresenter }  from './presenter/emptypresenter.js'
+import { Items, createItems } from './items.js'
 
 /**
  * Listview mit mehreren Spalten
@@ -24,11 +23,8 @@ export function createTableView(parent: HTMLElement) {
     let tableCapacity = -1
     let rowHeight: number
 
-    let presenter: Presenter = new EmptyPresenter()
-
     let onCurrentItemChanged: (itemIndex: number) => void
     let onToggleSelection: (itemIndex: number) => void
-    let onDragCallback: () => void
     let onSelectedCallback: (itemIndex: number, openWith: boolean, showProperties: boolean)=>void
     let onFocus: ()=>void
 
@@ -120,15 +116,12 @@ export function createTableView(parent: HTMLElement) {
 
     window.addEventListener('resize', () => resizeChecking())        
 
-    function setPresenter(presenterToSet: Presenter) {
-        presenter = presenterToSet
-        presenter.registerView(view)
+    function setItems(itemsToSet: Items) {
+        items = itemsToSet
+        // TODO:
+        //items.registerView(view)
     }
 
-    function getPresenter() {
-        return presenter
-    }
-    
     function getCurrentItemIndex() {
         return currentItemIndex
     }
@@ -153,18 +146,18 @@ export function createTableView(parent: HTMLElement) {
     function updateItems() {
         const trs = tbody.querySelectorAll('tr')
         for (let i = 0; i < trs.length; i++) 
-            presenter.updateItem(trs[i], i + startPosition)
+            items.updateItem(trs[i], i + startPosition)
     }
 
     function updateSelections() {
         const trs = tbody.querySelectorAll('tr')
         for (let i = 0; i < trs.length; i++) 
-            presenter.updateSelection(trs[i], i + startPosition)
+            items.updateSelection(trs[i], i + startPosition)
     }
 
     function updateSelection(itemIndex: number) {
         const item = tbody.querySelectorAll('tr')[itemIndex - startPosition]
-        presenter.updateSelection(item, itemIndex)
+        items.updateSelection(item, itemIndex)
     }
     
     function setOnSelectedCallback(callback: (itemIndex: number, openWith: boolean, showProperties: boolean) => void) {
@@ -181,10 +174,6 @@ export function createTableView(parent: HTMLElement) {
 
     function setOnToggleSelection(callback: (itemIndex: number) => void) {
         onToggleSelection = callback
-    }
-
-    function setOnDragCallback(callback: () => void) {
-        onDragCallback = callback
     }
 
     /**
@@ -273,7 +262,7 @@ export function createTableView(parent: HTMLElement) {
     }
 
     function initializeRowHeight() {
-        const node = presenter.insertMeasureItem()
+        const node = items.insertMeasureItem()
         tbody.appendChild(node)
         const td = tbody.querySelector('td')!
         rowHeight = td.clientHeight
@@ -292,7 +281,7 @@ export function createTableView(parent: HTMLElement) {
     }
 
     function insertItem(index: number): HTMLTableRowElement {
-        return presenter.insertItem(index, onDragCallback)
+        return items.insertItem(index)
     }
 
     function hasFocus() {
@@ -308,7 +297,7 @@ export function createTableView(parent: HTMLElement) {
 
     function displayItems(start: number) {
         startPosition = start
-        itemsCount = presenter.getItemsCount()
+        itemsCount = items.getItemsCount()
 
         if (tableCapacity == -1) {
             initializeRowHeight()
@@ -458,8 +447,7 @@ export function createTableView(parent: HTMLElement) {
     }
 
     const view = {
-        setPresenter: setPresenter,
-        getPresenter: getPresenter,
+        setItems: setItems,
         getCurrentItemIndex: getCurrentItemIndex,
         ItemsCleared: ItemsCleared,
         itemsChanged: itemsChanged,
@@ -470,7 +458,6 @@ export function createTableView(parent: HTMLElement) {
         setOnCurrentItemChanged: setOnCurrentItemChanged,
         setOnFocus: setOnFocus,
         setOnToggleSelection: setOnToggleSelection,
-        setOnDragCallback: setOnDragCallback,
         focus: focus,
         pos1: pos1,
         downOne: downOne,
@@ -478,5 +465,8 @@ export function createTableView(parent: HTMLElement) {
         dragLeave: dragLeave,
         setColumns: setColumns
     }
+
+    let items = createItems(view)
+
     return view
 }
