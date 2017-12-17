@@ -38,7 +38,7 @@ export function createCommanderView(id: string) {
     commanderTable.classList.add('commanderTable')
     parent.appendChild(commanderTable)
 
-    const tableView = createTableView(commanderTable)
+    const tableView = createTableView(commanderTable, id)
     let items = createItems(tableView)
         
     /**

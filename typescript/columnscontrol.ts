@@ -11,7 +11,8 @@ export interface ColumnsControl {
  * @param columns columns Die Spalten der zugehörigen TableView
  * @param id Die Id dieses ColumnControls
  */
-export function createColumnsControl(columns: string[], id: string) {
+export const createColumnsControl = (viewId:string) => (columnId: string) => (columns: string[]) => {
+    const id = `${viewId}-${columnId}`
     const itemTemplate = document.createElement("tr")
     itemTemplate.style.userSelect = "none"
     const td = document.createElement("td")

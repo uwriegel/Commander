@@ -7,7 +7,7 @@ import { Items, createItems } from './items.js'
  * 
  * @param parent Das Elternelement, das die Tableview beinhaltet
  */
-export function createTableView(parent: HTMLElement) {
+export function createTableView(parent: HTMLElement, id: string) {
     const tableView = document.createElement("div")
 
     let columnsControl: ColumnsControl
@@ -115,6 +115,8 @@ export function createTableView(parent: HTMLElement) {
     }
 
     window.addEventListener('resize', () => resizeChecking())        
+
+    const getId = () => id
 
     function setItems(itemsToSet: Items) {
         items = itemsToSet
@@ -447,6 +449,7 @@ export function createTableView(parent: HTMLElement) {
     }
 
     const view = {
+        getId: getId,
         setItems: setItems,
         getCurrentItemIndex: getCurrentItemIndex,
         ItemsCleared: ItemsCleared,

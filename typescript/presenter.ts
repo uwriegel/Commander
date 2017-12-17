@@ -1,6 +1,6 @@
 import { platform, Platform } from './platform.js'
 import { View } from './view.js'
-import { createColumnsControl } from './columnscontrol.js'
+import { createColumnsControl, ColumnsControl } from './columnscontrol.js'
 
 export interface Presenter {
     getType: ()=>Type
@@ -16,17 +16,20 @@ export function checkPresenter(path: string, currentPresenter: Presenter | undef
     if (currentPresenter && currentPresenter.getType() == newType)
         return currentPresenter
     
+    let columnsControl: ColumnsControl
     switch (newType) {
         case Type.Root: 
+            const createRootColumns = createColumnsControl(view.getId())(Type.Root.toString())
             if (platform == Platform.Linux)
-            // TODO: Abspeicherm der Spalten nach view left right und type Falsch: "4"
-                view.setColumns(createColumnsControl(["Name", "Beschreibung", "Mount", "Größe", "Typ"], "4"))
+                columnsControl = createRootColumns(["Name", "Beschreibung", "Mount", "Größe", "Typ"])
             else
-                view.setColumns(createColumnsControl(["Name", "Beschreibung", "Größe"], "4"))
+                columnsControl = createRootColumns(["Name", "Beschreibung", "Größe"])
+            view.setColumns(columnsControl)
             break
         case Type.Directory: 
             break
     }
+    
 
     function whichType(path: string) {
         if (path == "root") 
