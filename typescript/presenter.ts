@@ -1,6 +1,6 @@
 import { platform, Platform } from './platform.js'
 import { View } from './view.js'
-import { createColumnsControl, ColumnsControl } from './columnscontrol.js'
+import { createColumnsControl } from './columnscontrol.js'
 
 export interface Presenter {
     getType: ()=>Type
@@ -11,25 +11,20 @@ enum Type {
     Directory
 }
 
+const Columns = [ 
+    platform == Platform.Linux ? ["Name", "Beschreibung", "Mount", "Größe", "Typ"] : ["Name", "Beschreibung", "Größe"],
+    ["Name"]
+]
+
 export function checkPresenter(path: string, currentPresenter: Presenter | undefined, view: View) {
     const newType = whichType(path)
     if (currentPresenter && currentPresenter.getType() == newType)
         return currentPresenter
+    const type = newType
     
-    let columnsControl: ColumnsControl
-    switch (newType) {
-        case Type.Root: 
-            const createRootColumns = createColumnsControl(view.getId())(Type.Root.toString())
-            if (platform == Platform.Linux)
-                columnsControl = createRootColumns(["Name", "Beschreibung", "Mount", "Größe", "Typ"])
-            else
-                columnsControl = createRootColumns(["Name", "Beschreibung", "Größe"])
-            view.setColumns(columnsControl)
-            break
-        case Type.Directory: 
-            break
-    }
-    
+    const createColumns = createColumnsControl(view.getId())(type.toString())
+    const columnsControl = createColumns(Columns[type])
+    view.setColumns(columnsControl)
 
     function whichType(path: string) {
         if (path == "root") 
@@ -40,8 +35,6 @@ export function checkPresenter(path: string, currentPresenter: Presenter | undef
 
     const getType = () => type
 
-    var type = Type.Root
-    
     return {
         getType: getType
     }
