@@ -10,8 +10,8 @@ export interface Items {
     updateSelection: (itemElement: HTMLTableRowElement, index: number)=>void
     insertMeasureItem: ()=>HTMLTableRowElement
     insertItem: (index: number)=>HTMLTableRowElement
+    
     getItemsCount: ()=>number
-
     getSelectedPath: (index: number)=>{ selectedPath: string, currentPath: string }, 
     restrict: (prefix: string, back?: boolean)=>boolean
     closeRestrict: (noRefresh: boolean)=>void,
