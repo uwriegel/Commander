@@ -4,13 +4,6 @@ import { View } from './view.js'
 export interface Items {
     getPath: ()=>string,
     getItem: (index: number)=>Item,
-
-    // TODO: hier nicht!
-    updateItem: (tr: HTMLTableRowElement, index: number)=>void
-    updateSelection: (itemElement: HTMLTableRowElement, index: number)=>void
-    insertMeasureItem: ()=>HTMLTableRowElement
-    insertItem: (index: number)=>HTMLTableRowElement
-    
     getItemsCount: ()=>number
     getSelectedPath: (index: number)=>{ selectedPath: string, currentPath: string }, 
     restrict: (prefix: string, back?: boolean)=>boolean
@@ -19,9 +12,20 @@ export interface Items {
     toggleSelection: (itemIndex: number)=>void
 }
 
-export function createItems(view: View) {
+export function createEmpty(view: View) {
+    createItems(view, "")
+}
+
+export async function createItems(view: View, path: string, selectPath?: string) {
+
+    if (path) {
+
+    }
+    else
+        items = []
+
     function getPath() {
-        return ""
+        return path
     }
 
     function getItem(index: number) {
@@ -35,29 +39,8 @@ export function createItems(view: View) {
         }
     }
 
-    function updateItem(_: HTMLTableRowElement, __: number) { }
-
-    // TODO: hier nicht!
-    function updateSelection(itemElement: HTMLTableRowElement, index: number) {
-        const item = items[index]
-        if (item.isSelected)
-            itemElement.classList.add("selected")
-        else
-            itemElement.classList.remove("selected")
-    }
-
-    function insertMeasureItem(): HTMLTableRowElement {
-        //return createItem(undefined)
-        return undefined
-    }
-
     function getItemsCount(): number {
         return items.length
-    }
-
-    function insertItem(index: number): HTMLTableRowElement {
-        //return createItem(items[index])
-        return undefined
     }
 
     /**
@@ -125,10 +108,6 @@ export function createItems(view: View) {
     return { 
         getPath: getPath,
         getItem: getItem,
-        updateItem: updateItem,
-        updateSelection: updateSelection,
-        insertMeasureItem: insertMeasureItem,
-        insertItem: insertItem,
         getItemsCount: getItemsCount,
         getSelectedPath: getSelectedPath,
         restrict: restrict,

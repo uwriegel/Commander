@@ -1,6 +1,7 @@
 import { createScrollbar }  from './scrollbar.js'
 import { ColumnsControl }  from './columnscontrol.js'
-import { Items, createItems } from './items.js'
+import { Items, createEmpty } from './items.js'
+import { Presenter } from './presenter';
 
 /**
  * Listview mit mehreren Spalten
@@ -9,6 +10,8 @@ import { Items, createItems } from './items.js'
  */
 export function createTableView(parent: HTMLElement, id: string) {
     const tableView = document.createElement("div")
+
+    let presenter: Presenter
 
     let columnsControl: ColumnsControl
     let itemsCount = 0
@@ -124,6 +127,10 @@ export function createTableView(parent: HTMLElement, id: string) {
         //items.registerView(view)
     }
 
+    function setPresenter(presenterToSet: Presenter) {
+        presenter = presenterToSet
+    }
+
     function getCurrentItemIndex() {
         return currentItemIndex
     }
@@ -148,18 +155,18 @@ export function createTableView(parent: HTMLElement, id: string) {
     function updateItems() {
         const trs = tbody.querySelectorAll('tr')
         for (let i = 0; i < trs.length; i++) 
-            items.updateItem(trs[i], i + startPosition)
+            presenter.updateItem(trs[i], items.getItem(i + startPosition))
     }
 
     function updateSelections() {
         const trs = tbody.querySelectorAll('tr')
         for (let i = 0; i < trs.length; i++) 
-            items.updateSelection(trs[i], i + startPosition)
+            presenter.updateSelection(trs[i], items.getItem(i + startPosition))
     }
 
     function updateSelection(itemIndex: number) {
         const item = tbody.querySelectorAll('tr')[itemIndex - startPosition]
-        items.updateSelection(item, itemIndex)
+        presenter.updateSelection(item, items.getItem(itemIndex))
     }
     
     function setOnSelectedCallback(callback: (itemIndex: number, openWith: boolean, showProperties: boolean) => void) {
@@ -264,7 +271,7 @@ export function createTableView(parent: HTMLElement, id: string) {
     }
 
     function initializeRowHeight() {
-        const node = items.insertMeasureItem()
+        const node = presenter.insertMeasureItem()
         tbody.appendChild(node)
         const td = tbody.querySelector('td')!
         rowHeight = td.clientHeight
@@ -283,7 +290,7 @@ export function createTableView(parent: HTMLElement, id: string) {
     }
 
     function insertItem(index: number): HTMLTableRowElement {
-        return items.insertItem(index)
+        return presenter.insertItem(items.getItem(index))
     }
 
     function hasFocus() {
@@ -450,6 +457,7 @@ export function createTableView(parent: HTMLElement, id: string) {
 
     const view = {
         getId: getId,
+        setPresenter: setPresenter,
         setItems: setItems,
         getCurrentItemIndex: getCurrentItemIndex,
         ItemsCleared: ItemsCleared,
@@ -469,7 +477,7 @@ export function createTableView(parent: HTMLElement, id: string) {
         setColumns: setColumns
     }
 
-    let items = createItems(view)
-
+    var items = createEmpty(view)
+    
     return view
 }

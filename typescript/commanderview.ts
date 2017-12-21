@@ -1,6 +1,6 @@
 import { createTableView } from './tableview.js';
 import { Item } from './item.js'
-import { createItems } from './items.js'
+import { createItems, Items } from './items.js'
 import { Presenter, checkPresenter } from './presenter.js'
 
 export interface CommanderView {
@@ -39,7 +39,8 @@ export function createCommanderView(id: string) {
     parent.appendChild(commanderTable)
 
     const tableView = createTableView(commanderTable, id)
-    let items = createItems(tableView)
+    // TODO:
+    let items: Items // = createItems(tableView)
         
     /**
     * Das input-Element, welches die Beschränkungszeichen darstellt</var>
@@ -156,9 +157,8 @@ export function createCommanderView(id: string) {
     async function changePath(path: string, selectPath?: string) {
         closeRestrict(true)
         presenter = checkPresenter(path, presenter, tableView)
-     
-        // TODO:        
-        //await presenter.fill(path, selectPath)
+        tableView.setPresenter(presenter)
+        items = await createItems(tableView, path, selectPath)
         localStorage[id] = path
         commanderDirectory.value = path
     }
