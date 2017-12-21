@@ -12,18 +12,20 @@ export interface Items {
     toggleSelection: (itemIndex: number)=>void
 }
 
-export function createEmpty(view: View) {
-    createItems(view, "")
+export function createEmptyItems() {
+    return {
+        getPath: ()=>"",
+        getItem: (index: number)=>{ throw "no items"},
+        getItemsCount: ()=>0,
+        getSelectedPath: (index: number)=>{ return { selectedPath: "", currentPath: "" }},
+        restrict: (prefix: string, back?: boolean)=>false,
+        closeRestrict: (noRefresh: boolean)=>{},
+        selectAll: (select: boolean, startIndex?: number)=>{},
+        toggleSelection: (itemIndex: number)=>{}
+    }
 }
 
 export async function createItems(view: View, path: string, selectPath?: string) {
-
-    if (path) {
-
-    }
-    else
-        items = []
-
     function getPath() {
         return path
     }

@@ -1,6 +1,5 @@
 import { createTableView } from './tableview.js';
 import { Item } from './item.js'
-import { createItems, Items } from './items.js'
 import { Presenter, checkPresenter } from './presenter.js'
 
 export interface CommanderView {
@@ -39,8 +38,6 @@ export function createCommanderView(id: string) {
     parent.appendChild(commanderTable)
 
     const tableView = createTableView(commanderTable, id)
-    // TODO:
-    let items: Items // = createItems(tableView)
         
     /**
     * Das input-Element, welches die Beschränkungszeichen darstellt</var>
@@ -78,22 +75,22 @@ export function createCommanderView(id: string) {
                 break
             case 32: // _
                 if (restrictor.value == "")
-                    items.toggleSelection(tableView.getCurrentItemIndex())
+                    tableView.getItems().toggleSelection(tableView.getCurrentItemIndex())
                 break
             case 35: // End
                 if (e.shiftKey) {
-                    items.selectAll(true, tableView.getCurrentItemIndex())
+                    tableView.getItems().selectAll(true, tableView.getCurrentItemIndex())
                     e.preventDefault()
                 }
                 break
             case 36: // Pos1
                 if (e.shiftKey) {
-                    items.selectAll(false, tableView.getCurrentItemIndex() + 1)
+                    tableView.getItems().selectAll(false, tableView.getCurrentItemIndex() + 1)
                     e.preventDefault();
                 }
                 break;
             case 45: // Einfg
-                items.toggleSelection(tableView.getCurrentItemIndex())
+            tableView.getItems().toggleSelection(tableView.getCurrentItemIndex())
                 tableView.downOne()
                 break
             case 82: // r
@@ -103,13 +100,13 @@ export function createCommanderView(id: string) {
                 }
                 break
             case 107: // NUM +
-                items.selectAll(true)
+                tableView.getItems().selectAll(true)
                 break
             case 109: // NUM -
-                items.selectAll(false)
+                tableView.getItems().selectAll(false)
                 break
             case 120: // F9
-                otherView.changePath(items.getPath())
+                otherView.changePath(tableView.getItems().getPath())
                 break
         }
     }
@@ -128,7 +125,7 @@ export function createCommanderView(id: string) {
     }
 
     function refresh() {
-        changePath(items.getPath())
+        changePath(tableView.getItems().getPath())
     }
 
     function focus() {
@@ -149,8 +146,11 @@ export function createCommanderView(id: string) {
 
     function setOnCurrentItemChanged(callback: (item: Item, path: string) => void) {
         tableView.setOnCurrentItemChanged(itemIndex => {
-            const item = items.getItem(itemIndex)
-            callback(item, items.getPath())
+            const items = tableView.getItems()
+            if (items.getItemsCount()) {
+                const item = items.getItem(itemIndex)
+                callback(item, items.getPath())
+            }
         })
     }
 
@@ -158,13 +158,13 @@ export function createCommanderView(id: string) {
         closeRestrict(true)
         presenter = checkPresenter(path, presenter, tableView)
         tableView.setPresenter(presenter)
-        items = await createItems(tableView, path, selectPath)
+//        items = await createItems(tableView, path, selectPath)
         localStorage[id] = path
         commanderDirectory.value = path
     }
 
     function processItem(itemIndex: number, openWith: boolean, showProperties: boolean, fromOtherView?: boolean) {
-        const { selectedPath, currentPath } = items.getSelectedPath(itemIndex)
+        const { selectedPath, currentPath } = tableView.getItems().getSelectedPath(itemIndex)
         changePath(selectedPath, currentPath)
         tableView.focus()
     }
@@ -173,7 +173,7 @@ export function createCommanderView(id: string) {
         let restrict = String.fromCharCode(e.charCode).toLowerCase()
         restrict = restrictor.value + restrict
 
-        if (items.restrict(restrict))
+        if (tableView.getItems().restrict(restrict))
             checkRestrict(restrict)
         if (!tableView.focus())
             tableView.pos1()
@@ -188,7 +188,7 @@ export function createCommanderView(id: string) {
     function closeRestrict(noRefresh?: boolean) {
         restrictor.classList.add('restrictorHide')
         restrictor.value = ""
-        items.closeRestrict(noRefresh!)
+        tableView.getItems().closeRestrict(noRefresh!)
         tableView.focus()
     }
 
@@ -198,7 +198,7 @@ export function createCommanderView(id: string) {
         if (restrict.length == 0)
             closeRestrict()
         else {
-            if (items.restrict(restrict, true))
+            if (tableView.getItems().restrict(restrict, true))
                 checkRestrict(restrict)
             tableView.focus()
         }

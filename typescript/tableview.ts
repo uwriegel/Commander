@@ -1,6 +1,6 @@
 import { createScrollbar }  from './scrollbar.js'
 import { ColumnsControl }  from './columnscontrol.js'
-import { Items, createEmpty } from './items.js'
+import { Items, createEmptyItems } from './items.js'
 import { Presenter } from './presenter';
 
 /**
@@ -13,8 +13,9 @@ export function createTableView(parent: HTMLElement, id: string) {
 
     let presenter: Presenter
 
+    let items: Items = createEmptyItems() 
+
     let columnsControl: ColumnsControl
-    let itemsCount = 0
     /**
     * Index des aktuellen Eintrags in der Liste der Einträge (items)
     */
@@ -127,6 +128,8 @@ export function createTableView(parent: HTMLElement, id: string) {
         //items.registerView(view)
     }
 
+    function getItems() { return items}
+
     function setPresenter(presenterToSet: Presenter) {
         presenter = presenterToSet
     }
@@ -215,7 +218,7 @@ export function createTableView(parent: HTMLElement, id: string) {
     }
 
     function downOne() {
-        if (currentItemIndex == itemsCount - 1)
+        if (currentItemIndex == items.getItemsCount() - 1)
             return false
 
         scrollIntoView()
@@ -225,7 +228,7 @@ export function createTableView(parent: HTMLElement, id: string) {
             tbody.querySelector('tr')!.remove()
             startPosition += 1
             scrollbar.setPosition(startPosition)
-            if (currentItemIndex < itemsCount - 1) {
+            if (currentItemIndex < items.getItemsCount() - 1) {
                 const node = insertItem(currentItemIndex + 1)
                 tbody.appendChild(node)
             }
@@ -306,20 +309,19 @@ export function createTableView(parent: HTMLElement, id: string) {
 
     function displayItems(start: number) {
         startPosition = start
-        itemsCount = items.getItemsCount()
 
         if (tableCapacity == -1) {
             initializeRowHeight()
             calculateTableHeight()
         }
 
-        const end = Math.min(tableCapacity + 1 + startPosition, itemsCount)
+        const end = Math.min(tableCapacity + 1 + startPosition, items.getItemsCount())
         for (let i = startPosition; i < end; i++) {
             var node = insertItem(i)
             tbody.appendChild(node)
         }
 
-        scrollbar.itemsChanged(itemsCount, tableCapacity, startPosition)
+        scrollbar.itemsChanged(items.getItemsCount(), tableCapacity, startPosition)
     }
 
     function upOne() {
@@ -329,7 +331,7 @@ export function createTableView(parent: HTMLElement, id: string) {
 
         currentItemIndex--
         if (currentItemIndex - startPosition < 0) {
-            if (currentItemIndex + tableCapacity < itemsCount - 1) {
+            if (currentItemIndex + tableCapacity < items.getItemsCount() - 1) {
                 const trs = tbody.querySelectorAll('tr')
                 trs[trs.length - 1].remove()
             }
@@ -345,7 +347,6 @@ export function createTableView(parent: HTMLElement, id: string) {
         if (onCurrentItemChanged)
             onCurrentItemChanged(currentItemIndex)
     }
-
 
     function pageUp() {
         if (currentItemIndex == 0)
@@ -369,20 +370,20 @@ export function createTableView(parent: HTMLElement, id: string) {
     }
 
     function pageDown() {
-        if (currentItemIndex == itemsCount - 1)
+        if (currentItemIndex == items.getItemsCount() - 1)
             return
 
         scrollIntoView()
 
         if (currentItemIndex - startPosition < tableCapacity - 1) {
-            currentItemIndex = Math.min(tableCapacity, itemsCount) - 1 + startPosition
-            if (currentItemIndex >= itemsCount)
-                currentItemIndex = itemsCount - 1
+            currentItemIndex = Math.min(tableCapacity, items.getItemsCount()) - 1 + startPosition
+            if (currentItemIndex >= items.getItemsCount())
+                currentItemIndex = items.getItemsCount() - 1
         }
         else {
             currentItemIndex += tableCapacity
-            if (currentItemIndex >= itemsCount)
-                currentItemIndex = itemsCount - 1
+            if (currentItemIndex >= items.getItemsCount())
+                currentItemIndex = items.getItemsCount() - 1
             clearItems()
             displayItems(currentItemIndex - tableCapacity + 1)
         }
@@ -394,7 +395,7 @@ export function createTableView(parent: HTMLElement, id: string) {
     
     function end() {
         clearItems()
-        currentItemIndex = itemsCount - 1
+        currentItemIndex = items.getItemsCount() - 1
         let startPos = currentItemIndex - tableCapacity + 1
         if (startPos < 0)
             startPos = 0
@@ -415,12 +416,12 @@ export function createTableView(parent: HTMLElement, id: string) {
     }
 
     function scroll(position: number) {
-        if (itemsCount < tableCapacity)
+        if (items.getItemsCount() < tableCapacity)
             return
         if (position < 0)
             position = 0
-        else if (position > itemsCount - tableCapacity)
-            position = itemsCount - tableCapacity
+        else if (position > items.getItemsCount() - tableCapacity)
+            position = items.getItemsCount() - tableCapacity
         startPosition = position
         clearItems()
         displayItems(startPosition)
@@ -438,8 +439,8 @@ export function createTableView(parent: HTMLElement, id: string) {
             recentHeight = tableView.clientHeight
             const tableCapacityOld = tableCapacity
             calculateTableHeight()
-            const itemsCountOld = Math.min(tableCapacityOld + 1, itemsCount - startPosition)
-            const itemsCountNew = Math.min(tableCapacity + 1, itemsCount - startPosition)
+            const itemsCountOld = Math.min(tableCapacityOld + 1, items.getItemsCount() - startPosition)
+            const itemsCountNew = Math.min(tableCapacity + 1, items.getItemsCount() - startPosition)
             if (itemsCountNew < itemsCountOld) {
                 for (i = itemsCountOld - 1; i >= itemsCountNew; i--)
                     tbody.children[i].remove()
@@ -459,6 +460,7 @@ export function createTableView(parent: HTMLElement, id: string) {
         getId: getId,
         setPresenter: setPresenter,
         setItems: setItems,
+        getItems: getItems,
         getCurrentItemIndex: getCurrentItemIndex,
         ItemsCleared: ItemsCleared,
         itemsChanged: itemsChanged,
@@ -477,7 +479,5 @@ export function createTableView(parent: HTMLElement, id: string) {
         setColumns: setColumns
     }
 
-    var items = createEmpty(view)
-    
     return view
 }
