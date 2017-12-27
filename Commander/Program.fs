@@ -1,7 +1,25 @@
-﻿// Learn more about F# at http://fsharp.org
-// See the 'F# Tutorial' project for more help.
+﻿open System.Diagnostics
+open System.Net.Sockets
 
-[<EntryPoint>]
-let main argv = 
-    printfn "%A" argv
-    0 // return an integer exit code
+printfn "Starting Commander service"
+let rec checkPort port = 
+    try
+        use client = new TcpClient ("localhost", port)
+        client.GetStream () |> ignore
+        checkPort <| port + 1
+    with
+    | _ -> port
+let port = checkPort 20000
+printfn "using port %d" port
+
+let info = ProcessStartInfo (@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", sprintf "--app=http://localhost:%d/commander.html" <| port)
+info.UseShellExecute <- true
+let p = new Process()
+p.EnableRaisingEvents <- true
+p.StartInfo <- info
+p.Start() |> ignore
+
+// TODO:
+// Testweise in das Eventlog schreiben
+// Auf WM_CREATE reagieren, aber nur bei Fensterklasse Chrome_WidgetWin_1
+// Nach 500 ms Hook entfernen
