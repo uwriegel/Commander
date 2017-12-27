@@ -9,3 +9,6 @@ processes/dotnet/
 processes/commander/bin
 processes/commander/obj
 processes/bin
+/Commander/bin/Debug
+/Commander/obj/Debug
+/packages/System.ValueTuple.4.3.1
