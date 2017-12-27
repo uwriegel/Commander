@@ -25,7 +25,6 @@ p.StartInfo <- info
 p.Start() |> ignore
 Start() 
 
-// TODO: EventLog
-// Testweise in das Eventlog schreiben
-// Auf WM_CREATE reagieren, aber nur bei Fensterklasse Chrome_WidgetWin_1
+// TODO: 
+// Auf WM_CREATE bzw NC_CREATE reagieren, aber nur bei Fensterklasse Chrome_WidgetWin_1
 // Nach 500 ms Hook entfernen
