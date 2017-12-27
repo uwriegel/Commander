@@ -1,5 +1,10 @@
 ﻿open System.Diagnostics
 open System.Net.Sockets
+open System.Runtime.InteropServices
+
+[<DllImport("hook.dll")>]
+extern void Start()
+
 
 printfn "Starting Commander service"
 let rec checkPort port = 
@@ -18,8 +23,9 @@ let p = new Process()
 p.EnableRaisingEvents <- true
 p.StartInfo <- info
 p.Start() |> ignore
+Start() 
 
-// TODO:
+// TODO: EventLog
 // Testweise in das Eventlog schreiben
 // Auf WM_CREATE reagieren, aber nur bei Fensterklasse Chrome_WidgetWin_1
 // Nach 500 ms Hook entfernen
