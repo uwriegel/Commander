@@ -12,3 +12,6 @@ processes/bin
 /Commander/bin/Debug
 /Commander/obj/Debug
 /packages/System.ValueTuple.4.3.1
+Commander/obj/fsac.cache
+.vs/Commander/v15/.suo
+
