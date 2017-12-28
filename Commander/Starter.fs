@@ -1,8 +1,7 @@
-﻿namespace Commander
+﻿module Starter
 
-type Starter() =
-    static member Start(path: string, hwnd: int64) =
-        ()
+let start(path: string, hwnd: int64) =
+    ()
 
 
 

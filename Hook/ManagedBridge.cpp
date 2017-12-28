@@ -92,11 +92,11 @@ void StartManaged(HWND hwnd)
 
 	_Assembly* commander_Assembly = static_cast<_Assembly*>(return_value.pdispVal);
 	VariantClear(&return_value);
-	class_name = SysAllocString(L"Commander.Starter");
+	class_name = SysAllocString(L"Starter");
 	hr = commander_Assembly->GetType_2(class_name, &type);
 	commander_Assembly->Release();
 	SysFreeString(class_name);
-	static_method_name = SysAllocString(L"Start");
+	static_method_name = SysAllocString(L"start");
 	hr = type->InvokeMember_3(static_method_name, static_cast<BindingFlags>(BindingFlags_InvokeMethod | BindingFlags_Static | BindingFlags_Public),
 		nullptr, vtEmpty, static_method_args, nullptr);
 	VariantClear(&args);
