@@ -2,6 +2,7 @@
 
 open System.Threading
 open Server
+open System
 
 let rec checkPort port = 
     try
@@ -12,16 +13,24 @@ let rec checkPort port =
     with
     | _ -> checkPort <| port + 1
 
+let retrieveWebRoot (path: string) = 
+    let webroot = path.Substring(0, path.IndexOf(@"\commander.exe", StringComparison.CurrentCultureIgnoreCase))
+    let pos = webroot.IndexOf(@"\commander\bin\debug", StringComparison.CurrentCultureIgnoreCase)
+    if pos <> -1 then
+        webroot.Substring(0, pos)
+    else
+        path
+
 let start(path: string, hwnd: int64) =
     let port = checkPort 20000
 
     let configuration = Configuration.create {
         Configuration.createEmpty() with 
             Port = port 
-            WebRoot = @"C:\Users\urieg\Documents\Projekte\Commander" // TODO: anhand des Modulpaths berechnen
+            WebRoot = retrieveWebRoot path
             //asyncRequest = asyncRequest
             //onNewWebSocket = onNewWebSocket
-            favicon = "assets\images\kirk2.png"
+            favicon = "assets\images\kirk.png"
     }
 
     ThreadPool.SetMinThreads(60, 60) |> ignore
