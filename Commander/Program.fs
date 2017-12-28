@@ -5,15 +5,18 @@ open System.Runtime.InteropServices
 [<DllImport("hook.dll")>]
 extern void Start()
 
-
 printfn "Starting Commander service"
+
 let rec checkPort port = 
     try
-        use client = new TcpClient ("localhost", port)
-        client.GetStream () |> ignore
-        checkPort <| port + 1
+        let listener = IPV6ListenerFactory.create port
+        listener.Listener.Start()
+        listener.Listener.Stop()
+        port
     with
-    | _ -> port
+    | _ -> checkPort <| port + 1
+ 
+
 let port = checkPort 20000
 printfn "using port %d" port
 
