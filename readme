@@ -1,11 +1,3 @@
-to debug webservice:
-dotnet build processes/commander
-F5
-
-to build Release: 
-cd processes/commander
-dotnet publish --framework netcoreapp2.0 -c Release (dotnet publish --framework netcoreapp2.0 --self-contained)
-copy content of /processes/commander/bin/Release/netcoreapp2.0/publish to /processes/bin
-
-to run Release:
-dotnet processes/bin/commander.dll
+Compile project "commander.sln" in Visual Studio
+In Visual Studio Code build typescript
+Visual Studio "Debug" or "Run"

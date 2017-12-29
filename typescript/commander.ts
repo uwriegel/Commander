@@ -28,7 +28,6 @@ import { CommanderView, createCommanderView }  from './commanderview.js'
 import { MenuItemType, insertItem as insertMenuItem }  from './menubar/menubar.js'
 import { MenuItemSelector } from './menubar/menuitemcontrol.js'
 import { setShowHidden } from './global-settings.js'
-import { platform, Platform } from './platform.js'
 import { joinPath } from './filehelper.js'
 import { createViewer }  from './viewer.js'
 import { Item } from './item.js'
@@ -142,16 +141,6 @@ function setTheme(theme: string) {
     link.href = `assets/css/themes/${theme}.css`
     link.media = 'all'
     head.appendChild(link)
-
-    if (platform == Platform.Linux) {
-        link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.id = 'theme'
-        link.type = 'text/css'
-        link.href = `assets/css/themes/ubuntu.css`
-        link.media = 'all'
-        head.appendChild(link)
-    }
 }
 
 function initializeMenubar() {

@@ -1,4 +1,3 @@
-import { platform, Platform } from './platform.js'
 import { View } from './view.js'
 import { createColumnsControl } from './columnscontrol.js'
 import { Item } from './item.js'
@@ -18,7 +17,7 @@ enum Type {
 
 const Columns = (function() {
     const result = [] 
-    result[Type.Root] = platform == Platform.Linux ? ["Name", "Beschreibung", "Mount", "Größe", "Typ"] : ["Name", "Beschreibung", "Größe"]
+    result[Type.Root] = ["Name", "Beschreibung", "Größe"]
     result[Type.Directory] = ["Name"]
     return result
 })()
