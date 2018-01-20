@@ -3,6 +3,7 @@
 open System.Threading
 open Server
 open System
+open System.IO
 
 let rec checkPort port = 
     try
@@ -17,7 +18,7 @@ let retrieveWebRoot (path: string) =
     let webroot = path.Substring(0, path.IndexOf(@"\commander.exe", StringComparison.CurrentCultureIgnoreCase))
     let pos = webroot.IndexOf(@"\commander\bin\debug", StringComparison.CurrentCultureIgnoreCase)
     if pos <> -1 then
-        webroot.Substring(0, pos)
+        Path.Combine(webroot.Substring(0, pos), "WebApp")
     else
         path
 

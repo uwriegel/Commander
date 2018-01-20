@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "module": "esnext",
+        "outDir": "../scripts",
+        //"alwaysStrict": true,
+        //"noImplicitThis": true,
+        //"noUnusedLocals": true,
+        //"noUnusedParameters": true,
+        //"strictNullChecks": true,
+        "noImplicitAny": false,
+        //"noImplicitReturns": true,
+        //"strict": true,
+        "sourceMap": true
+    }
+}
