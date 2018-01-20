@@ -3,7 +3,7 @@ In Visual Studio Code build typescript
 Visual Studio "Debug" or "Run"
 
 Steps:
-1. all HTML, CSS and ts files will be moved to legacy folder
+--- 1. all HTML, CSS and ts files will be moved to legacy folder
 2. Commander web app from commander-chrome
 3. Running and testing
 4. Commander cs project from commander-chrome will be added and served from fs project commander
