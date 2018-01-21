@@ -4,7 +4,8 @@ open Session
 let asyncRequest (requestSession: RequestSession) = 
     async {
         match requestSession.query.Value.method with
-        | "affe" ->
+        | "getItems" ->
+            //requestSession.asyncSendJson
             let test = requestSession.query.Value
             let param1 = test.Query "param1" 
             let param2 = test.Query "param2"
