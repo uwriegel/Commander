@@ -18,4 +18,8 @@ Commander/obj/fsac.cache
 /.vs/Commander/v15/Browse.VC.db
 /Hook/x64/Debug
 /.vs/Commander/v15/
+Tools/bin/Debug
+Tools/obj/Debug
 
+/Tools/bin/Debug/Tools.dll
+/Tools/bin/Debug/Tools.dll
