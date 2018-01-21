@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme = readme
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,18 @@ Global
 		{0715F850-85F1-4CE5-82CD-48EDBBFD9035}.Release|x64.Build.0 = Release|x64
 		{0715F850-85F1-4CE5-82CD-48EDBBFD9035}.Release|x86.ActiveCfg = Release|Win32
 		{0715F850-85F1-4CE5-82CD-48EDBBFD9035}.Release|x86.Build.0 = Release|Win32
+		{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}.Debug|x64.Build.0 = Debug|Any CPU
+		{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}.Debug|x86.Build.0 = Debug|Any CPU
+		{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}.Release|x64.ActiveCfg = Release|Any CPU
+		{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}.Release|x64.Build.0 = Release|Any CPU
+		{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}.Release|x86.ActiveCfg = Release|Any CPU
+		{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

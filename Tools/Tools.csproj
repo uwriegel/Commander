@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8C4CF9E8-B683-4F64-AF8E-88E7F4DFE731}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tools</RootNamespace>
+    <AssemblyName>Tools</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api.cs" />
+    <Compile Include="ClassExtensions\DirectoryInfoExtensions.cs" />
+    <Compile Include="ClassExtensions\FileAttributes.cs" />
+    <Compile Include="Enums\DragDropKind.cs" />
+    <Compile Include="Enums\Kind.cs" />
+    <Compile Include="Enums\OperationCheckResult.cs" />
+    <Compile Include="Enums\RegistryItemKind.cs" />
+    <Compile Include="Exceptions\AlreadyExistsException.cs" />
+    <Compile Include="Exceptions\CancelledException.cs" />
+    <Compile Include="Exceptions\FavoriteException.cs" />
+    <Compile Include="Exceptions\ServiceNotSupportedException.cs" />
+    <Compile Include="FileVersion.cs" />
+    <Compile Include="ImageUrl.cs" />
+    <Compile Include="Json\CheckFileOperation.cs" />
+    <Compile Include="Json\DragFinished.cs" />
+    <Compile Include="Json\DragOver.cs" />
+    <Compile Include="Json\Drop.cs" />
+    <Compile Include="Json\Event.cs" />
+    <Compile Include="Json\GetItems.cs" />
+    <Compile Include="Json\Item.cs" />
+    <Compile Include="Json\ItemResult.cs" />
+    <Compile Include="Json\Items.cs" />
+    <Compile Include="Json\ItemUpdate.cs" />
+    <Compile Include="Json\NewName.cs" />
+    <Compile Include="Json\Operate.cs" />
+    <Compile Include="Json\OperationItem.cs" />
+    <Compile Include="Json\ProcessItem.cs" />
+    <Compile Include="Json\Result.cs" />
+    <Compile Include="Json\ServiceItemChanged.cs" />
+    <Compile Include="Json\ShowHidden.cs" />
+    <Compile Include="Json\StartExplorerInput.cs" />
+    <Compile Include="OperationRunner.cs" />
+    <Compile Include="Operations\CopyOperation.cs" />
+    <Compile Include="Operations\DeleteOperation.cs" />
+    <Compile Include="Operations\DirectoryProcessor.cs" />
+    <Compile Include="Operations\DriveProcessor.cs" />
+    <Compile Include="Operations\FileOperation.cs" />
+    <Compile Include="Operations\MoveOperation.cs" />
+    <Compile Include="Operations\Operation.cs" />
+    <Compile Include="Operations\OperationProcessor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

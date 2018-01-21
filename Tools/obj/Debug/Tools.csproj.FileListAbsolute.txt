@@ -1,0 +1,6 @@
+C:\Users\urieg\Documents\Projekte\Commander\Tools\obj\Debug\Tools.csprojResolveAssemblyReference.cache
+C:\Users\urieg\Documents\Projekte\Commander\Tools\obj\Debug\Tools.csproj.CoreCompileInputs.cache
+C:\Users\urieg\Documents\Projekte\Commander\Tools\bin\Debug\Tools.dll
+C:\Users\urieg\Documents\Projekte\Commander\Tools\bin\Debug\Tools.pdb
+C:\Users\urieg\Documents\Projekte\Commander\Tools\obj\Debug\Tools.dll
+C:\Users\urieg\Documents\Projekte\Commander\Tools\obj\Debug\Tools.pdb

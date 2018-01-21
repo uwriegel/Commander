@@ -7,5 +7,7 @@ Steps:
 --- 2. Commander web app from commander-chrome
 --- 3. Running and testing
 4. Commander cs project from commander-chrome will be added and served from fs project commander
-5. parts from cs will be ported to fs till commander-chrome is empty
-6. Commander from legacy folder will update recent commander
+5. DragnDrop with Api.dll
+6. Removing Commander-Chrome 
+7. parts from cs will be ported to fs till commander-chrome is empty
+8. Commander from legacy folder will update recent commander
