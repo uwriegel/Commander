@@ -6,8 +6,9 @@ Steps:
 --- 1. all HTML, CSS and ts files will be moved to legacy folder
 --- 2. Commander web app from commander-chrome
 --- 3. Running and testing
-4. Commander cs project from commander-chrome will be added and served from fs project commander
-5. DragnDrop with Api.dll
-6. Removing Commander-Chrome 
-7. parts from cs will be ported to fs till commander-chrome is empty
-8. Commander from legacy folder will update recent commander
+--- 4. Commander cs project from commander-chrome will be added and served from fs project commander
+5. Make runnable
+6. DragnDrop with Api.dll
+7. Removing Commander-Chrome 
+8. parts from cs will be ported to fs till commander-chrome is empty
+9. Commander from legacy folder will update recent commander

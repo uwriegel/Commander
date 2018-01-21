@@ -4,6 +4,7 @@ open System.Threading
 open Server
 open System
 open System.IO
+open Requests
 
 let rec checkPort port = 
     try
@@ -29,9 +30,9 @@ let start(path: string, hwnd: int64) =
         Configuration.createEmpty() with 
             Port = port 
             WebRoot = retrieveWebRoot path
-            //asyncRequest = asyncRequest
+            asyncRequest = asyncRequest
             //onNewWebSocket = onNewWebSocket
-            favicon = "assets\images\kirk.png"
+            favicon = "WebApp\images\kirk.png"
     }
 
     ThreadPool.SetMinThreads(60, 60) |> ignore
