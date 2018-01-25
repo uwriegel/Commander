@@ -20,3 +20,5 @@ Commander/obj/fsac.cache
 /.vs/Commander/v15/
 Tools/bin
 Tools/obj
+/WebApp/bin
+/WebApp/obj/Debug

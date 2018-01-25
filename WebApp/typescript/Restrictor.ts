@@ -3,7 +3,7 @@
  * * Der Restrictor befindet sich zwischen ItemsModel und ItemsViewModel und ist für das Begrenzen der Einträge zuständig,
  * wenn man beispielsweise "s" eingibt, werden nur noch Einträge, die mit "s" anfangen, angezeigt
  */
-class Restrictor implements IObservator, IObservable, IModel
+class Restrictor implements IObservator, IObservable
 {
     get ItemsSorter()
     {
@@ -25,7 +25,7 @@ class Restrictor implements IObservator, IObservable, IModel
     {
         var restrictedItems = []
         if (back)
-            this.itemsToShow = this.itemsSorter.items
+            this.itemsToShow = this.itemsSorter.getItems()
         this.itemsToShow.forEach((item) =>
         {
             if (item.name.toLowerCase().indexOf(prefix) == 0)
@@ -36,8 +36,10 @@ class Restrictor implements IObservator, IObservable, IModel
         {
             this.itemsToShow = restrictedItems
 
-            if (this.observator)
-                this.observator.itemsChanged(0)
+            //if (this.observator)
+            //    this.observator.itemsChanged(0)
+            this.itemsSorter.itemsChanged(0)
+
             return true
         }
         return false
@@ -49,10 +51,12 @@ class Restrictor implements IObservator, IObservable, IModel
      */
     closeRestrict(noRefresh)
     {
-        this.itemsToShow = this.itemsSorter.items
+        this.itemsToShow = this.itemsSorter.getItems()
         this.itemsSorter.sortItems()
-        if (!noRefresh && this.observator)
-            this.observator.itemsChanged(0)
+        //if (!noRefresh && this.observator)
+        //    this.observator.itemsChanged(0)
+        if (!noRefresh) 
+            this.itemsSorter.itemsChanged(0)
     }
 
     ItemsCleared()
@@ -63,7 +67,7 @@ class Restrictor implements IObservator, IObservable, IModel
     itemsChanged(lastCurrentIndex: number)
     {
         this.itemsSorter.itemsChanged(lastCurrentIndex)
-        this.itemsToShow = this.itemsSorter.items
+        this.itemsToShow = this.itemsSorter.getItems()
     }
 
     updateItems()

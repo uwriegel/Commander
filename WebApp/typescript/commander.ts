@@ -44,8 +44,8 @@ class Commander
 
         if (localStorage["showHidden"] == "true")
             this.showHidden(true)
-        if (localStorage["darkTheme"] = "true")
-            this.darkTheme(true)
+        //if (localStorage["darkTheme"] = "true")
+        //    this.darkTheme(true)
     }
 
     getCommanderView(id: string)

@@ -25,6 +25,11 @@ class ItemsSorter implements IObservator, IObservable, IModel, ISorter
     {
         return this.itemsToShow
     }
+
+    getItems()
+    {
+        return this.items
+    }
     
     /**
      * Ermittlung des Eintrags mit dem angegebenen Index
@@ -211,7 +216,7 @@ class ItemsSorter implements IObservator, IObservable, IModel, ISorter
         return this.itemsToShow.length
     }
 
-    private sortItems() {
+    sortItems() {
         var sorted = []
         var fileItem
         var restArray = null
